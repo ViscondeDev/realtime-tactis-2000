@@ -37,4 +37,4 @@ project/assembly_name="Realtime Tactics 2000"
 
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="mobile"
-environment/defaults/default_clear_color=Color(0.14901961, 0.23137255, 0.27450982, 1)
+environment/defaults/default_clear_color=Color(0.29411766, 0.43529412, 0.5764706, 1)

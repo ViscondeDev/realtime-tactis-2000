@@ -2,7 +2,7 @@ class_name Unit
 extends CharacterBody2D
 
 const COMMANDABLE_UNITS_GROUP: StringName = &"commandable_units"
-const SELECTION_PADDING_PIXELS: float = 8.0
+const SELECTION_PADDING_PIXELS: float = 200
 
 @export var definition: UnitDefinition
 
@@ -13,7 +13,6 @@ const SELECTION_PADDING_PIXELS: float = 8.0
 func _ready() -> void:
 	add_to_group(COMMANDABLE_UNITS_GROUP)
 
-	# A new shape per instance, so changing one unit's radius never affects another.
 	var body_collision_shape: CircleShape2D = CircleShape2D.new()
 	body_collision_shape.radius = definition.body_radius
 	$CollisionShape2D.shape = body_collision_shape

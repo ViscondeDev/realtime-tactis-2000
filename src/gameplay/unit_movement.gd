@@ -6,7 +6,7 @@ signal move_order_completed
 const PATH_DESIRED_DISTANCE_PIXELS: float = 8.0
 const TARGET_DESIRED_DISTANCE_PIXELS: float = 8.0
 
-var movement_speed: float = 150.0
+var movement_speed: float
 
 var _has_active_move_order: bool = false
 

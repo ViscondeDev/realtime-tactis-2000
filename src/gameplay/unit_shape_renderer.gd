@@ -16,7 +16,7 @@ func _draw() -> void:
 		return
 
 	var radius: float = definition.body_radius
-	var color: Color = definition.body_color
+	var color: Color = Color.html(UnitDefinition.TEAM_COLORS[definition.body_team])
 
 	match definition.body_shape:
 		UnitDefinition.BodyShape.TRIANGLE:
