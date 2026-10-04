@@ -11,13 +11,19 @@ config_version=5
 [application]
 
 config/name="Realtime Tactics 2000"
+run/main_scene="uid://dwi4fguxf5b6b"
 config/features=PackedStringArray("4.7", "Mobile")
 config/icon="res://icon.svg"
 
 [display]
 
-window/stretch/mode="canvas_items"
-window/stretch/aspect="expand"
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/size/mode=3
+window/size/initial_position_type=3
+window/size/resizable=false
+window/size/borderless=true
+window/stretch/mode="viewport"
 
 [dotnet]
 
@@ -31,3 +37,4 @@ project/assembly_name="Realtime Tactics 2000"
 
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="mobile"
+environment/defaults/default_clear_color=Color(0.14901961, 0.23137255, 0.27450982, 1)
