@@ -3,23 +3,10 @@
 [ext_resource type="PackedScene" uid="uid://bt1qf6j1ifhf7" path="res://src/gameplay/unit.tscn" id="1_e2o6t"]
 [ext_resource type="Script" uid="uid://c2bvcalceuvv8" path="res://tools/level_builder.gd" id="1_fc0e3"]
 [ext_resource type="Script" uid="uid://bxn47tpjyr6rv" path="res://tools/level_polygon.gd" id="2_7jktm"]
-[ext_resource type="Script" uid="uid://c036a2estl0ix" path="res://src/resources/unit_definition.gd" id="4_7jktm"]
+[ext_resource type="Resource" uid="uid://ch8prcptxdl31" path="res://src/resources/classes/quick.tres" id="4_ryrav"]
+[ext_resource type="Resource" uid="uid://beiw7m8hmc0nj" path="res://src/resources/classes/strong.tres" id="5_eow3j"]
+[ext_resource type="Resource" uid="uid://c3yjuhcf2tds4" path="res://src/resources/classes/smart.tres" id="6_eow3j"]
 [ext_resource type="Script" uid="uid://35datvu1g58l" path="res://src/gameplay/unit_command_controller.gd" id="6_mfdv2"]
-
-[sub_resource type="Resource" id="Resource_7jktm"]
-resource_local_to_scene = true
-script = ExtResource("4_7jktm")
-body_shape = 0
-body_radius = 30.0
-movement_speed = 300.0
-metadata/_custom_type_script = "uid://c036a2estl0ix"
-
-[sub_resource type="Resource" id="Resource_ryrav"]
-resource_local_to_scene = true
-script = ExtResource("4_7jktm")
-body_shape = 1
-body_team = 1
-metadata/_custom_type_script = "uid://c036a2estl0ix"
 
 [node name="Game" type="Node2D" unique_id=1544827901]
 
@@ -59,11 +46,16 @@ metadata/_custom_type_script = "uid://bxn47tpjyr6rv"
 
 [node name="Unit" parent="." unique_id=865573347 instance=ExtResource("1_e2o6t")]
 position = Vector2(320, 384)
-definition = SubResource("Resource_7jktm")
+class_definition = ExtResource("4_ryrav")
 
 [node name="Unit2" parent="." unique_id=171539738 instance=ExtResource("1_e2o6t")]
 position = Vector2(832, 832)
-definition = SubResource("Resource_ryrav")
+class_definition = ExtResource("5_eow3j")
+
+[node name="Unit3" parent="." unique_id=1483051596 instance=ExtResource("1_e2o6t")]
+position = Vector2(384, 832)
+class_definition = ExtResource("6_eow3j")
+team = 1
 
 [node name="UnitCommandController" type="Node2D" parent="." unique_id=52227663]
 script = ExtResource("6_mfdv2")

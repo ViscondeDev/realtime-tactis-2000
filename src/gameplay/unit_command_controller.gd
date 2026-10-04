@@ -26,7 +26,7 @@ func _process(_delta: float) -> void:
 func _draw() -> void:
 	if _dragged_unit == null:
 		return
-	var ring_color: Color = Color.html(UnitDefinition.TEAM_COLORS[_dragged_unit.definition.body_team])
+	var ring_color: Color = Color.html(Unit.TEAM_COLORS[_dragged_unit.team])
 	ring_color.a = 0.5
 	draw_arc(to_local(get_global_mouse_position()), DRAG_GOAL_RING_RADIUS, 0.0, TAU, 32, ring_color, 2.0)
 

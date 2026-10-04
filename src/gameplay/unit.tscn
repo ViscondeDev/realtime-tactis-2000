@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bt1qf6j1ifhf7"]
 
 [ext_resource type="Script" uid="uid://bp5cu3hr7bwh3" path="res://src/gameplay/unit.gd" id="1_inr3l"]
-[ext_resource type="Script" uid="uid://c036a2estl0ix" path="res://src/resources/unit_definition.gd" id="2_qpmdq"]
+[ext_resource type="Script" uid="uid://c036a2estl0ix" path="res://src/resources/class_definition.gd" id="2_qpmdq"]
 [ext_resource type="Script" uid="uid://rwyec42x04lg" path="res://src/gameplay/unit_path_renderer.gd" id="3_sdpio"]
 [ext_resource type="Script" uid="uid://dagkbhfx81aeq" path="res://src/gameplay/unit_shape_renderer.gd" id="4_584o2"]
 [ext_resource type="Script" uid="uid://cabrh6ctmaedx" path="res://src/gameplay/unit_movement.gd" id="5_r6ibq"]

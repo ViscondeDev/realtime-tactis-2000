@@ -33,7 +33,7 @@ func _draw() -> void:
 	if path_points.size() < 2:
 		return
 
-	var path_color: Color = Color.html(UnitDefinition.TEAM_COLORS[_unit.definition.body_team])
+	var path_color: Color = Color.html(Unit.TEAM_COLORS[_unit.team])
 	path_color.a = path_opacity
 
 	var goal_position: Vector2 = path_points[path_points.size() - 1]
