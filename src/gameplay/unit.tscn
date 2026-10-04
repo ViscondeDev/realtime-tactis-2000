@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://bt1qf6j1ifhf7"]
+
+[ext_resource type="Script" uid="uid://bp5cu3hr7bwh3" path="res://src/gameplay/unit.gd" id="1_inr3l"]
+[ext_resource type="Script" uid="uid://cgnxhwgsxngwq" path="res://resources/unit_definition.gd" id="2_qpmdq"]
+[ext_resource type="Script" uid="uid://rwyec42x04lg" path="res://src/gameplay/unit_path_renderer.gd" id="3_sdpio"]
+[ext_resource type="Script" uid="uid://dagkbhfx81aeq" path="res://src/gameplay/unit_shape_renderer.gd" id="4_584o2"]
+[ext_resource type="Script" uid="uid://cabrh6ctmaedx" path="res://src/gameplay/unit_movement.gd" id="5_r6ibq"]
+
+[sub_resource type="Resource" id="Resource_ctxya"]
+script = ExtResource("2_qpmdq")
+metadata/_custom_type_script = "uid://cgnxhwgsxngwq"
+
+[node name="Unit" type="CharacterBody2D" unique_id=865573347]
+script = ExtResource("1_inr3l")
+definition = SubResource("Resource_ctxya")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=614002419]
+
+[node name="UnitPathRenderer" type="Node2D" parent="." unique_id=997801979]
+script = ExtResource("3_sdpio")
+
+[node name="UnitShapeRenderer" type="Node2D" parent="." unique_id=1474483965]
+script = ExtResource("4_584o2")
+
+[node name="UnitMovement" type="Node2D" parent="." unique_id=1781200274]
+script = ExtResource("5_r6ibq")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="UnitMovement" unique_id=1448612051]
