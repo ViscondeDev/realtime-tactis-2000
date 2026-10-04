@@ -1,3 +1,42 @@
 [gd_scene format=3 uid="uid://dwi4fguxf5b6b"]
 
+[ext_resource type="Script" uid="uid://bp5cu3hr7bwh3" path="res://src/gameplay/unit.gd" id="1_ryrav"]
+[ext_resource type="Script" uid="uid://cgnxhwgsxngwq" path="res://resources/unit_definition.gd" id="2_eow3j"]
+[ext_resource type="Script" uid="uid://rwyec42x04lg" path="res://src/gameplay/unit_path_renderer.gd" id="3_j5wjh"]
+[ext_resource type="Script" uid="uid://dagkbhfx81aeq" path="res://src/gameplay/unit_shape_renderer.gd" id="4_vef74"]
+[ext_resource type="Script" uid="uid://cabrh6ctmaedx" path="res://src/gameplay/unit_movement.gd" id="5_hve3p"]
+[ext_resource type="Script" uid="uid://35datvu1g58l" path="res://src/gameplay/unit_command_controller.gd" id="6_mfdv2"]
+
+[sub_resource type="Resource" id="Resource_ctxya"]
+script = ExtResource("2_eow3j")
+metadata/_custom_type_script = "uid://cgnxhwgsxngwq"
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_ctxya"]
+vertices = PackedVector2Array(1090.4297, 82.671875, 2473.7969, 735.09375, 806.5781, 822.78906, 779.09375, 537.02344, 240.07031, 317.45313, 392.8828, -162, 191.07813, -371.6875, -745.7969, 703.10156, -583.40625, -154.82813, -426.28906, -475.89063)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(3, 2, 4, 5), PackedInt32Array(6, 5, 4, 7, 8, 9)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(780, 518, 1087, 70, 2514, 743, 803, 833, 238, 329, -759, 719, -593, -158, -432, -487, 196, -381, 401, -168)])
+
 [node name="Game" type="Node2D" unique_id=1544827901]
+
+[node name="Unit" type="CharacterBody2D" parent="." unique_id=2144362464]
+script = ExtResource("1_ryrav")
+definition = SubResource("Resource_ctxya")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Unit" unique_id=1551701594]
+
+[node name="UnitPathRenderer" type="Node2D" parent="Unit" unique_id=1489504712]
+script = ExtResource("3_j5wjh")
+
+[node name="UnitShapeRenderer" type="Node2D" parent="Unit" unique_id=413280408]
+script = ExtResource("4_vef74")
+
+[node name="UnitMovement" type="Node2D" parent="Unit" unique_id=1511979406]
+script = ExtResource("5_hve3p")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="Unit/UnitMovement" unique_id=1923913057]
+
+[node name="UnitCommandController" type="Node2D" parent="." unique_id=52227663]
+script = ExtResource("6_mfdv2")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=1724343678]
+navigation_polygon = SubResource("NavigationPolygon_ctxya")
