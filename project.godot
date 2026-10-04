@@ -29,6 +29,12 @@ window/stretch/mode="viewport"
 
 project/assembly_name="Realtime Tactics 2000"
 
+[layer_names]
+
+2d_physics/layer_1="enviornment"
+2d_physics/layer_2="yellow"
+2d_physics/layer_3="red"
+
 [physics]
 
 3d/physics_engine="Jolt Physics"
