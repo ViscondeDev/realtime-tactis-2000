@@ -19,8 +19,8 @@ config/icon="res://icon.svg"
 
 window/size/viewport_width=2560
 window/size/viewport_height=1440
-window/size/mode=3
 window/size/initial_position_type=3
+window/size/initial_screen=2
 window/size/resizable=false
 window/size/borderless=true
 window/stretch/mode="viewport"
@@ -38,6 +38,8 @@ enabled=PackedStringArray("res://addons/at-icons/plugin.cfg")
 2d_physics/layer_1="enviornment"
 2d_physics/layer_2="yellow"
 2d_physics/layer_3="red"
+2d_physics/layer_4="collectables"
+2d_physics/layer_5="goals"
 
 [physics]
 

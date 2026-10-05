@@ -2,6 +2,7 @@
 class_name UnitPathRenderer
 extends Node2D
 
+@export var _unit: Unit
 @export var dot_radius: float = 2.5
 @export var dot_spacing: float = 12.0
 @export var goal_marker_radius: float = 10.0
@@ -10,7 +11,6 @@ extends Node2D
 
 var _was_drawing_last_frame: bool = false
 
-@onready var _unit: Unit = get_parent() as Unit
 
 
 func _ready() -> void:

@@ -7,11 +7,11 @@ signal move_order_completed
 const PATH_DESIRED_DISTANCE_PIXELS: float = 8.0
 const TARGET_DESIRED_DISTANCE_PIXELS: float = 8.0
 
-var movement_speed: float
+@export var _unit_body: CharacterBody2D
 
+var movement_speed: float
 var _has_active_move_order: bool = false
 
-@onready var _unit_body: CharacterBody2D = get_parent() as CharacterBody2D
 @onready var _navigation_agent: NavigationAgent2D = $NavigationAgent2D
 
 

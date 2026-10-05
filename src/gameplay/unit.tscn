@@ -1,27 +1,46 @@
 [gd_scene format=3 uid="uid://bt1qf6j1ifhf7"]
 
 [ext_resource type="Script" uid="uid://bp5cu3hr7bwh3" path="res://src/gameplay/unit.gd" id="1_inr3l"]
-[ext_resource type="Script" uid="uid://c036a2estl0ix" path="res://src/resources/class_definition.gd" id="2_qpmdq"]
-[ext_resource type="Script" uid="uid://rwyec42x04lg" path="res://src/gameplay/unit_path_renderer.gd" id="3_sdpio"]
-[ext_resource type="Script" uid="uid://dagkbhfx81aeq" path="res://src/gameplay/unit_shape_renderer.gd" id="4_584o2"]
-[ext_resource type="Script" uid="uid://cabrh6ctmaedx" path="res://src/gameplay/unit_movement.gd" id="5_r6ibq"]
+[ext_resource type="Script" uid="uid://rwyec42x04lg" path="res://src/gameplay/unit components/unit_path_renderer.gd" id="3_sdpio"]
+[ext_resource type="Script" uid="uid://dagkbhfx81aeq" path="res://src/gameplay/unit components/unit_shape_renderer.gd" id="4_584o2"]
+[ext_resource type="Script" uid="uid://e8fnamqpbfex" path="res://src/gameplay/unit components/unit_perception.gd" id="5_inr3l"]
+[ext_resource type="Script" uid="uid://cabrh6ctmaedx" path="res://src/gameplay/unit components/unit_movement.gd" id="5_r6ibq"]
 
-[sub_resource type="Resource" id="Resource_ctxya"]
-script = ExtResource("2_qpmdq")
+[sub_resource type="CircleShape2D" id="CircleShape2D_ninnf"]
+radius = 795.0
 
 [node name="Unit" type="CharacterBody2D" unique_id=865573347]
+collision_layer = 0
 script = ExtResource("1_inr3l")
-definition = SubResource("Resource_ctxya")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=614002419]
 
-[node name="UnitPathRenderer" type="Node2D" parent="." unique_id=997801979]
-script = ExtResource("3_sdpio")
+[node name="Behavior" type="Node2D" parent="." unique_id=1646724398]
 
-[node name="UnitShapeRenderer" type="Node2D" parent="." unique_id=1474483965]
-script = ExtResource("4_584o2")
-
-[node name="UnitMovement" type="Node2D" parent="." unique_id=1781200274]
+[node name="UnitMovement" type="Node2D" parent="Behavior" unique_id=1781200274 node_paths=PackedStringArray("_unit_body")]
+unique_name_in_owner = true
 script = ExtResource("5_r6ibq")
+_unit_body = NodePath("../..")
 
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="UnitMovement" unique_id=1448612051]
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="Behavior/UnitMovement" unique_id=1448612051]
+
+[node name="UnitPerception" type="Area2D" parent="Behavior" unique_id=855732808 node_paths=PackedStringArray("_unit")]
+script = ExtResource("5_inr3l")
+_unit = NodePath("../..")
+metadata/_custom_type_script = "uid://e8fnamqpbfex"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Behavior/UnitPerception" unique_id=881512707]
+shape = SubResource("CircleShape2D_ninnf")
+
+[node name="SightLine" type="RayCast2D" parent="Behavior/UnitPerception" unique_id=941687607]
+target_position = Vector2(795, 0)
+
+[node name="Rendering" type="Node2D" parent="." unique_id=405359763]
+
+[node name="UnitPathRenderer" type="Node2D" parent="Rendering" unique_id=997801979 node_paths=PackedStringArray("_unit")]
+script = ExtResource("3_sdpio")
+_unit = NodePath("../..")
+
+[node name="UnitShapeRenderer" type="Node2D" parent="Rendering" unique_id=1474483965]
+unique_name_in_owner = true
+script = ExtResource("4_584o2")

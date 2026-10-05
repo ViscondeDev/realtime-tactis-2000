@@ -7,3 +7,4 @@ enum BodyShape {TRIANGLE, SQUARE, CIRCLE}
 @export var body_shape: BodyShape = BodyShape.CIRCLE
 @export var body_radius: float = 16.0
 @export var movement_speed: float = 150.0
+@export var sight_update_interval: float = 0.5
