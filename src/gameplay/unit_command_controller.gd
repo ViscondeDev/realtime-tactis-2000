@@ -1,3 +1,4 @@
+@icon("res://addons/at-icons/node2d/push_button.svg")
 class_name UnitCommandController
 extends Node2D
 

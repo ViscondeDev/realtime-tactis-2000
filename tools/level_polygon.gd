@@ -1,4 +1,6 @@
 @tool
+@icon("res://addons/at-icons/node2d/mesh_plane.svg")
+
 class_name LevelPolygon
 extends Line2D
 

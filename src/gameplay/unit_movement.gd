@@ -1,3 +1,4 @@
+@icon("res://addons/at-icons/node2d/motion_vector.svg")
 class_name UnitMovement
 extends Node
 

@@ -1,3 +1,4 @@
+@icon("res://addons/at-icons/node2d/icons.svg")
 class_name Unit
 extends CharacterBody2D
 

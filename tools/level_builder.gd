@@ -1,4 +1,5 @@
 @tool
+@icon("res://addons/at-icons/node2d/hammer.svg")
 class_name LevelBuilder
 extends Node2D
 

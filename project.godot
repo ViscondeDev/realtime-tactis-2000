@@ -29,6 +29,10 @@ window/stretch/mode="viewport"
 
 project/assembly_name="Realtime Tactics 2000"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/at-icons/plugin.cfg")
+
 [layer_names]
 
 2d_physics/layer_1="enviornment"

@@ -1,3 +1,4 @@
+@icon("res://addons/at-icons/node2d/itinerary.svg")
 class_name UnitPathRenderer
 extends Node2D
 

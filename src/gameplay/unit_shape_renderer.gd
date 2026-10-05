@@ -1,3 +1,4 @@
+@icon("res://addons/at-icons/node2d/mesh_polygon.svg")
 class_name UnitShapeRenderer
 extends Node2D
 
