@@ -12,10 +12,14 @@ const RETREAT_HEALTH_RATIO: float = 0.4
 var state: State = State.IDLE
 var _target_enemy: Unit
 var _fire_timer: float = 0.0
+var _burst_rounds_remaining: int = 0
+var _burst_timer: float = 0.0
+var _burst_round_damage: float = 0.0
 var _retreat_leg_started: bool = false
 
 @onready var _perception: UnitPerception = get_parent().get_node("UnitPerception")
 @onready var _movement: UnitMovement = get_parent().get_node("UnitMovement")
+@onready var _projectile_pool: Node = get_tree().current_scene.get_node("ProjectilePool")
 
 
 func _physics_process(delta: float) -> void:
@@ -53,10 +57,86 @@ func _update_engaging(delta: float) -> void:
 
 	_update_engagement_movement()
 
+	var class_definition: ClassDefinition = _unit.class_definition
+	if _unit.global_position.distance_to(_target_enemy.global_position) > class_definition.attack_range:
+		_burst_rounds_remaining = 0
+		_burst_timer = 0.0
+		return
+
+	if _burst_rounds_remaining > 0:
+		_burst_timer += delta
+		while _burst_rounds_remaining > 0 and _burst_timer >= class_definition.burst_interval:
+			_burst_timer -= class_definition.burst_interval
+			_fire_round(_target_enemy, _burst_round_damage)
+			_burst_rounds_remaining -= 1
+		return
+
 	_fire_timer += delta
-	if _fire_timer >= _unit.class_definition.fire_interval:
-		_fire_timer = 0.0
-		_target_enemy.unit_health.take_damage(_unit.class_definition.hp_per_shot)
+	if _fire_timer < class_definition.fire_interval:
+		return
+	_fire_timer -= class_definition.fire_interval
+
+	var burst_count: int = maxi(class_definition.burst_projectile_count, 1)
+	if burst_count > 1:
+		_burst_rounds_remaining = burst_count - 1
+		_burst_timer = 0.0
+		_burst_round_damage = class_definition.hp_per_shot / float(burst_count)
+		_fire_round(_target_enemy, _burst_round_damage)
+		return
+
+	var pellet_count: int = maxi(class_definition.pellet_count, 1)
+	var pellet_damage: float = class_definition.hp_per_shot / float(pellet_count)
+	for _pellet_index: int in range(pellet_count):
+		_fire_round(_target_enemy, pellet_damage)
+
+
+func _fire_round(target: Unit, damage: float) -> void:
+	var class_definition: ClassDefinition = _unit.class_definition
+	var aim_direction: Vector2 = _calculate_intercept_direction(target, class_definition.projectile_speed)
+	aim_direction = aim_direction.rotated(deg_to_rad(randf_range(
+		-class_definition.bullet_spread_degrees,
+		class_definition.bullet_spread_degrees
+	)))
+	var spawn_position: Vector2 = _unit.global_position + aim_direction * (_unit.class_definition.body_radius + 4.0)
+	_projectile_pool.call("fire",
+		spawn_position,
+		aim_direction,
+		_unit.team,
+		damage,
+		class_definition.projectile_speed,
+		class_definition.attack_range
+	)
+
+
+func _calculate_intercept_direction(target: Unit, projectile_speed: float) -> Vector2:
+	var relative_position: Vector2 = target.global_position - _unit.global_position
+	var target_velocity: Vector2 = target.get_real_velocity()
+	var quadratic_a: float = target_velocity.length_squared() - projectile_speed * projectile_speed
+	var quadratic_b: float = 2.0 * relative_position.dot(target_velocity)
+	var quadratic_c: float = relative_position.length_squared()
+	var intercept_time: float = -1.0
+
+	if absf(quadratic_a) < 0.001:
+		if absf(quadratic_b) > 0.001:
+			intercept_time = -quadratic_c / quadratic_b
+	else:
+		var discriminant: float = quadratic_b * quadratic_b - 4.0 * quadratic_a * quadratic_c
+		if discriminant >= 0.0:
+			var root: float = sqrt(discriminant)
+			var first_time: float = (-quadratic_b - root) / (2.0 * quadratic_a)
+			var second_time: float = (-quadratic_b + root) / (2.0 * quadratic_a)
+			if first_time > 0.0 and second_time > 0.0:
+				intercept_time = minf(first_time, second_time)
+			elif first_time > 0.0:
+				intercept_time = first_time
+			elif second_time > 0.0:
+				intercept_time = second_time
+
+	if intercept_time > 0.0:
+		var intercept_vector: Vector2 = relative_position + target_velocity * intercept_time
+		if not intercept_vector.is_zero_approx():
+			return intercept_vector.normalized()
+	return relative_position.normalized()
 
 
 func _update_engagement_movement() -> void:
@@ -79,6 +159,8 @@ func _update_engagement_movement() -> void:
 func _end_engagement() -> void:
 	_target_enemy = null
 	_fire_timer = 0.0
+	_burst_rounds_remaining = 0
+	_burst_timer = 0.0
 	_retreat_leg_started = false
 	if _movement.has_active_move_order():
 		_transition_to(State.MOVING)

@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://c2bvcalceuvv8" path="res://tools/level_builder.gd" id="1_fc0e3"]
 [ext_resource type="Script" uid="uid://bxn47tpjyr6rv" path="res://tools/level_polygon.gd" id="2_7jktm"]
 [ext_resource type="Script" uid="uid://35datvu1g58l" path="res://src/gameplay/unit_command_controller.gd" id="6_mfdv2"]
+[ext_resource type="Script" uid="uid://blm2sqcpqdbpt" path="res://src/gameplay/unit_projectile_pool.gd" id="7_projectile_pool"]
 
 [node name="Game" type="Node2D" unique_id=1544827901]
 
@@ -40,6 +41,9 @@ default_color = Color(0.95, 0.35, 0.35, 1)
 script = ExtResource("2_7jktm")
 polygon_kind = 1
 metadata/_custom_type_script = "uid://bxn47tpjyr6rv"
+
+[node name="ProjectilePool" type="Node2D" parent="." unique_id=1674037165]
+script = ExtResource("7_projectile_pool")
 
 [node name="Unit" parent="." unique_id=865573347 instance=ExtResource("1_e2o6t")]
 position = Vector2(320, 384)

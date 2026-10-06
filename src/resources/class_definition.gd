@@ -17,3 +17,9 @@ enum BodyShape {TRIANGLE, SQUARE, CIRCLE}
 @export var fire_interval: float = 1.0
 @export var hp_per_shot: float = 10
 @export var optimal_engagement_distance: float = 180.0
+@export var projectile_speed: float = 850.0
+@export var attack_range: float = 480.0
+@export var bullet_spread_degrees: float = 4.0
+@export_range(1, 16, 1) var pellet_count: int = 1
+@export_range(1, 16, 1) var burst_projectile_count: int = 1
+@export var burst_interval: float = 0.08
