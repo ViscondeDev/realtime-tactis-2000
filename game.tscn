@@ -82,7 +82,7 @@ polygon_kind = 1
 metadata/_custom_type_script = "uid://bxn47tpjyr6rv"
 
 [node name="LevelPolygon6" type="Line2D" parent="Level/LevelBuilder" unique_id=65361045]
-points = PackedVector2Array(-256, 320, -256, -576, -448, -384, -448, 128)
+points = PackedVector2Array(-256, 320, -192, 256, -192, -128, -192, -512, -256, -576, -448, -384, -448, 128)
 closed = true
 width = 4.0
 default_color = Color(0.95, 0.35, 0.35, 1)
@@ -91,7 +91,8 @@ polygon_kind = 1
 metadata/_custom_type_script = "uid://bxn47tpjyr6rv"
 
 [node name="LevelPolygon7" type="Line2D" parent="Level/LevelBuilder" unique_id=989831261]
-points = PackedVector2Array(1408, -832, 1600, -640, 1600, -128, 1408, 64)
+position = Vector2(0, -64)
+points = PackedVector2Array(1344, -704, 1408, -768, 1600, -640, 1600, -128, 1408, 128, 1344, 64)
 closed = true
 width = 4.0
 default_color = Color(0.95, 0.35, 0.35, 1)

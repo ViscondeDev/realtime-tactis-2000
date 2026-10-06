@@ -3,6 +3,7 @@ extends Camera2D
 const EDGE_MARGIN_PIXELS: float = 500.0
 const POSITION_SMOOTHING_SPEED: float = 2.0
 const ZOOM_SMOOTHING_SPEED: float = 2.5
+const CONTROL_POINTS_GROUP: StringName = &"control_points"
 
 var _has_initial_frame: bool = false
 
@@ -30,6 +31,15 @@ func _process(delta: float) -> void:
 		var unit_max: Vector2 = unit.global_position + Vector2.ONE * radius
 		bounds_min = bounds_min.min(unit_min)
 		bounds_max = bounds_max.max(unit_max)
+	for node: Node in get_tree().get_nodes_in_group(CONTROL_POINTS_GROUP):
+		var control_point: ControlPoint = node as ControlPoint
+		if control_point == null:
+			continue
+		var radius: float = ControlPoint.HEXAGON_RADIUS
+		var point_min: Vector2 = control_point.global_position - Vector2.ONE * radius
+		var point_max: Vector2 = control_point.global_position + Vector2.ONE * radius
+		bounds_min = bounds_min.min(point_min)
+		bounds_max = bounds_max.max(point_max)
 
 	var target_position: Vector2 = (bounds_min + bounds_max) * 0.5
 	var viewport_size: Vector2 = get_viewport_rect().size

@@ -48,7 +48,7 @@ func clear_autonomous_move_target() -> void:
 	if _has_active_move_order:
 		_navigation_agent.target_position = _move_order_navigation_agent.target_position
 	else:
-		_unit_body.velocity = Vector2.ZERO
+		_stop_unit_body()
 
 
 func is_autonomous_move_finished() -> bool:
@@ -77,7 +77,7 @@ func _physics_process(_delta: float) -> void:
 		return
 
 	if _navigation_agent.is_navigation_finished():
-		_unit_body.velocity = Vector2.ZERO
+		_stop_unit_body()
 		if _has_active_move_order and not _has_autonomous_move_target:
 			_has_active_move_order = false
 			move_order_completed.emit()
@@ -86,4 +86,9 @@ func _physics_process(_delta: float) -> void:
 	var next_waypoint_position: Vector2 = _navigation_agent.get_next_path_position()
 	var direction_to_waypoint: Vector2 = _unit_body.global_position.direction_to(next_waypoint_position)
 	_unit_body.velocity = direction_to_waypoint * movement_speed
+	_unit_body.move_and_slide()
+
+
+func _stop_unit_body() -> void:
+	_unit_body.velocity = Vector2.ZERO
 	_unit_body.move_and_slide()
