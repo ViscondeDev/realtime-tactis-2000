@@ -30,7 +30,7 @@ func _draw() -> void:
 	if not _unit.unit_movement.has_active_move_order():
 		return
 
-	var path_points: PackedVector2Array = _unit.unit_movement.get_remaining_path_points()
+	var path_points: PackedVector2Array = _unit.unit_movement.get_remaining_move_order_path_points()
 	if path_points.size() < 2:
 		return
 

@@ -9,7 +9,7 @@
 [ext_resource type="Script" uid="uid://dlipap3g1dug7" path="res://src/gameplay/unit components/unit_autonomous_behavior.gd" id="6_autonomous"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ninnf"]
-radius = 795.0
+radius = 510.00098
 
 [node name="Unit" type="CharacterBody2D" unique_id=865573347]
 collision_layer = 0
@@ -25,6 +25,8 @@ script = ExtResource("5_r6ibq")
 _unit_body = NodePath("../..")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="Behavior/UnitMovement" unique_id=1448612051]
+
+[node name="MoveOrderNavigationAgent2D" type="NavigationAgent2D" parent="Behavior/UnitMovement" unique_id=1461557179]
 
 [node name="UnitPerception" type="Area2D" parent="Behavior" unique_id=855732808 node_paths=PackedStringArray("_unit")]
 collision_mask = 6

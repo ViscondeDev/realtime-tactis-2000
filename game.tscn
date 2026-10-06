@@ -45,6 +45,9 @@ metadata/_custom_type_script = "uid://bxn47tpjyr6rv"
 position = Vector2(320, 384)
 unit_class = 1
 
+[node name="Unit4" parent="." unique_id=1083795138 instance=ExtResource("1_e2o6t")]
+position = Vector2(1645, 314)
+
 [node name="Unit2" parent="." unique_id=171539738 instance=ExtResource("1_e2o6t")]
 position = Vector2(832, 832)
 team = 1

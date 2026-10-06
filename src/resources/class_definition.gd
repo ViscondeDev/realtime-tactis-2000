@@ -16,3 +16,4 @@ enum BodyShape {TRIANGLE, SQUARE, CIRCLE}
 @export var max_health: float = 100.0
 @export var fire_interval: float = 1.0
 @export var hp_per_shot: float = 10
+@export var optimal_engagement_distance: float = 180.0
