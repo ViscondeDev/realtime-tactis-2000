@@ -1,4 +1,6 @@
 @tool
+@icon("res://addons/at-icons/node2d/target.svg")
+
 class_name ControlPoint
 extends Node2D
 

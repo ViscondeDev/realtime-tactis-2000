@@ -1,4 +1,6 @@
 @tool
+@icon("res://addons/at-icons/node2d/wing.svg")
+
 class_name RespawnPoint
 extends Node2D
 

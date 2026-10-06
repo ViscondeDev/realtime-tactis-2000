@@ -1,3 +1,4 @@
+@icon("res://addons/at-icons/node2d/ammunition.svg")
 class_name UnitProjectilePool
 extends Node2D
 
