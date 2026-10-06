@@ -16,6 +16,26 @@ We want tactical decisions, positioning, timing, and unit composition to matter 
 
 The visual design is intentionally simple and readable, using geometric shapes and strong colors to make units and battlefield events immediately understandable.
 
+## Project Structure
+
+```text
+.
+├── addons/
+│   └── at-icons/                 # Icon browser and icon assets
+├── src/
+│   ├── gameplay/
+│   │   ├── unit components/      # Movement, perception, health, rendering, and behavior
+│   │   ├── unit.gd
+│   │   ├── unit.tscn
+│   │   └── unit_command_controller.gd
+│   └── resources/
+│       ├── classes/              # Strong, Quick, and Smart unit definitions
+│       └── class_definition.gd
+├── tools/                        # Level builder, geometry, polygons, and visuals
+├── game.tscn                     # Main game scene
+└── project.godot                 # Godot project configuration
+```
+
 ## References
 
 The main gameplay inspiration is **Team Fortress 2's Control Points** mode, particularly its focus on:
@@ -29,12 +49,9 @@ The game's autonomous-unit approach also draws inspiration from strategy and tac
 
 ## Team
 
-### Team Members [TBD]
-
-* **[Name]** — [Role]
-* **[Name]** — [Role]
-* **[Name]** — [Role]
-* **[Name]** — [Role]
+* [**Willian (visconde)**](https://www.linkedin.com/in/visconde/) — Designer / Developer
+* [**Eric (Centropic)**](https://www.linkedin.com/in/ericsingletonjr/) — Composer
+* [**Germán (Weirhelmer)**](https://www.linkedin.com/in/griztall/) — SFX Designer
 
 ## Jam
 
