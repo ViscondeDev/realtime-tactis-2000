@@ -12,11 +12,6 @@ var onsight_enemy_units: Array[Unit] = []
 
 
 func _ready() -> void:
-	if _unit.team == Unit.Team.YELLOW:
-		sight_line.set_collision_mask_value(3, true)
-	elif _unit.team == Unit.Team.RED:
-		sight_line.set_collision_mask_value(2, true)
-
 	connect("body_entered", _on_body_entered)
 	connect("body_exited", _on_body_exited)
 
@@ -43,6 +38,10 @@ func _on_body_exited(body: Node2D) -> void:
 
 
 func _sight_line_check() -> void:
+	if _unit.team == Unit.Team.YELLOW:
+		sight_line.set_collision_mask_value(Unit.RED_LAYER, true)
+		sight_line.set_collision_mask_value(Unit.YELLOW_LAYER, false)
+
 	for enemy in enemy_units:
 		sight_line.look_at(enemy.global_position)
 		sight_line.force_raycast_update()

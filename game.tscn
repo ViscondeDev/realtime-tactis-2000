@@ -47,7 +47,6 @@ unit_class = 1
 
 [node name="Unit2" parent="." unique_id=171539738 instance=ExtResource("1_e2o6t")]
 position = Vector2(832, 832)
-team = 1
 
 [node name="Unit3" parent="." unique_id=1483051596 instance=ExtResource("1_e2o6t")]
 position = Vector2(384, 832)

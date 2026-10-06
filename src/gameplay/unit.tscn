@@ -25,6 +25,7 @@ _unit_body = NodePath("../..")
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="Behavior/UnitMovement" unique_id=1448612051]
 
 [node name="UnitPerception" type="Area2D" parent="Behavior" unique_id=855732808 node_paths=PackedStringArray("_unit")]
+collision_mask = 6
 script = ExtResource("5_inr3l")
 _unit = NodePath("../..")
 metadata/_custom_type_script = "uid://e8fnamqpbfex"

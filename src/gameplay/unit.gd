@@ -11,6 +11,9 @@ const CLASS_RESOURCES = {Class.STRONG: "uid://beiw7m8hmc0nj", Class.QUICK: "uid:
 const COMMANDABLE_UNITS_GROUP: StringName = &"commandable_units"
 const SELECTION_PADDING_PIXELS: float = 100
 
+const YELLOW_LAYER:int = 2
+const RED_LAYER:int = 3
+
 @export var team: Team = Team.YELLOW
 @export var unit_class: Class = Class.STRONG
 
@@ -23,11 +26,11 @@ func _ready() -> void:
 	add_to_group(COMMANDABLE_UNITS_GROUP)
 
 	if team == Team.YELLOW:
-		set_collision_layer_value(2, true)
-		set_collision_mask_value(3, true)
+		set_collision_layer_value(YELLOW_LAYER, true)
+		set_collision_mask_value(RED_LAYER, true)
 	elif team == Team.RED:
-		set_collision_layer_value(3, true)
-		set_collision_mask_value(2, true)
+		set_collision_layer_value(RED_LAYER, true)
+		set_collision_mask_value(YELLOW_LAYER, true)
 
 	var body_collision_shape: CircleShape2D = CircleShape2D.new()
 	body_collision_shape.radius = class_definition.body_radius
