@@ -8,8 +8,14 @@
 [ext_resource type="Script" uid="uid://cuw8comgqlltb" path="res://src/gameplay/respawn_point.gd" id="8_respawn_point"]
 [ext_resource type="Script" uid="uid://y35tpk8ols0k" path="res://src/gameplay/unit_respawn_controller.gd" id="9_unit_respawn_controller"]
 [ext_resource type="Script" uid="uid://bm30wf3r7fjhn" path="res://src/gameplay/control_point.gd" id="10_control_point"]
+[ext_resource type="Script" uid="uid://btusjhtd4pkht" path="res://src/gameplay/yellow_team_camera.gd" id="11_yellow_team_camera"]
 
 [node name="Game" type="Node2D" unique_id=1544827901]
+
+[node name="YellowTeamCamera" type="Camera2D" parent="." unique_id=1842231650]
+process_callback = 0
+position_smoothing_enabled = true
+script = ExtResource("11_yellow_team_camera")
 
 [node name="LevelBuilder" type="Node2D" parent="." unique_id=1170741134]
 script = ExtResource("1_fc0e3")
@@ -56,9 +62,6 @@ position = Vector2(1645, 314)
 script = ExtResource("8_respawn_point")
 team = 1
 
-[node name="UnitRespawnController" type="Node2D" parent="RespawnPoints" unique_id=1797427090]
-script = ExtResource("9_unit_respawn_controller")
-
 [node name="ControlPoint" type="Node2D" parent="." unique_id=1087336828 groups=["control_points"]]
 position = Vector2(832, 640)
 script = ExtResource("10_control_point")
@@ -85,3 +88,6 @@ unit_class = 2
 
 [node name="UnitCommandController" type="Node2D" parent="." unique_id=52227663]
 script = ExtResource("6_mfdv2")
+
+[node name="UnitRespawnController" type="Node2D" parent="." unique_id=1797427090]
+script = ExtResource("9_unit_respawn_controller")
