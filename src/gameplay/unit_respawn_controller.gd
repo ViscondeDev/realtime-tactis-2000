@@ -1,3 +1,4 @@
+@icon("res://addons/at-icons/node2d/arrow_clockwise.svg")
 class_name UnitRespawnController
 extends Node2D
 

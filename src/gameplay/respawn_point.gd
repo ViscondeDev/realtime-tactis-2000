@@ -6,7 +6,7 @@ extends Node2D
 
 const RING_RADIUS: float = 120.0
 const RING_WIDTH: float = 10.0
-const TEAM_DOT_RADIUS: float = 20.0
+const TEAM_DOT_RADIUS: float = 5.0
 
 @export var team: Unit.Team = Unit.Team.YELLOW:
 	set(value):
