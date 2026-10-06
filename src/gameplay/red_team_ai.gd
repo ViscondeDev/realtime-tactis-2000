@@ -125,7 +125,10 @@ func _issue_objective_order(unit: Unit, state: Dictionary) -> void:
 
 func _issue_retreat_order(unit: Unit, state: Dictionary) -> void:
 	var ally: Unit = _find_nearest_living_ally(unit)
-	if ally != null:
+	var health: HealthDispenser = _find_nearest_health(unit)
+	if health != null:
+		_issue_order_if_changed(unit, state, "retreat_health", health.global_position, null)
+	elif ally != null:
 		_issue_order_if_changed(unit, state, "retreat_ally", ally.global_position, ally)
 	elif is_instance_valid(_red_spawn):
 		_issue_order_if_changed(unit, state, "retreat_spawn", _red_spawn.global_position, null)
@@ -147,6 +150,23 @@ func _find_nearest_living_ally(unit: Unit) -> Unit:
 			nearest_distance_squared = distance_squared
 			nearest_ally = candidate
 	return nearest_ally
+
+func _find_nearest_health(unit: Unit) -> HealthDispenser:
+	var nearest_health: HealthDispenser = null
+	var nearest_distance_squared: float = INF
+	for node: Node in get_tree().get_nodes_in_group(HealthDispenser.HEALTH_DISPENSER_GROUP):
+		if not is_instance_valid(node):
+			continue
+		var candidate: HealthDispenser = node as HealthDispenser
+		if candidate == null or candidate.team != Unit.Team.RED or not candidate.is_built:
+			continue
+		if candidate.current_health <= 0.0:
+			continue
+		var distance_squared: float = unit.global_position.distance_squared_to(candidate.global_position)
+		if distance_squared < nearest_distance_squared:
+			nearest_distance_squared = distance_squared
+			nearest_health = candidate
+	return nearest_health
 
 
 func _issue_order_if_changed(unit: Unit, state: Dictionary, mode: String, target: Vector2, follow_unit: Unit) -> void:

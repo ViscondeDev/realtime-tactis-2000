@@ -13,6 +13,7 @@ const SELECTION_PADDING_PIXELS: float = 100
 
 const YELLOW_LAYER:int = 2
 const RED_LAYER:int = 3
+const COLLECTABLES_LAYER:int = 4
 
 signal status_reported(report_type: StringName, active: bool)
 
@@ -22,6 +23,7 @@ signal status_reported(report_type: StringName, active: bool)
 
 @onready var class_definition: ClassDefinition = load(CLASS_RESOURCES[unit_class])
 @onready var unit_movement: UnitMovement = %UnitMovement
+@onready var unit_perception: UnitPerception = %UnitPerception
 @onready var unit_shape_renderer: UnitShapeRenderer = %UnitShapeRenderer
 @onready var unit_autonomous_behavior: UnitAutonomousBehavior = %UnitAutonomousBehavior
 @onready var unit_health: UnitHealth = $Behavior/UnitHealth

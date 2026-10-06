@@ -5,8 +5,10 @@ extends Area2D
 
 var friendly_units: Array[Unit] = []
 var enemy_units: Array[Unit] = []
+var areas: Array[HealthDispenser] = []
 var onsight_friendly_units: Array[Unit] = []
 var onsight_enemy_units: Array[Unit] = []
+var onsight_areas: Array[HealthDispenser] = []
 
 @export var _unit: Unit
 @onready var sight_line: RayCast2D = $SightLine
@@ -36,6 +38,8 @@ func _on_body_entered(body: Node2D) -> void:
 		else:
 			if not enemy_units.has(body):
 				enemy_units.append(body)
+	elif body is HealthDispenser:
+		areas.append(body)
 
 
 func _on_body_exited(body: Node2D) -> void:
@@ -50,8 +54,10 @@ func _sight_line_check() -> void:
 	sight_line.set_collision_mask_value(Unit.YELLOW_LAYER, true)
 	sight_line.set_collision_mask_value(Unit.RED_LAYER, true)
 
-	_update_visible_units(friendly_units, onsight_friendly_units)
-	_update_visible_units(enemy_units, onsight_enemy_units)
+	_update_visible_unit(friendly_units, onsight_friendly_units)
+	_update_visible_unit(enemy_units, onsight_enemy_units)
+	_update_visible_area(areas, onsight_areas)
+	
 	var visible_allies: int = 1 if _unit.unit_health.current_health > 0.0 else 0
 	var visible_enemies: int = 0
 	for ally: Unit in onsight_friendly_units:
@@ -63,7 +69,7 @@ func _sight_line_check() -> void:
 	_unit.set_report_condition(&"outnumbered", visible_enemies > visible_allies)
 
 
-func _update_visible_units(candidates: Array[Unit], visible_units: Array[Unit]) -> void:
+func _update_visible_unit(candidates: Array[Unit], visible_units: Array[Unit]) -> void:
 	for candidate: Unit in candidates:
 		if not is_instance_valid(candidate) or candidate.unit_health.current_health <= 0.0:
 			visible_units.erase(candidate)
@@ -75,3 +81,16 @@ func _update_visible_units(candidates: Array[Unit], visible_units: Array[Unit]) 
 				visible_units.append(candidate)
 		else:
 			visible_units.erase(candidate)
+
+func _update_visible_area(candidates: Array[HealthDispenser], visible_areas: Array[HealthDispenser]) -> void:
+	for candidate: HealthDispenser in candidates:
+		if not is_instance_valid(candidate) or not candidate.is_built:
+			visible_areas.erase(candidate)
+			continue
+		sight_line.look_at(candidate.global_position)
+		sight_line.force_raycast_update()
+		if sight_line.get_collider() == candidate:
+			if not visible_areas.has(candidate):
+				visible_areas.append(candidate)
+		else:
+			visible_areas.erase(candidate)

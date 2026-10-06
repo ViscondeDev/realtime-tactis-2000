@@ -10,8 +10,9 @@
 [ext_resource type="Script" uid="uid://bm30wf3r7fjhn" path="res://src/gameplay/control_point.gd" id="10_control_point"]
 [ext_resource type="Script" uid="uid://btusjhtd4pkht" path="res://src/gameplay/yellow_team_camera.gd" id="11_yellow_team_camera"]
 [ext_resource type="Script" uid="uid://cwxqpmv3uu5rt" path="res://src/gameplay/red_team_ai.gd" id="12_red_team_ai"]
-[ext_resource type="Script" path="res://src/gameplay/match_controller.gd" id="13_match_controller"]
-[ext_resource type="Script" path="res://src/gameplay/match_hud.gd" id="14_match_hud"]
+[ext_resource type="Script" uid="uid://bsn5jpqx8v6xp" path="res://src/gameplay/match_controller.gd" id="13_match_controller"]
+[ext_resource type="Script" uid="uid://cvahsvfevyws8" path="res://src/gameplay/match_hud.gd" id="14_match_hud"]
+[ext_resource type="Script" uid="uid://d16rfyvpgtlxb" path="res://src/gameplay/health_dispenser.gd" id="15_health_dispenser"]
 
 [node name="Game" type="Node2D" unique_id=1544827901]
 
@@ -72,6 +73,28 @@ team = 1
 position = Vector2(832, 640)
 script = ExtResource("10_control_point")
 
+[node name="HealthDispenserSite" type="StaticBody2D" parent="Level" unique_id=2012734253 groups=["health_dispenser_sites"]]
+position = Vector2(560, 384)
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("15_health_dispenser")
+maximum_health = 150.0
+is_built = true
+
+[node name="HealthDispenserSite2" type="StaticBody2D" parent="Level" unique_id=757737672 groups=["health_dispenser_sites"]]
+position = Vector2(1200, 640)
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("15_health_dispenser")
+
+[node name="HealthDispenserSite3" type="StaticBody2D" parent="Level" unique_id=1580053723 groups=["health_dispenser_sites"]]
+position = Vector2(1604, 996)
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("15_health_dispenser")
+team = 1
+is_built = true
+
 [node name="ProjectilePool" type="Node2D" parent="Level" unique_id=1674037165]
 script = ExtResource("7_projectile_pool")
 
@@ -108,9 +131,9 @@ _projectile_pool = NodePath("../ProjectilePool")
 [node name="RedTeamAI" type="Node2D" parent="Level" unique_id=2106649642]
 script = ExtResource("12_red_team_ai")
 
-[node name="MatchController" type="Node" parent="Level"]
+[node name="MatchController" type="Node" parent="Level" unique_id=945299454]
 unique_name_in_owner = true
 script = ExtResource("13_match_controller")
 
-[node name="MatchHUD" type="CanvasLayer" parent="."]
+[node name="MatchHUD" type="CanvasLayer" parent="." unique_id=427083564]
 script = ExtResource("14_match_hud")
