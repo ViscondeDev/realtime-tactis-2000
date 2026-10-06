@@ -3,8 +3,10 @@
 [ext_resource type="Script" uid="uid://bp5cu3hr7bwh3" path="res://src/gameplay/unit.gd" id="1_inr3l"]
 [ext_resource type="Script" uid="uid://rwyec42x04lg" path="res://src/gameplay/unit components/unit_path_renderer.gd" id="3_sdpio"]
 [ext_resource type="Script" uid="uid://dagkbhfx81aeq" path="res://src/gameplay/unit components/unit_shape_renderer.gd" id="4_584o2"]
+[ext_resource type="Script" uid="uid://d0t32d6mqcf6y" path="res://src/gameplay/unit components/unit_health.gd" id="4_qpmdq"]
 [ext_resource type="Script" uid="uid://e8fnamqpbfex" path="res://src/gameplay/unit components/unit_perception.gd" id="5_inr3l"]
 [ext_resource type="Script" uid="uid://cabrh6ctmaedx" path="res://src/gameplay/unit components/unit_movement.gd" id="5_r6ibq"]
+[ext_resource type="Script" uid="uid://dlipap3g1dug7" path="res://src/gameplay/unit components/unit_autonomous_behavior.gd" id="6_autonomous"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ninnf"]
 radius = 795.0
@@ -35,6 +37,14 @@ shape = SubResource("CircleShape2D_ninnf")
 
 [node name="SightLine" type="RayCast2D" parent="Behavior/UnitPerception" unique_id=941687607]
 target_position = Vector2(795, 0)
+
+[node name="UnitHealth" type="Node" parent="Behavior" unique_id=818674745 node_paths=PackedStringArray("_unit")]
+script = ExtResource("4_qpmdq")
+_unit = NodePath("../..")
+
+[node name="UnitAutonomousBehavior" type="Node" parent="Behavior" unique_id=82570147 node_paths=PackedStringArray("_unit")]
+script = ExtResource("6_autonomous")
+_unit = NodePath("../..")
 
 [node name="Rendering" type="Node2D" parent="." unique_id=405359763]
 

@@ -20,6 +20,7 @@ const RED_LAYER:int = 3
 @onready var class_definition: ClassDefinition = load(CLASS_RESOURCES[unit_class])
 @onready var unit_movement: UnitMovement = %UnitMovement
 @onready var unit_shape_renderer: UnitShapeRenderer = %UnitShapeRenderer
+@onready var unit_health: UnitHealth = $Behavior/UnitHealth
 
 
 func _ready() -> void:
@@ -38,6 +39,7 @@ func _ready() -> void:
 
 	unit_movement.movement_speed = class_definition.movement_speed
 	unit_shape_renderer.unit = self
+	unit_health.died.connect(queue_free)
 
 
 func issue_move_order(target_position: Vector2) -> void:

@@ -11,6 +11,7 @@ const TARGET_DESIRED_DISTANCE_PIXELS: float = 8.0
 
 var movement_speed: float
 var _has_active_move_order: bool = false
+var _is_paused: bool = false
 
 @onready var _navigation_agent: NavigationAgent2D = $NavigationAgent2D
 
@@ -23,6 +24,12 @@ func _ready() -> void:
 func move_to(target_position: Vector2) -> void:
 	_navigation_agent.target_position = target_position
 	_has_active_move_order = true
+
+
+func set_paused(paused: bool) -> void:
+	_is_paused = paused
+	if paused:
+		_unit_body.velocity = Vector2.ZERO
 
 
 func has_active_move_order() -> bool:
@@ -40,7 +47,7 @@ func get_remaining_path_points() -> PackedVector2Array:
 
 
 func _physics_process(_delta: float) -> void:
-	if not _has_active_move_order:
+	if _is_paused or not _has_active_move_order:
 		return
 
 	if _navigation_agent.is_navigation_finished():

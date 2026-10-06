@@ -47,11 +47,13 @@ unit_class = 1
 
 [node name="Unit2" parent="." unique_id=171539738 instance=ExtResource("1_e2o6t")]
 position = Vector2(832, 832)
+team = 1
+unit_class = 2
 
 [node name="Unit3" parent="." unique_id=1483051596 instance=ExtResource("1_e2o6t")]
-position = Vector2(384, 832)
+position = Vector2(764, 641)
 team = 1
-unit_class = 1
+unit_class = 2
 
 [node name="UnitCommandController" type="Node2D" parent="." unique_id=52227663]
 script = ExtResource("6_mfdv2")
