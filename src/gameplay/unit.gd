@@ -18,10 +18,12 @@ signal status_reported(report_type: StringName, active: bool)
 
 @export var team: Team = Team.YELLOW
 @export var unit_class: Class = Class.STRONG
+@export var projectile_pool: UnitProjectilePool
 
 @onready var class_definition: ClassDefinition = load(CLASS_RESOURCES[unit_class])
 @onready var unit_movement: UnitMovement = %UnitMovement
 @onready var unit_shape_renderer: UnitShapeRenderer = %UnitShapeRenderer
+@onready var unit_autonomous_behavior: UnitAutonomousBehavior = %UnitAutonomousBehavior
 @onready var unit_health: UnitHealth = $Behavior/UnitHealth
 
 var _report_conditions: Dictionary = {}
@@ -42,6 +44,7 @@ func _ready() -> void:
 	$CollisionShape2D.shape = body_collision_shape
 
 	unit_movement.movement_speed = class_definition.movement_speed
+	unit_autonomous_behavior.projectile_pool = projectile_pool
 	unit_shape_renderer.unit = self
 	unit_health.died.connect(queue_free)
 
@@ -51,7 +54,7 @@ func issue_move_order(target_position: Vector2) -> void:
 
 
 func set_report_condition(report_type: StringName, active: bool) -> void:
-	if team != Team.RED or _report_conditions.get(report_type, false) == active:
+	if _report_conditions.get(report_type, false) == active:
 		return
 	_report_conditions[report_type] = active
 	status_reported.emit(report_type, active)

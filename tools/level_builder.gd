@@ -15,15 +15,16 @@ const WALLS_COLLISION_LAYER_VALUE: int = 1  # Physics layer 1.
 
 @export_tool_button("Rebuild Level", "Reload") var rebuild_level_action: Callable = rebuild_level
 
+var _generated_root: Node2D
+
 
 func _ready() -> void:
 	rebuild_level()
 
 
 func rebuild_level() -> void:
-	var previous_generated_root: Node = get_node_or_null(NodePath(GENERATED_ROOT_NAME))
-	if previous_generated_root != null:
-		previous_generated_root.free()
+	if is_instance_valid(_generated_root):
+		_generated_root.free()
 
 	var floor_polygons: Array[PackedVector2Array] = []
 	var obstacle_polygons: Array[PackedVector2Array] = []
@@ -38,6 +39,7 @@ func rebuild_level() -> void:
 	var generated_root: Node2D = Node2D.new()
 	generated_root.name = GENERATED_ROOT_NAME
 	add_child(generated_root)
+	_generated_root = generated_root
 
 	_build_visual(generated_root, floor_polygons, obstacle_polygons, wall_polylines)
 	_build_navigation_region(generated_root, floor_polygons, obstacle_polygons)

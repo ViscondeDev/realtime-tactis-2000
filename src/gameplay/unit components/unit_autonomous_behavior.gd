@@ -8,6 +8,7 @@ const RETREAT_HEALTH_RATIO: float = 0.4
 
 @export var _unit: Unit
 @export var retreat_distance: float = 300.0
+var projectile_pool: UnitProjectilePool
 
 var state: State = State.IDLE
 var _target_enemy: Unit
@@ -17,9 +18,8 @@ var _burst_timer: float = 0.0
 var _burst_round_damage: float = 0.0
 var _retreat_leg_started: bool = false
 
-@onready var _perception: UnitPerception = get_parent().get_node("UnitPerception")
-@onready var _movement: UnitMovement = get_parent().get_node("UnitMovement")
-@onready var _projectile_pool: Node = get_tree().current_scene.get_node("ProjectilePool")
+@onready var _perception: UnitPerception = %UnitPerception
+@onready var _movement: UnitMovement = %UnitMovement
 
 
 func _physics_process(delta: float) -> void:
@@ -95,6 +95,9 @@ func _update_engaging(delta: float) -> void:
 
 
 func _fire_round(target: Unit, damage: float) -> void:
+	if not is_instance_valid(projectile_pool):
+		push_error("UnitAutonomousBehavior requires a projectile pool.")
+		return
 	var class_definition: ClassDefinition = _unit.class_definition
 	var aim_direction: Vector2 = _calculate_intercept_direction(target, class_definition.projectile_speed)
 	aim_direction = aim_direction.rotated(deg_to_rad(randf_range(
@@ -102,7 +105,7 @@ func _fire_round(target: Unit, damage: float) -> void:
 		class_definition.bullet_spread_degrees
 	)))
 	var spawn_position: Vector2 = _unit.global_position + aim_direction * (_unit.class_definition.body_radius + 4.0)
-	_projectile_pool.call("fire",
+	projectile_pool.fire(
 		spawn_position,
 		aim_direction,
 		_unit.team,

@@ -10,6 +10,8 @@
 [ext_resource type="Script" uid="uid://bm30wf3r7fjhn" path="res://src/gameplay/control_point.gd" id="10_control_point"]
 [ext_resource type="Script" uid="uid://btusjhtd4pkht" path="res://src/gameplay/yellow_team_camera.gd" id="11_yellow_team_camera"]
 [ext_resource type="Script" uid="uid://cwxqpmv3uu5rt" path="res://src/gameplay/red_team_ai.gd" id="12_red_team_ai"]
+[ext_resource type="Script" path="res://src/gameplay/match_controller.gd" id="13_match_controller"]
+[ext_resource type="Script" path="res://src/gameplay/match_hud.gd" id="14_match_hud"]
 
 [node name="Game" type="Node2D" unique_id=1544827901]
 
@@ -21,6 +23,7 @@ position_smoothing_enabled = true
 script = ExtResource("11_yellow_team_camera")
 
 [node name="LevelBuilder" type="Node2D" parent="Level" unique_id=1170741134]
+unique_name_in_owner = true
 script = ExtResource("1_fc0e3")
 navigation_agent_radius = 40.0
 floor_color = Color(0.16470589, 0.53333336, 0.9098039, 1)
@@ -72,28 +75,42 @@ script = ExtResource("10_control_point")
 [node name="ProjectilePool" type="Node2D" parent="Level" unique_id=1674037165]
 script = ExtResource("7_projectile_pool")
 
-[node name="Unit" parent="Level" unique_id=865573347 instance=ExtResource("1_e2o6t")]
+[node name="Unit" parent="Level" unique_id=865573347 node_paths=PackedStringArray("projectile_pool") instance=ExtResource("1_e2o6t")]
 position = Vector2(320, 384)
 unit_class = 1
+projectile_pool = NodePath("../ProjectilePool")
 
-[node name="Unit4" parent="Level" unique_id=1083795138 instance=ExtResource("1_e2o6t")]
+[node name="Unit4" parent="Level" unique_id=1083795138 node_paths=PackedStringArray("projectile_pool") instance=ExtResource("1_e2o6t")]
 position = Vector2(1645, 314)
+projectile_pool = NodePath("../ProjectilePool")
 
-[node name="Unit2" parent="Level" unique_id=171539738 instance=ExtResource("1_e2o6t")]
+[node name="Unit2" parent="Level" unique_id=171539738 node_paths=PackedStringArray("projectile_pool") instance=ExtResource("1_e2o6t")]
 position = Vector2(832, 832)
 team = 1
 unit_class = 2
+projectile_pool = NodePath("../ProjectilePool")
 
-[node name="Unit3" parent="Level" unique_id=1483051596 instance=ExtResource("1_e2o6t")]
+[node name="Unit3" parent="Level" unique_id=1483051596 node_paths=PackedStringArray("projectile_pool") instance=ExtResource("1_e2o6t")]
 position = Vector2(764, 641)
 team = 1
 unit_class = 2
+projectile_pool = NodePath("../ProjectilePool")
 
 [node name="UnitCommandController" type="Node2D" parent="Level" unique_id=52227663]
 script = ExtResource("6_mfdv2")
 
-[node name="UnitRespawnController" type="Node2D" parent="Level" unique_id=1797427090]
+[node name="UnitRespawnController" type="Node2D" parent="Level" unique_id=1797427090 node_paths=PackedStringArray("_unit_container", "_projectile_pool")]
+unique_name_in_owner = true
 script = ExtResource("9_unit_respawn_controller")
+_unit_container = NodePath("..")
+_projectile_pool = NodePath("../ProjectilePool")
 
 [node name="RedTeamAI" type="Node2D" parent="Level" unique_id=2106649642]
 script = ExtResource("12_red_team_ai")
+
+[node name="MatchController" type="Node" parent="Level"]
+unique_name_in_owner = true
+script = ExtResource("13_match_controller")
+
+[node name="MatchHUD" type="CanvasLayer" parent="."]
+script = ExtResource("14_match_hud")

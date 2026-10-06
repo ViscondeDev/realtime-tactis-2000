@@ -13,14 +13,14 @@ var _control_point: Node2D
 var _red_spawn: Node2D
 var _unit_states: Dictionary = {}
 var _order_refresh_timer: float = 0.0
+@onready var _respawn_controller: UnitRespawnController = %UnitRespawnController
 
 
 func _ready() -> void:
 	_control_point = _find_group_node(CONTROL_POINTS_GROUP)
 	_red_spawn = _find_red_spawn()
-	var respawn_controller: UnitRespawnController = get_parent().get_node_or_null("UnitRespawnController") as UnitRespawnController
-	if respawn_controller != null:
-		respawn_controller.unit_spawned.connect(_register_unit)
+	if is_instance_valid(_respawn_controller):
+		_respawn_controller.unit_spawned.connect(_register_unit)
 	for node: Node in get_tree().get_nodes_in_group(Unit.COMMANDABLE_UNITS_GROUP):
 		if is_instance_valid(node):
 			_register_unit(node as Unit)

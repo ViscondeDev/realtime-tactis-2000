@@ -16,6 +16,7 @@ var _active_projectiles: Array[CharacterBody2D] = []
 var _cull_bounds: Rect2
 var _has_cull_bounds: bool = false
 var _cull_padding: float = 0.0
+@onready var _level_builder: LevelBuilder = %LevelBuilder
 
 
 func _ready() -> void:
@@ -66,7 +67,7 @@ func _create_projectile() -> CharacterBody2D:
 
 
 func _refresh_cull_bounds() -> void:
-	var level_visual: LevelVisual = get_node_or_null("../LevelBuilder/GeneratedLevel/LevelVisual") as LevelVisual
+	var level_visual: LevelVisual = _level_builder.find_child("LevelVisual", true, false) as LevelVisual
 	if level_visual == null:
 		return
 

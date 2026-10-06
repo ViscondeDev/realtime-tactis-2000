@@ -7,6 +7,9 @@ const RESPAWN_DELAY_SECONDS: float = 5.0
 const RESPAWN_POINTS_GROUP: StringName = &"respawn_points"
 const UNIT_SCENE: PackedScene = preload("res://src/gameplay/unit.tscn")
 
+@export var _unit_container: Node2D
+@export var _projectile_pool: UnitProjectilePool
+
 var _respawn_points: Dictionary = {}
 var _is_shutting_down: bool = false
 
@@ -54,14 +57,14 @@ func _respawn_unit(team: Unit.Team, unit_class: Unit.Class, timer: Timer) -> voi
 		push_error("No respawn point configured for team %s." % team)
 		return
 
-	var game_root: Node2D = get_parent() as Node2D
-	if game_root == null:
-		push_error("UnitRespawnController must be a child of a Node2D game root.")
+	if not is_instance_valid(_unit_container) or not is_instance_valid(_projectile_pool):
+		push_error("UnitRespawnController requires a unit container and projectile pool.")
 		return
 
 	var unit: Unit = UNIT_SCENE.instantiate() as Unit
 	unit.team = team
 	unit.unit_class = unit_class
-	unit.position = game_root.to_local(respawn_point.global_position)
-	game_root.add_child(unit)
+	unit.projectile_pool = _projectile_pool
+	unit.position = _unit_container.to_local(respawn_point.global_position)
+	_unit_container.add_child(unit)
 	_register_unit(unit)

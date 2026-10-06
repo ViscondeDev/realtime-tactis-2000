@@ -29,6 +29,7 @@ _unit_body = NodePath("../..")
 [node name="MoveOrderNavigationAgent2D" type="NavigationAgent2D" parent="Behavior/UnitMovement" unique_id=1461557179]
 
 [node name="UnitPerception" type="Area2D" parent="Behavior" unique_id=855732808 node_paths=PackedStringArray("_unit")]
+unique_name_in_owner = true
 collision_mask = 6
 script = ExtResource("5_inr3l")
 _unit = NodePath("../..")
@@ -45,6 +46,7 @@ script = ExtResource("4_qpmdq")
 _unit = NodePath("../..")
 
 [node name="UnitAutonomousBehavior" type="Node" parent="Behavior" unique_id=82570147 node_paths=PackedStringArray("_unit")]
+unique_name_in_owner = true
 script = ExtResource("6_autonomous")
 _unit = NodePath("../..")
 
