@@ -9,6 +9,7 @@ var red_control_time_remaining: float = MATCH_DURATION_SECONDS
 var winner_team: int = -1
 
 var _control_point: ControlPoint
+var _controlling_team: int = -1
 
 
 func _ready() -> void:
@@ -25,10 +26,15 @@ func _process(delta: float) -> void:
 		return
 
 	if _control_point.capture_progress >= 1.0:
+		_controlling_team = Unit.Team.YELLOW
+	elif _control_point.capture_progress <= -1.0:
+		_controlling_team = Unit.Team.RED
+
+	if _controlling_team == Unit.Team.YELLOW:
 		yellow_control_time_remaining = maxf(yellow_control_time_remaining - delta, 0.0)
 		if yellow_control_time_remaining <= 0.0:
 			winner_team = Unit.Team.YELLOW
-	elif _control_point.capture_progress <= -1.0:
+	elif _controlling_team == Unit.Team.RED:
 		red_control_time_remaining = maxf(red_control_time_remaining - delta, 0.0)
 		if red_control_time_remaining <= 0.0:
 			winner_team = Unit.Team.RED

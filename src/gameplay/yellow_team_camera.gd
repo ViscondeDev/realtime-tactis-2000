@@ -1,6 +1,6 @@
 extends Camera2D
 
-const EDGE_MARGIN_PIXELS: float = 500.0
+const EDGE_MARGIN_PIXELS: float = 250.0
 const POSITION_SMOOTHING_SPEED: float = 2.0
 const ZOOM_SMOOTHING_SPEED: float = 2.5
 const CONTROL_POINTS_GROUP: StringName = &"control_points"
