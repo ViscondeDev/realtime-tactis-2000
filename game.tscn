@@ -5,6 +5,9 @@
 [ext_resource type="Script" uid="uid://bxn47tpjyr6rv" path="res://tools/level_polygon.gd" id="2_7jktm"]
 [ext_resource type="Script" uid="uid://35datvu1g58l" path="res://src/gameplay/unit_command_controller.gd" id="6_mfdv2"]
 [ext_resource type="Script" uid="uid://blm2sqcpqdbpt" path="res://src/gameplay/unit_projectile_pool.gd" id="7_projectile_pool"]
+[ext_resource type="Script" uid="uid://cuw8comgqlltb" path="res://src/gameplay/respawn_point.gd" id="8_respawn_point"]
+[ext_resource type="Script" uid="uid://y35tpk8ols0k" path="res://src/gameplay/unit_respawn_controller.gd" id="9_unit_respawn_controller"]
+[ext_resource type="Script" path="res://src/gameplay/control_point.gd" id="10_control_point"]
 
 [node name="Game" type="Node2D" unique_id=1544827901]
 
@@ -42,6 +45,21 @@ script = ExtResource("2_7jktm")
 polygon_kind = 1
 metadata/_custom_type_script = "uid://bxn47tpjyr6rv"
 
+[node name="RespawnPoints" type="Node2D" parent="." unique_id=1211908553]
+
+[node name="Yellow" type="Node2D" parent="RespawnPoints" unique_id=2111600398 groups=["respawn_points"]]
+position = Vector2(272, 641)
+script = ExtResource("8_respawn_point")
+
+[node name="Red" type="Node2D" parent="RespawnPoints" unique_id=265383413 groups=["respawn_points"]]
+position = Vector2(1645, 314)
+script = ExtResource("8_respawn_point")
+team = 1
+
+[node name="ControlPoint" type="Node2D" parent="." groups=["control_points"]]
+position = Vector2(832, 640)
+script = ExtResource("10_control_point")
+
 [node name="ProjectilePool" type="Node2D" parent="." unique_id=1674037165]
 script = ExtResource("7_projectile_pool")
 
@@ -64,3 +82,6 @@ unit_class = 2
 
 [node name="UnitCommandController" type="Node2D" parent="." unique_id=52227663]
 script = ExtResource("6_mfdv2")
+
+[node name="UnitRespawnController" type="Node2D" parent="." unique_id=1797427090]
+script = ExtResource("9_unit_respawn_controller")
