@@ -25,6 +25,7 @@ func _ready() -> void:
 	_max_health = _unit.class_definition.max_health
 	_current_health = _max_health
 	health_changed.emit(_current_health)
+	_update_low_health_report()
 
 
 func take_damage(amount: float) -> void:
@@ -43,5 +44,11 @@ func _set_current_health(value: float) -> void:
 	var previous_health: float = _current_health
 	_current_health = clampf(value, 0.0, _max_health)
 	health_changed.emit(_current_health)
+	_update_low_health_report()
 	if previous_health > 0.0 and _current_health == 0.0:
 		died.emit()
+
+
+func _update_low_health_report() -> void:
+	var is_low_health: bool = _max_health > 0.0 and _current_health / _max_health <= 0.3
+	_unit.set_report_condition(&"low_health", is_low_health)

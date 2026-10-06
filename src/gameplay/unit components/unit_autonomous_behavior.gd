@@ -34,9 +34,13 @@ func _physics_process(delta: float) -> void:
 
 func _update_idle() -> void:
 	if _acquire_visible_enemy():
+		_unit.set_report_condition(&"idle_without_order", false)
 		_transition_to(State.ENGAGING)
 	elif _movement.has_active_move_order():
+		_unit.set_report_condition(&"idle_without_order", false)
 		_transition_to(State.MOVING)
+	else:
+		_unit.set_report_condition(&"idle_without_order", true)
 
 
 func _update_moving() -> void:

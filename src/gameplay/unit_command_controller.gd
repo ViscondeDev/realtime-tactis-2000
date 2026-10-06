@@ -51,7 +51,7 @@ func _find_closest_unit_under_position(world_position: Vector2) -> Unit:
 
 	for node: Node in get_tree().get_nodes_in_group(Unit.COMMANDABLE_UNITS_GROUP):
 		var unit: Unit = node as Unit
-		if unit == null or not unit.is_point_over_unit(world_position):
+		if unit == null or unit.team != Unit.Team.YELLOW or not unit.is_point_over_unit(world_position):
 			continue
 		var distance: float = unit.global_position.distance_to(world_position)
 		if distance < closest_distance:

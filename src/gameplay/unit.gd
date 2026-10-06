@@ -14,6 +14,8 @@ const SELECTION_PADDING_PIXELS: float = 100
 const YELLOW_LAYER:int = 2
 const RED_LAYER:int = 3
 
+signal status_reported(report_type: StringName, active: bool)
+
 @export var team: Team = Team.YELLOW
 @export var unit_class: Class = Class.STRONG
 
@@ -21,6 +23,8 @@ const RED_LAYER:int = 3
 @onready var unit_movement: UnitMovement = %UnitMovement
 @onready var unit_shape_renderer: UnitShapeRenderer = %UnitShapeRenderer
 @onready var unit_health: UnitHealth = $Behavior/UnitHealth
+
+var _report_conditions: Dictionary = {}
 
 
 func _ready() -> void:
@@ -44,6 +48,13 @@ func _ready() -> void:
 
 func issue_move_order(target_position: Vector2) -> void:
 	unit_movement.move_to(target_position)
+
+
+func set_report_condition(report_type: StringName, active: bool) -> void:
+	if team != Team.RED or _report_conditions.get(report_type, false) == active:
+		return
+	_report_conditions[report_type] = active
+	status_reported.emit(report_type, active)
 
 
 func is_point_over_unit(world_position: Vector2) -> bool:

@@ -1,6 +1,8 @@
 class_name UnitRespawnController
 extends Node2D
 
+signal unit_spawned(unit: Unit)
+
 const RESPAWN_DELAY_SECONDS: float = 5.0
 const RESPAWN_POINTS_GROUP: StringName = &"respawn_points"
 const UNIT_SCENE: PackedScene = preload("res://src/gameplay/unit.tscn")
@@ -27,6 +29,7 @@ func _exit_tree() -> void:
 
 func _register_unit(unit: Unit) -> void:
 	unit.unit_health.died.connect(_on_unit_died.bind(unit))
+	unit_spawned.emit(unit)
 
 
 func _on_unit_died(unit: Unit) -> void:
