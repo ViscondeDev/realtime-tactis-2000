@@ -4,6 +4,7 @@ class_name HealthDispenser
 extends StaticBody2D
 
 const GOALS_LAYER: int = 5
+const BUILD_SITES_LAYER: int = 6
 const BUILD_SECONDS: float = 5.0
 const DOT_RADIUS: float = 8.0
 const CROSS_HALF_LENGTH: float = 20.0
@@ -16,12 +17,13 @@ const HEALTH_DISPENSER_GROUP: StringName = &"health_dispensers"
 	set(value):
 		healing_radius = value
 		queue_redraw()
-@export_range(1.0, 1000.0, 1.0) var maximum_health: float = 250.0
+@export_range(1.0, 1000.0, 1.0) var maximum_health: float = 125.0
 @export_range(0.0, 100.0, 0.5) var healing_per_second: float = 20.0
 
 @export var team: Unit.Team = Unit.Team.YELLOW
 var is_building: bool = false
 @export var is_built: bool = false
+var builder: Unit
 var _construction_elapsed: float = 0.0
 var current_health: float = maximum_health
 var _collision_shape: CollisionShape2D
@@ -30,12 +32,12 @@ var _collision_shape: CollisionShape2D
 func _ready() -> void:
 	add_to_group(HEALTH_DISPENSER_GROUP)
 	collision_layer = 0
-	set_collision_layer_value(GOALS_LAYER, true)
+	set_collision_layer_value(GOALS_LAYER if is_built else BUILD_SITES_LAYER, true)
 	collision_mask = 0
 	_collision_shape = CollisionShape2D.new()
 	_collision_shape.shape = CircleShape2D.new()
 	(_collision_shape.shape as CircleShape2D).radius = CROSS_HALF_LENGTH
-	_collision_shape.disabled = true
+	_collision_shape.disabled = Engine.is_editor_hint()
 	add_child(_collision_shape)
 	set_process(not Engine.is_editor_hint())
 
@@ -49,6 +51,7 @@ func begin_construction(builder: Unit) -> bool:
 		return false
 
 	team = builder.team
+	self.builder = builder
 	is_building = true
 	_construction_elapsed = 0.0
 	queue_redraw()
@@ -60,8 +63,14 @@ func take_damage(amount: float) -> void:
 		return
 	current_health = maxf(current_health - amount, 0.0)
 	if current_health == 0.0:
-		_collision_shape.set_deferred("disabled", true)
-		queue_free()
+		is_built = false
+		is_building = false
+		builder = null
+		_construction_elapsed = 0.0
+		current_health = maximum_health
+		set_collision_layer_value(GOALS_LAYER, false)
+		set_collision_layer_value(BUILD_SITES_LAYER, true)
+		queue_redraw()
 
 
 func _process(delta: float) -> void:
@@ -79,6 +88,8 @@ func _finish_construction() -> void:
 	is_building = false
 	is_built = true
 	current_health = maximum_health
+	set_collision_layer_value(BUILD_SITES_LAYER, false)
+	set_collision_layer_value(GOALS_LAYER, true)
 	_collision_shape.set_deferred("disabled", false)
 	queue_redraw()
 

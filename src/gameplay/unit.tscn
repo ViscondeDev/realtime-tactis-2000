@@ -30,7 +30,7 @@ _unit_body = NodePath("../..")
 
 [node name="UnitPerception" type="Area2D" parent="Behavior" unique_id=855732808 node_paths=PackedStringArray("_unit")]
 unique_name_in_owner = true
-collision_mask = 6
+collision_mask = 62
 script = ExtResource("5_inr3l")
 _unit = NodePath("../..")
 metadata/_custom_type_script = "uid://e8fnamqpbfex"
@@ -40,6 +40,7 @@ shape = SubResource("CircleShape2D_ninnf")
 
 [node name="SightLine" type="RayCast2D" parent="Behavior/UnitPerception" unique_id=941687607]
 target_position = Vector2(795, 0)
+collision_mask = 9
 
 [node name="UnitHealth" type="Node" parent="Behavior" unique_id=818674745 node_paths=PackedStringArray("_unit")]
 script = ExtResource("4_qpmdq")

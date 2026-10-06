@@ -48,11 +48,16 @@ func _on_body_exited(body: Node2D) -> void:
 		enemy_units.erase(body)
 		onsight_friendly_units.erase(body)
 		onsight_enemy_units.erase(body)
+	elif body is HealthDispenser:
+		areas.erase(body)
+		onsight_areas.erase(body)
 
 
 func _sight_line_check() -> void:
 	sight_line.set_collision_mask_value(Unit.YELLOW_LAYER, true)
 	sight_line.set_collision_mask_value(Unit.RED_LAYER, true)
+	sight_line.set_collision_mask_value(HealthDispenser.GOALS_LAYER, true)
+	sight_line.set_collision_mask_value(HealthDispenser.BUILD_SITES_LAYER, true)
 
 	_update_visible_unit(friendly_units, onsight_friendly_units)
 	_update_visible_unit(enemy_units, onsight_enemy_units)
@@ -84,7 +89,7 @@ func _update_visible_unit(candidates: Array[Unit], visible_units: Array[Unit]) -
 
 func _update_visible_area(candidates: Array[HealthDispenser], visible_areas: Array[HealthDispenser]) -> void:
 	for candidate: HealthDispenser in candidates:
-		if not is_instance_valid(candidate) or not candidate.is_built:
+		if not is_instance_valid(candidate):
 			visible_areas.erase(candidate)
 			continue
 		sight_line.look_at(candidate.global_position)

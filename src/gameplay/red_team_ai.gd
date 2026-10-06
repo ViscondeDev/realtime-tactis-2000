@@ -9,7 +9,7 @@ const ORDER_REFRESH_INTERVAL: float = 0.25
 const TARGET_UPDATE_DISTANCE: float = 20.0
 const OBJECTIVE_ARRIVAL_DISTANCE: float = 48.0
 
-var _control_point: Node2D
+var _control_point: ControlPoint
 var _red_spawn: Node2D
 var _unit_states: Dictionary = {}
 var _order_refresh_timer: float = 0.0
@@ -47,6 +47,8 @@ func _process(delta: float) -> void:
 		var state: Dictionary = _unit_states[unit_id]
 		if _is_retreating(state):
 			_issue_retreat_order(unit, state)
+		else:
+			_issue_role_order(unit, state)
 
 
 func _find_group_node(group_name: StringName) -> Node2D:
@@ -81,6 +83,7 @@ func _register_unit(unit: Unit) -> void:
 		"order_mode": "",
 		"follow_unit": null,
 		"target_position": Vector2.INF,
+		"build_target": null,
 	}
 	unit.status_reported.connect(_on_unit_status_reported.bind(unit))
 	unit.tree_exiting.connect(_on_unit_exiting.bind(unit_id))
@@ -99,12 +102,12 @@ func _on_unit_status_reported(report_type: StringName, active: bool, unit: Unit)
 			state["low_health"] = active
 		&"idle_without_order":
 			if active and not _is_retreating(state):
-				_issue_objective_order(unit, state)
+				_issue_role_order(unit, state)
 			return
 	if _is_retreating(state):
 		_issue_retreat_order(unit, state)
 	else:
-		_issue_objective_order(unit, state)
+		_issue_role_order(unit, state)
 
 
 func _is_retreating(state: Dictionary) -> bool:
@@ -116,11 +119,101 @@ func _issue_objective_order(unit: Unit, state: Dictionary) -> void:
 		return
 	var objective_position: Vector2 = _control_point.global_position
 	if unit.global_position.distance_to(objective_position) <= OBJECTIVE_ARRIVAL_DISTANCE:
-		state["order_mode"] = "objective"
-		state["follow_unit"] = null
-		state["target_position"] = objective_position
+		if state.get("order_mode", "") != "objective":
+			_issue_order_if_changed(unit, state, "objective", objective_position, null)
 		return
 	_issue_order_if_changed(unit, state, "objective", objective_position, null)
+
+
+func _issue_role_order(unit: Unit, state: Dictionary) -> void:
+	if unit.unit_class == Unit.Class.QUICK and _is_red_controlled():
+		_issue_dispenser_raid_order(unit, state)
+	elif unit.unit_class == Unit.Class.SMART:
+		_issue_smart_build_order(unit, state)
+	else:
+		_issue_objective_order(unit, state)
+
+
+func _issue_smart_build_order(unit: Unit, state: Dictionary) -> void:
+	var active_build: HealthDispenser = _find_dispenser_being_built_by(unit)
+	if active_build != null:
+		state["build_target"] = active_build
+		state["order_mode"] = "build_wait"
+		state["follow_unit"] = null
+		state["target_position"] = active_build.global_position
+		return
+
+	var target: HealthDispenser = state.get("build_target") as HealthDispenser
+	if is_instance_valid(target) and not target.is_built:
+		if target.is_building:
+			state["order_mode"] = "build_wait"
+			state["follow_unit"] = null
+			state["target_position"] = target.global_position
+			return
+		_issue_order_if_changed(unit, state, "build_site", target.global_position, null)
+		return
+
+	state["build_target"] = null
+	target = _find_nearest_available_build_site(unit)
+	if target != null:
+		state["build_target"] = target
+		_issue_order_if_changed(unit, state, "build_site", target.global_position, null)
+	else:
+		_issue_objective_order(unit, state)
+
+
+func _find_dispenser_being_built_by(unit: Unit) -> HealthDispenser:
+	for node: Node in get_tree().get_nodes_in_group(HealthDispenser.HEALTH_DISPENSER_GROUP):
+		var candidate: HealthDispenser = node as HealthDispenser
+		if is_instance_valid(candidate) and candidate.is_building and candidate.builder == unit:
+			return candidate
+	return null
+
+
+func _find_nearest_available_build_site(unit: Unit) -> HealthDispenser:
+	var nearest_site: HealthDispenser = null
+	var nearest_distance_squared: float = INF
+	for node: Node in get_tree().get_nodes_in_group(HealthDispenser.HEALTH_DISPENSER_GROUP):
+		if not is_instance_valid(node):
+			continue
+		var candidate: HealthDispenser = node as HealthDispenser
+		if candidate == null or candidate.is_built or candidate.is_building:
+			continue
+		var distance_squared: float = unit.global_position.distance_squared_to(candidate.global_position)
+		if distance_squared < nearest_distance_squared:
+			nearest_distance_squared = distance_squared
+			nearest_site = candidate
+	return nearest_site
+
+
+func _issue_dispenser_raid_order(unit: Unit, state: Dictionary) -> void:
+	var target: HealthDispenser = _find_nearest_yellow_dispenser(unit)
+	if target == null:
+		_issue_objective_order(unit, state)
+		return
+	_issue_order_if_changed(unit, state, "dispenser_raid", target.global_position, null)
+
+
+func _find_nearest_yellow_dispenser(unit: Unit) -> HealthDispenser:
+	var nearest_dispenser: HealthDispenser = null
+	var nearest_distance_squared: float = INF
+	for node: Node in get_tree().get_nodes_in_group(HealthDispenser.HEALTH_DISPENSER_GROUP):
+		if not is_instance_valid(node):
+			continue
+		var candidate: HealthDispenser = node as HealthDispenser
+		if candidate == null or candidate.team != Unit.Team.YELLOW or not candidate.is_built:
+			continue
+		if candidate.current_health <= 0.0:
+			continue
+		var distance_squared: float = unit.global_position.distance_squared_to(candidate.global_position)
+		if distance_squared < nearest_distance_squared:
+			nearest_distance_squared = distance_squared
+			nearest_dispenser = candidate
+	return nearest_dispenser
+
+
+func _is_red_controlled() -> bool:
+	return is_instance_valid(_control_point) and _control_point.capture_progress <= -1.0
 
 
 func _issue_retreat_order(unit: Unit, state: Dictionary) -> void:

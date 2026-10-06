@@ -115,6 +115,7 @@ team = 1
 [node name="ControlPoint" type="Node2D" parent="Level" unique_id=1087336828 groups=["control_points"]]
 position = Vector2(576, -256)
 script = ExtResource("10_control_point")
+capture_radius = 250.0
 
 [node name="ProjectilePool" type="Node2D" parent="Level" unique_id=1674037165]
 script = ExtResource("7_projectile_pool")
@@ -124,33 +125,36 @@ script = ExtResource("6_mfdv2")
 
 [node name="HealthDispenser" type="StaticBody2D" parent="Level" unique_id=1887715674]
 position = Vector2(0, 512)
-collision_layer = 16
+collision_layer = 24
 collision_mask = 0
 script = ExtResource("15_health_dispenser")
+maximum_health = 250.0
 is_built = true
 metadata/_custom_type_script = "uid://d16rfyvpgtlxb"
 
 [node name="HealthDispenser3" type="StaticBody2D" parent="Level" unique_id=903858893]
 position = Vector2(704, 192)
-collision_layer = 16
+collision_layer = 24
 collision_mask = 0
 script = ExtResource("15_health_dispenser")
-is_built = true
+maximum_health = 250.0
 metadata/_custom_type_script = "uid://d16rfyvpgtlxb"
 
 [node name="HealthDispenser4" type="StaticBody2D" parent="Level" unique_id=866026612]
-position = Vector2(448, -704)
-collision_layer = 16
+position = Vector2(447, -704)
+collision_layer = 24
 collision_mask = 0
 script = ExtResource("15_health_dispenser")
-is_built = true
+maximum_health = 250.0
+team = 1
 metadata/_custom_type_script = "uid://d16rfyvpgtlxb"
 
 [node name="HealthDispenser2" type="StaticBody2D" parent="Level" unique_id=202232472]
 position = Vector2(1152, -1024)
-collision_layer = 16
+collision_layer = 24
 collision_mask = 0
 script = ExtResource("15_health_dispenser")
+maximum_health = 250.0
 team = 1
 is_built = true
 metadata/_custom_type_script = "uid://d16rfyvpgtlxb"

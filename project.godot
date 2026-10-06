@@ -40,6 +40,7 @@ enabled=PackedStringArray("res://addons/at-icons/plugin.cfg")
 2d_physics/layer_3="red"
 2d_physics/layer_4="collectables"
 2d_physics/layer_5="goals"
+2d_physics/layer_6="build_sites"
 
 [physics]
 
