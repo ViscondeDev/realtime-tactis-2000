@@ -12,6 +12,8 @@ const AUTONOMOUS_TARGET_UPDATE_DISTANCE_PIXELS: float = 16.0
 
 var movement_speed: float
 var _has_active_move_order: bool = false
+var _has_player_move_goal: bool = false
+var _player_move_goal: Vector2
 var _has_autonomous_move_target: bool = false
 var _autonomous_target_position: Vector2
 
@@ -27,10 +29,12 @@ func _ready() -> void:
 
 
 func move_to(target_position: Vector2) -> void:
+	_has_player_move_goal = true
+	_player_move_goal = target_position
 	_move_order_navigation_agent.target_position = target_position
 	_has_active_move_order = true
-	if not _has_autonomous_move_target:
-		_navigation_agent.target_position = target_position
+	_has_autonomous_move_target = false
+	_navigation_agent.target_position = target_position
 
 
 func set_autonomous_move_target(target_position: Vector2) -> void:
@@ -45,8 +49,10 @@ func clear_autonomous_move_target() -> void:
 	if not _has_autonomous_move_target:
 		return
 	_has_autonomous_move_target = false
-	if _has_active_move_order:
-		_navigation_agent.target_position = _move_order_navigation_agent.target_position
+	if _has_player_move_goal:
+		_navigation_agent.target_position = _player_move_goal
+		if _unit_body.global_position.distance_to(_player_move_goal) > TARGET_DESIRED_DISTANCE_PIXELS:
+			_has_active_move_order = true
 	else:
 		_stop_unit_body()
 
@@ -57,6 +63,14 @@ func is_autonomous_move_finished() -> bool:
 
 func has_active_move_order() -> bool:
 	return _has_active_move_order
+
+
+func has_player_move_goal() -> bool:
+	return _has_player_move_goal
+
+
+func get_player_move_goal() -> Vector2:
+	return _player_move_goal
 
 
 # Starts at the unit's current position, followed by the waypoints it has not reached yet.

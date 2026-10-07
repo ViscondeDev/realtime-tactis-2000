@@ -4,7 +4,7 @@
 class_name ControlPoint
 extends Node2D
 
-const CAPTURE_SECONDS: float = 10.0
+const CAPTURE_SECONDS: float = 5.0
 const HEXAGON_RADIUS: float = 80.0
 const HEXAGON_OUTLINE_WIDTH: float = 5.0
 const PROGRESS_BAR_SIZE: Vector2 = Vector2(110.0, 18.0)

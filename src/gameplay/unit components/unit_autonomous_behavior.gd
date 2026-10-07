@@ -13,6 +13,7 @@ var projectile_pool: UnitProjectilePool
 var state: State = State.IDLE
 var _target_enemy: Unit
 var _target_dispenser: HealthDispenser
+var _building_dispenser: HealthDispenser
 var _control_point_target: ControlPoint
 var _fire_timer: float = 0.0
 var _burst_rounds_remaining: int = 0
@@ -32,6 +33,21 @@ func _physics_process(delta: float) -> void:
 			_update_moving()
 		State.ENGAGING:
 			_update_engaging(delta)
+
+
+func on_player_move_order_issued() -> void:
+	_target_enemy = null
+	_target_dispenser = null
+	_fire_timer = 0.0
+	_burst_rounds_remaining = 0
+	_burst_timer = 0.0
+	_retreat_leg_started = false
+	_control_point_target = null
+	if is_instance_valid(_building_dispenser):
+		_building_dispenser.cancel_construction(_unit)
+		_building_dispenser = null
+	_movement.clear_autonomous_move_target()
+	_transition_to(State.MOVING)
 
 
 func _update_idle() -> void:
@@ -85,7 +101,11 @@ func _update_engaging(delta: float) -> void:
 	_update_engagement_movement()
 
 	var class_definition: ClassDefinition = _unit.class_definition
-	var target: Node2D = _target_enemy if is_instance_valid(_target_enemy) else _target_dispenser
+	var target: Node2D = (
+		_target_enemy as Node2D
+		if is_instance_valid(_target_enemy)
+		else _target_dispenser as Node2D
+	)
 	if _unit.global_position.distance_to(target.global_position) > class_definition.attack_range:
 		_burst_rounds_remaining = 0
 		_burst_timer = 0.0
@@ -173,8 +193,17 @@ func _calculate_intercept_direction(target: Unit, projectile_speed: float) -> Ve
 
 
 func _update_engagement_movement() -> void:
+	if _movement.has_active_move_order():
+		_retreat_leg_started = false
+		_movement.clear_autonomous_move_target()
+		return
+
 	var health_ratio: float = _unit.unit_health.current_health / _unit.unit_health.max_health
-	var target: Node2D = _target_enemy if is_instance_valid(_target_enemy) else _target_dispenser
+	var target: Node2D = (
+		_target_enemy as Node2D
+		if is_instance_valid(_target_enemy)
+		else _target_dispenser as Node2D
+	)
 	var direction_away_from_enemy: Vector2 = target.global_position.direction_to(_unit.global_position)
 	if direction_away_from_enemy == Vector2.ZERO:
 		direction_away_from_enemy = Vector2.RIGHT
@@ -249,6 +278,8 @@ func _find_visible_enemy_dispenser() -> HealthDispenser:
 			or dispenser.team == _unit.team
 		):
 			continue
+		if not _is_in_player_move_goal_direction(dispenser.global_position):
+			continue
 		var distance_squared: float = _unit.global_position.distance_squared_to(dispenser.global_position)
 		if distance_squared < nearest_distance_squared:
 			nearest_distance_squared = distance_squared
@@ -262,10 +293,14 @@ func _try_build_visible_dispenser() -> void:
 	for dispenser: HealthDispenser in _perception.onsight_areas:
 		if is_instance_valid(dispenser) and not dispenser.is_built and not dispenser.is_building:
 			if dispenser.begin_construction(_unit):
+				_building_dispenser = dispenser
 				return
 
 
 func _hold_visible_control_point() -> bool:
+	if _movement.has_player_move_goal():
+		return false
+
 	var visible_control_point: ControlPoint
 	var nearest_distance_squared: float = INF
 	for node: Node in get_tree().get_nodes_in_group(&"control_points"):
@@ -290,6 +325,20 @@ func _hold_visible_control_point() -> bool:
 
 func _find_visible_enemy() -> Unit:
 	for enemy: Unit in _perception.onsight_enemy_units:
-		if is_instance_valid(enemy) and enemy.unit_health.current_health > 0.0:
+		if (
+			is_instance_valid(enemy)
+			and enemy.unit_health.current_health > 0.0
+			and _is_in_player_move_goal_direction(enemy.global_position)
+		):
 			return enemy
 	return null
+
+
+func _is_in_player_move_goal_direction(target_position: Vector2) -> bool:
+	if not _movement.has_player_move_goal():
+		return true
+	var direction_to_goal: Vector2 = _unit.global_position.direction_to(_movement.get_player_move_goal())
+	if direction_to_goal.is_zero_approx():
+		return true
+	var direction_to_target: Vector2 = _unit.global_position.direction_to(target_position)
+	return direction_to_goal.dot(direction_to_target) >= 0.0

@@ -44,20 +44,29 @@ func _ready() -> void:
 	set_process(not Engine.is_editor_hint())
 
 
-func begin_construction(builder: Unit) -> bool:
-	if not is_instance_valid(builder) or builder.unit_class != Unit.Class.SMART:
+func begin_construction(requesting_builder: Unit) -> bool:
+	if not is_instance_valid(requesting_builder) or requesting_builder.unit_class != Unit.Class.SMART:
 		return false
-	if not is_instance_valid(builder.unit_health) or builder.unit_health.current_health <= 0.0:
+	if not is_instance_valid(requesting_builder.unit_health) or requesting_builder.unit_health.current_health <= 0.0:
 		return false
 	if is_building or is_built:
 		return false
 
-	team = builder.team
-	self.builder = builder
+	team = requesting_builder.team
+	self.builder = requesting_builder
 	is_building = true
 	_construction_elapsed = 0.0
 	queue_redraw()
 	return true
+
+
+func cancel_construction(requesting_builder: Unit) -> void:
+	if not is_building or builder != requesting_builder:
+		return
+	is_building = false
+	self.builder = null
+	_construction_elapsed = 0.0
+	queue_redraw()
 
 
 func take_damage(amount: float) -> void:

@@ -52,6 +52,7 @@ func _ready() -> void:
 
 
 func issue_move_order(target_position: Vector2) -> void:
+	unit_autonomous_behavior.on_player_move_order_issued()
 	unit_movement.move_to(target_position)
 
 
