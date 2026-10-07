@@ -25,7 +25,6 @@ script = ExtResource("13_match_controller")
 
 [node name="YellowTeamCamera" type="Camera2D" parent="Level" unique_id=1842231650]
 process_callback = 0
-position_smoothing_enabled = true
 script = ExtResource("11_yellow_team_camera")
 
 [node name="LevelBuilder" type="Node2D" parent="Level" unique_id=1170741134]
@@ -38,7 +37,7 @@ wall_line_color = Color(0.29411766, 0.43529412, 0.5764706, 1)
 metadata/_custom_type_script = "uid://c2bvcalceuvv8"
 
 [node name="LevelPolygon" type="Line2D" parent="Level/LevelBuilder" unique_id=499366588]
-points = PackedVector2Array(-256, -768, 1408, -1344, 1408, -1088, 1536, -1088, 1664, -960, 1664, -64, 1536, 64, 1408, 64, 1408, 324, -256, 896, -256, 576, -384, 576, -512, 448, -512, -448, -384, -576, -256, -576)
+points = PackedVector2Array(-256, -768, 1408, -1344, 1408, -1088, 1536, -1088, 1664, -960, 1408, 64, 1408, 324, -256, 896, -256, 576, -384, 576, -512, 448, -256, -576)
 closed = true
 width = 4.0
 default_color = Color(0.25, 0.85, 0.5, 1)
@@ -83,7 +82,7 @@ metadata/_custom_type_script = "uid://bxn47tpjyr6rv"
 
 [node name="LevelPolygon6" type="Line2D" parent="Level/LevelBuilder" unique_id=65361045]
 position = Vector2(64, 4)
-points = PackedVector2Array(-320, 316, -128, 124, -128, -132, -128, -196, -320, -388, -320, 320)
+points = PackedVector2Array(-320, 316, -128, 252, -128, -132, -128, -196, -192, -260, -320, 252, -320, 320)
 closed = true
 width = 4.0
 default_color = Color(0.95, 0.35, 0.35, 1)
@@ -93,7 +92,7 @@ metadata/_custom_type_script = "uid://bxn47tpjyr6rv"
 
 [node name="LevelPolygon7" type="Line2D" parent="Level/LevelBuilder" unique_id=989831261]
 position = Vector2(0, -64)
-points = PackedVector2Array(1216, -576, 1408, -768, 1408, -640, 1408, -128, 1408, -128, 1216, -320)
+points = PackedVector2Array(1216, -704, 1408, -768, 1408, -640, 1280, -256, 1216, -320)
 closed = true
 width = 4.0
 default_color = Color(0.95, 0.35, 0.35, 1)
@@ -125,36 +124,40 @@ script = ExtResource("6_mfdv2")
 
 [node name="HealthDispenser" type="StaticBody2D" parent="Level" unique_id=1887715674]
 position = Vector2(0, 512)
-collision_layer = 24
+collision_layer = 16
 collision_mask = 0
 script = ExtResource("15_health_dispenser")
-maximum_health = 250.0
+maximum_health = 150.0
+healing_per_second = 30.0
 is_built = true
 metadata/_custom_type_script = "uid://d16rfyvpgtlxb"
 
 [node name="HealthDispenser3" type="StaticBody2D" parent="Level" unique_id=903858893]
 position = Vector2(704, 192)
-collision_layer = 24
+collision_layer = 32
 collision_mask = 0
 script = ExtResource("15_health_dispenser")
-maximum_health = 250.0
+maximum_health = 150.0
+healing_per_second = 30.0
 metadata/_custom_type_script = "uid://d16rfyvpgtlxb"
 
 [node name="HealthDispenser4" type="StaticBody2D" parent="Level" unique_id=866026612]
 position = Vector2(447, -704)
-collision_layer = 24
+collision_layer = 32
 collision_mask = 0
 script = ExtResource("15_health_dispenser")
-maximum_health = 250.0
+maximum_health = 150.0
+healing_per_second = 30.0
 team = 1
 metadata/_custom_type_script = "uid://d16rfyvpgtlxb"
 
 [node name="HealthDispenser2" type="StaticBody2D" parent="Level" unique_id=202232472]
 position = Vector2(1152, -1024)
-collision_layer = 24
+collision_layer = 16
 collision_mask = 0
 script = ExtResource("15_health_dispenser")
-maximum_health = 250.0
+maximum_health = 150.0
+healing_per_second = 30.0
 team = 1
 is_built = true
 metadata/_custom_type_script = "uid://d16rfyvpgtlxb"

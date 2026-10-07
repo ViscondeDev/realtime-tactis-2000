@@ -1,11 +1,15 @@
 extends Camera2D
 
-const EDGE_MARGIN_PIXELS: float = 250.0
-const POSITION_SMOOTHING_SPEED: float = 2.0
-const ZOOM_SMOOTHING_SPEED: float = 2.5
-const CONTROL_POINTS_GROUP: StringName = &"control_points"
+const MIN_ZOOM: float = 0.25
+const MAX_ZOOM: float = 2.5
+const WHEEL_ZOOM_FACTOR: float = 1.1
+const PAN_INERTIA_MULTIPLIER: float = 0.35
+const PAN_INERTIA_FRICTION: float = 9.0
+const PAN_INERTIA_STOP_SPEED: float = 8.0
 
-var _has_initial_frame: bool = false
+var _is_mouse_panning: bool = false
+var _pan_velocity: Vector2 = Vector2.ZERO
+var _touch_positions: Dictionary = {}
 
 
 func _ready() -> void:
@@ -14,46 +18,81 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	var yellow_units: Array[Unit] = []
-	for node: Node in get_tree().get_nodes_in_group(Unit.COMMANDABLE_UNITS_GROUP):
-		var unit: Unit = node as Unit
-		if unit != null and unit.team == Unit.Team.YELLOW and unit.unit_health.current_health > 0.0:
-			yellow_units.append(unit)
+	if _is_mouse_panning or _pan_velocity.length() <= PAN_INERTIA_STOP_SPEED:
+		_pan_velocity = Vector2.ZERO if not _is_mouse_panning else _pan_velocity
+		return
+	global_position += _pan_velocity * delta
+	_pan_velocity *= exp(-PAN_INERTIA_FRICTION * delta)
 
-	if yellow_units.is_empty():
+
+func _unhandled_input(event: InputEvent) -> void:
+	var mouse_button_event: InputEventMouseButton = event as InputEventMouseButton
+	if mouse_button_event != null:
+		if mouse_button_event.button_index == MOUSE_BUTTON_RIGHT:
+			_is_mouse_panning = mouse_button_event.pressed
+			if _is_mouse_panning:
+				_pan_velocity = Vector2.ZERO
+			get_viewport().set_input_as_handled()
+		elif mouse_button_event.pressed and mouse_button_event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			_zoom_at_screen_position(WHEEL_ZOOM_FACTOR, mouse_button_event.position)
+			get_viewport().set_input_as_handled()
+		elif mouse_button_event.pressed and mouse_button_event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			_zoom_at_screen_position(1.0 / WHEEL_ZOOM_FACTOR, mouse_button_event.position)
+			get_viewport().set_input_as_handled()
 		return
 
-	var bounds_min: Vector2 = yellow_units[0].global_position
-	var bounds_max: Vector2 = bounds_min
-	for unit: Unit in yellow_units:
-		var radius: float = unit.class_definition.body_radius
-		var unit_min: Vector2 = unit.global_position - Vector2.ONE * radius
-		var unit_max: Vector2 = unit.global_position + Vector2.ONE * radius
-		bounds_min = bounds_min.min(unit_min)
-		bounds_max = bounds_max.max(unit_max)
-	for node: Node in get_tree().get_nodes_in_group(CONTROL_POINTS_GROUP):
-		var control_point: ControlPoint = node as ControlPoint
-		if control_point == null:
-			continue
-		var radius: float = ControlPoint.HEXAGON_RADIUS
-		var point_min: Vector2 = control_point.global_position - Vector2.ONE * radius
-		var point_max: Vector2 = control_point.global_position + Vector2.ONE * radius
-		bounds_min = bounds_min.min(point_min)
-		bounds_max = bounds_max.max(point_max)
-
-	var target_position: Vector2 = (bounds_min + bounds_max) * 0.5
-	var viewport_size: Vector2 = get_viewport_rect().size
-	var framed_size: Vector2 = bounds_max - bounds_min + Vector2.ONE * EDGE_MARGIN_PIXELS * 2.0
-	var fit_zoom: float = minf(viewport_size.x / framed_size.x, viewport_size.y / framed_size.y)
-	var target_zoom: Vector2 = Vector2.ONE * fit_zoom
-
-	if not _has_initial_frame:
-		global_position = target_position
-		zoom = target_zoom
-		_has_initial_frame = true
+	var mouse_motion_event: InputEventMouseMotion = event as InputEventMouseMotion
+	if mouse_motion_event != null and _is_mouse_panning:
+		_pan_by_screen_delta(mouse_motion_event.relative)
+		_pan_velocity = -mouse_motion_event.velocity / zoom * PAN_INERTIA_MULTIPLIER
+		get_viewport().set_input_as_handled()
 		return
 
-	var position_weight: float = 1.0 - exp(-POSITION_SMOOTHING_SPEED * delta)
-	var zoom_weight: float = 1.0 - exp(-ZOOM_SMOOTHING_SPEED * delta)
-	global_position = global_position.lerp(target_position, position_weight)
-	zoom = zoom.lerp(target_zoom, zoom_weight)
+	var screen_touch_event: InputEventScreenTouch = event as InputEventScreenTouch
+	if screen_touch_event != null:
+		if screen_touch_event.pressed:
+			_touch_positions[screen_touch_event.index] = screen_touch_event.position
+		else:
+			_touch_positions.erase(screen_touch_event.index)
+		get_viewport().set_input_as_handled()
+		return
+
+	var screen_drag_event: InputEventScreenDrag = event as InputEventScreenDrag
+	if screen_drag_event != null and _touch_positions.has(screen_drag_event.index):
+		_handle_touch_drag(screen_drag_event.index, screen_drag_event.position)
+		get_viewport().set_input_as_handled()
+
+
+func _pan_by_screen_delta(screen_delta: Vector2) -> void:
+	global_position -= screen_delta / zoom
+
+
+func _zoom_at_screen_position(factor: float, screen_position: Vector2) -> void:
+	var world_position_before_zoom: Vector2 = get_canvas_transform().affine_inverse() * screen_position
+	var next_zoom: float = clampf(zoom.x * factor, MIN_ZOOM, MAX_ZOOM)
+	zoom = Vector2.ONE * next_zoom
+	var world_position_after_zoom: Vector2 = get_canvas_transform().affine_inverse() * screen_position
+	global_position += world_position_before_zoom - world_position_after_zoom
+
+
+func _handle_touch_drag(touch_index: int, next_position: Vector2) -> void:
+	var touch_indices: Array = _touch_positions.keys()
+	if touch_indices.size() != 2:
+		_touch_positions[touch_index] = next_position
+		return
+
+	var first_index: int = touch_indices[0]
+	var second_index: int = touch_indices[1]
+	var previous_first: Vector2 = _touch_positions[first_index]
+	var previous_second: Vector2 = _touch_positions[second_index]
+	var next_first: Vector2 = next_position if touch_index == first_index else previous_first
+	var next_second: Vector2 = next_position if touch_index == second_index else previous_second
+	var previous_center: Vector2 = (previous_first + previous_second) * 0.5
+	var next_center: Vector2 = (next_first + next_second) * 0.5
+	var previous_distance: float = previous_first.distance_to(previous_second)
+	var next_distance: float = next_first.distance_to(next_second)
+
+	_touch_positions[touch_index] = next_position
+	_pan_by_screen_delta(next_center - previous_center)
+	if previous_distance > 0.0 and next_distance > 0.0:
+		_zoom_at_screen_position(next_distance / previous_distance, next_center)
