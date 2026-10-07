@@ -13,6 +13,7 @@ var projectile_pool: UnitProjectilePool
 var state: State = State.IDLE
 var _target_enemy: Unit
 var _target_dispenser: HealthDispenser
+var _control_point_target: ControlPoint
 var _fire_timer: float = 0.0
 var _burst_rounds_remaining: int = 0
 var _burst_timer: float = 0.0
@@ -43,6 +44,8 @@ func _update_idle() -> void:
 	elif _movement.has_active_move_order():
 		_unit.set_report_condition(&"idle_without_order", false)
 		_transition_to(State.MOVING)
+	elif _hold_visible_control_point():
+		_unit.set_report_condition(&"idle_without_order", false)
 	else:
 		if _unit.unit_class == Unit.Class.SMART:
 			_try_build_visible_dispenser()
@@ -260,6 +263,29 @@ func _try_build_visible_dispenser() -> void:
 		if is_instance_valid(dispenser) and not dispenser.is_built and not dispenser.is_building:
 			if dispenser.begin_construction(_unit):
 				return
+
+
+func _hold_visible_control_point() -> bool:
+	var visible_control_point: ControlPoint
+	var nearest_distance_squared: float = INF
+	for node: Node in get_tree().get_nodes_in_group(&"control_points"):
+		var control_point: ControlPoint = node as ControlPoint
+		if control_point == null or not _perception.can_see_position(control_point.global_position):
+			continue
+		var distance_squared: float = _unit.global_position.distance_squared_to(control_point.global_position)
+		if distance_squared < nearest_distance_squared:
+			nearest_distance_squared = distance_squared
+			visible_control_point = control_point
+
+	if visible_control_point != null:
+		_control_point_target = visible_control_point
+		_movement.set_autonomous_move_target(visible_control_point.global_position)
+		return true
+
+	if is_instance_valid(_control_point_target):
+		_control_point_target = null
+		_movement.clear_autonomous_move_target()
+	return false
 
 
 func _find_visible_enemy() -> Unit:

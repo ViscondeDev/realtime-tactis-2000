@@ -9,6 +9,7 @@ const BUILD_SECONDS: float = 5.0
 const DOT_RADIUS: float = 8.0
 const CROSS_HALF_LENGTH: float = 20.0
 const CROSS_WIDTH: float = 8.0
+const CONNECTOR_WIDTH: float = 3.0
 const DOTTED_RING_COUNT: int = 48
 const DOTTED_RING_RADIUS: float = 2.5
 const HEALTH_DISPENSER_GROUP: StringName = &"health_dispensers"
@@ -27,6 +28,7 @@ var builder: Unit
 var _construction_elapsed: float = 0.0
 var current_health: float = maximum_health
 var _collision_shape: CollisionShape2D
+var _healing_units: Array[Unit] = []
 
 
 func _ready() -> void:
@@ -76,11 +78,15 @@ func take_damage(amount: float) -> void:
 func _process(delta: float) -> void:
 	if is_building:
 		_construction_elapsed += delta
+		queue_redraw()
 		if _construction_elapsed >= BUILD_SECONDS:
 			_finish_construction()
 		return
 	if is_built:
+		var had_healing_units: bool = not _healing_units.is_empty()
 		_heal_nearby_units(delta)
+		if had_healing_units or not _healing_units.is_empty():
+			queue_redraw()
 
 
 func _finish_construction() -> void:
@@ -95,6 +101,10 @@ func _finish_construction() -> void:
 
 
 func _heal_nearby_units(delta: float) -> void:
+	_healing_units.clear()
+	if healing_per_second <= 0.0:
+		return
+
 	var radius_squared: float = healing_radius * healing_radius
 	for node: Node in get_tree().get_nodes_in_group(Unit.COMMANDABLE_UNITS_GROUP):
 		var unit: Unit = node as Unit
@@ -104,15 +114,35 @@ func _heal_nearby_units(delta: float) -> void:
 			continue
 		if unit.global_position.distance_squared_to(global_position) > radius_squared:
 			continue
+		if unit.unit_health.current_health >= unit.unit_health.max_health:
+			continue
+		_healing_units.append(unit)
 		unit.unit_health.heal(healing_per_second * delta)
 
 
 func _draw() -> void:
 	if not is_built:
+		if is_building and is_instance_valid(builder):
+			draw_line(
+				Vector2.ZERO,
+				to_local(builder.global_position),
+				Color.html(Unit.TEAM_COLORS[team]),
+				CONNECTOR_WIDTH,
+				true
+			)
 		draw_circle(Vector2.ZERO, DOT_RADIUS, Color.WHITE)
 		return
 
 	var team_color: Color = Color.html(Unit.TEAM_COLORS[team])
+	for unit: Unit in _healing_units:
+		if is_instance_valid(unit):
+			draw_line(
+				Vector2.ZERO,
+				to_local(unit.global_position),
+				team_color,
+				CONNECTOR_WIDTH,
+				true
+			)
 	draw_line(
 		Vector2(-CROSS_HALF_LENGTH, 0.0),
 		Vector2(CROSS_HALF_LENGTH, 0.0),

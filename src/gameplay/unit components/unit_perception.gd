@@ -53,6 +53,21 @@ func _on_body_exited(body: Node2D) -> void:
 		onsight_areas.erase(body)
 
 
+func can_see_position(world_position: Vector2) -> bool:
+	var perception_shape: CircleShape2D = $CollisionShape2D.shape as CircleShape2D
+	if perception_shape == null:
+		return false
+	if _unit.global_position.distance_squared_to(world_position) > perception_shape.radius * perception_shape.radius:
+		return false
+
+	var original_target_position: Vector2 = sight_line.target_position
+	sight_line.target_position = sight_line.to_local(world_position)
+	sight_line.force_raycast_update()
+	var is_visible: bool = not sight_line.is_colliding()
+	sight_line.target_position = original_target_position
+	return is_visible
+
+
 func _sight_line_check() -> void:
 	sight_line.set_collision_mask_value(Unit.YELLOW_LAYER, true)
 	sight_line.set_collision_mask_value(Unit.RED_LAYER, true)
