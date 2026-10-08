@@ -1,0 +1,280 @@
+[gd_scene format=3]
+
+[sub_resource type="Gradient" id="Gradient_menu"]
+colors = PackedColorArray(0.0627451, 0.0980392, 0.101961, 1, 0.105882, 0.160784, 0.160784, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_menu"]
+gradient = SubResource("Gradient_menu")
+fill_from = Vector2(0, 0)
+fill_to = Vector2(1, 1)
+width = 2
+height = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.082353, 0.121569, 0.12549, 0.98)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.270588, 0.32549, 0.329412, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+content_margin_left = 42.0
+content_margin_top = 38.0
+content_margin_right = 42.0
+content_margin_bottom = 38.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_input"]
+bg_color = Color(0.0941176, 0.141176, 0.145098, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.270588, 0.32549, 0.329412, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+content_margin_left = 12.0
+content_margin_top = 12.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button"]
+bg_color = Color(0.835294, 0.909804, 0.223529, 1)
+border_color = Color(0.835294, 0.909804, 0.223529, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+content_margin_left = 12.0
+content_margin_top = 12.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button_hover"]
+bg_color = Color(0.905882, 0.964706, 0.376471, 1)
+border_color = Color(0.929412, 0.94902, 0.921569, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+content_margin_left = 12.0
+content_margin_top = 12.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_disabled"]
+bg_color = Color(0.14902, 0.196078, 0.2, 1)
+border_color = Color(0.270588, 0.32549, 0.329412, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+content_margin_left = 12.0
+content_margin_top = 12.0
+content_margin_right = 12.0
+content_margin_bottom = 12.0
+
+[node name="MainMenuUI" type="CanvasLayer"]
+layer = 20
+
+[node name="Screen" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="Screen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_menu")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="TopRule" type="ColorRect" parent="Screen"]
+layout_mode = 1
+anchor_right = 1.0
+offset_bottom = 5.0
+mouse_filter = 2
+color = Color(0.835294, 0.909804, 0.223529, 1)
+
+[node name="Brand" type="Label" parent="Screen"]
+offset_left = 48.0
+offset_top = 34.0
+offset_right = 298.0
+offset_bottom = 70.0
+theme_override_colors/font_color = Color(0.835294, 0.909804, 0.223529, 1)
+theme_override_font_sizes/font_size = 20
+text = "RT // 2000"
+
+[node name="HeaderStatus" type="Label" parent="Screen"]
+anchors_preset = 10
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -390.0
+offset_top = 40.0
+offset_right = -48.0
+offset_bottom = 64.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0.529412, 0.584314, 0.584314, 1)
+theme_override_font_sizes/font_size = 14
+text = "TACTICAL OPERATIONS  /  BUILD 01"
+horizontal_alignment = 2
+
+[node name="MenuCenter" type="CenterContainer" parent="Screen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MenuPanel" type="PanelContainer" parent="Screen/MenuCenter"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(720, 680)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="Content" type="VBoxContainer" parent="Screen/MenuCenter/MenuPanel"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Eyebrow" type="Label" parent="Screen/MenuCenter/MenuPanel/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.835294, 0.909804, 0.223529, 1)
+theme_override_font_sizes/font_size = 15
+text = "FIELD COMMAND  /  01"
+
+[node name="Title" type="Label" parent="Screen/MenuCenter/MenuPanel/Content"]
+custom_minimum_size = Vector2(0, 130)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.929412, 0.94902, 0.921569, 1)
+theme_override_font_sizes/font_size = 54
+text = "REALTIME\nTACTICS"
+
+[node name="Description" type="Label" parent="Screen/MenuCenter/MenuPanel/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.607843, 0.658824, 0.65098, 1)
+theme_override_font_sizes/font_size = 18
+text = "Select an operation and deploy your squad."
+
+[node name="Divider" type="HSeparator" parent="Screen/MenuCenter/MenuPanel/Content"]
+layout_mode = 2
+
+[node name="ModesLabel" type="Label" parent="Screen/MenuCenter/MenuPanel/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.607843, 0.658824, 0.65098, 1)
+theme_override_font_sizes/font_size = 14
+text = "AVAILABLE OPERATIONS"
+
+[node name="LevelSelector" type="OptionButton" parent="Screen/MenuCenter/MenuPanel/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 54)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.929412, 0.94902, 0.921569, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_input")
+theme_override_styles/hover = SubResource("StyleBoxFlat_input")
+
+[node name="StartButton" type="Button" parent="Screen/MenuCenter/MenuPanel/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 76)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0901961, 0.12549, 0.101961, 1)
+theme_override_colors/font_hover_color = Color(0.0901961, 0.12549, 0.101961, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_button")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_disabled")
+text = "KING OF THE HILL     /     DEPLOY"
+
+[node name="DisabledModeButton" type="Button" parent="Screen/MenuCenter/MenuPanel/Content"]
+custom_minimum_size = Vector2(0, 58)
+layout_mode = 2
+disabled = true
+theme_override_colors/font_color = Color(0.470588, 0.513725, 0.513725, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/disabled = SubResource("StyleBoxFlat_disabled")
+text = "CONTROL POINTS     /     DISABLED"
+
+[node name="StatusLabel" type="Label" parent="Screen/MenuCenter/MenuPanel/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.607843, 0.658824, 0.65098, 1)
+theme_override_font_sizes/font_size = 14
+text = "ENEMY ORDER DELAY  /  2.5 SECONDS"
+
+[node name="Footer" type="Label" parent="Screen"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 892.0
+offset_bottom = 918.0
+theme_override_colors/font_color = Color(0.392157, 0.447059, 0.45098, 1)
+theme_override_font_sizes/font_size = 13
+text = "KOTH 01  /  CONTROL THE CENTRE  /  HOLD THE LINE"
+horizontal_alignment = 1
+
+[node name="LoadingScreen" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Backdrop" type="ColorRect" parent="LoadingScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0627451, 0.0980392, 0.101961, 1)
+
+[node name="Center" type="CenterContainer" parent="LoadingScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Content" type="VBoxContainer" parent="LoadingScreen/Center"]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="Title" type="Label" parent="LoadingScreen/Center/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.929412, 0.94902, 0.921569, 1)
+theme_override_font_sizes/font_size = 34
+text = "DEPLOYMENT IN PROGRESS"
+horizontal_alignment = 1
+
+[node name="Status" type="Label" parent="LoadingScreen/Center/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.607843, 0.658824, 0.65098, 1)
+theme_override_font_sizes/font_size = 17
+text = "Loading selected level..."
+horizontal_alignment = 1
+
+[node name="Progress" type="ProgressBar" parent="LoadingScreen/Center/Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+show_percentage = false

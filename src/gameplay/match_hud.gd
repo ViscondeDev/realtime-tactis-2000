@@ -1,6 +1,8 @@
 class_name MatchHUD
 extends CanvasLayer
 
+signal return_to_menu_requested
+
 const UNIT_ROW_SCENE: PackedScene = preload("res://src/gameplay/unit_status_row.tscn")
 
 @export var match_controller: Node
@@ -11,6 +13,8 @@ const UNIT_ROW_SCENE: PackedScene = preload("res://src/gameplay/unit_status_row.
 @onready var _yellow_fill: ColorRect = %YellowFill
 @onready var _red_fill: ColorRect = %RedFill
 @onready var _match_result_label: Label = %MatchResult
+@onready var _countdown_label: Label = %Countdown
+@onready var _return_to_menu_button: Button = %ReturnToMenu
 @onready var _unit_list: VBoxContainer = %UnitList
 @onready var _empty_state: Label = %EmptyState
 
@@ -22,6 +26,7 @@ var _last_red_seconds: int = -1
 
 func _ready() -> void:
 	layer = 10
+	_return_to_menu_button.pressed.connect(_on_return_to_menu_pressed)
 	_control_point = _find_control_point()
 	for node: Node in get_tree().get_nodes_in_group(Unit.COMMANDABLE_UNITS_GROUP):
 		_register_unit(node as Unit)
@@ -41,8 +46,17 @@ func _process(_delta: float) -> void:
 			_last_red_seconds = red_seconds
 		var winner_team: int = int(match_controller.get("winner_team"))
 		_match_result_label.visible = winner_team >= 0
+		_return_to_menu_button.visible = winner_team >= 0
 		if winner_team >= 0:
-			_match_result_label.text = "%s TEAM WINS" % ("YELLOW" if winner_team == Unit.Team.YELLOW else "RED")
+			var seconds_remaining: int = ceili(float(match_controller.get("result_seconds_remaining")))
+			_match_result_label.text = "%s TEAM WINS  /  MENU IN %d" % [
+				"YELLOW" if winner_team == Unit.Team.YELLOW else "RED",
+				seconds_remaining,
+			]
+		var phase: int = int(match_controller.get("phase"))
+		_countdown_label.visible = phase == MatchController.Phase.COUNTDOWN
+		if _countdown_label.visible:
+			_countdown_label.text = "MATCH STARTS IN  %d" % ceili(float(match_controller.get("countdown_seconds_remaining")))
 
 	if is_instance_valid(_control_point):
 		var yellow_width: float = clampf((_control_point.capture_progress + 1.0) * 0.5, 0.0, 1.0)
@@ -56,6 +70,10 @@ func _process(_delta: float) -> void:
 			if is_instance_valid(row):
 				row.queue_free()
 	_empty_state.visible = _unit_rows.is_empty()
+
+
+func _on_return_to_menu_pressed() -> void:
+	return_to_menu_requested.emit()
 
 
 func _find_control_point() -> ControlPoint:

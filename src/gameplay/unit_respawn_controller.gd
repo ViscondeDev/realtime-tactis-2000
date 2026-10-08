@@ -13,9 +13,14 @@ const UNIT_SCENE: PackedScene = preload("res://src/gameplay/unit.tscn")
 
 var _respawn_points: Dictionary = {}
 var _is_shutting_down: bool = false
+var _respawns_enabled: bool = true
 
 
 func _ready() -> void:
+	var match_controller: MatchController = get_tree().get_first_node_in_group(&"match_controllers") as MatchController
+	if is_instance_valid(match_controller):
+		match_controller.match_finished.connect(_on_match_finished)
+		_respawns_enabled = match_controller.phase != MatchController.Phase.FINISHED
 	for node: Node in get_tree().get_nodes_in_group(RESPAWN_POINTS_GROUP):
 		var respawn_point: Node2D = node as Node2D
 		if respawn_point != null:
@@ -37,7 +42,7 @@ func _register_unit(unit: Unit) -> void:
 
 
 func _on_unit_died(unit: Unit) -> void:
-	if _is_shutting_down or not is_inside_tree():
+	if _is_shutting_down or not _respawns_enabled or not is_inside_tree():
 		return
 
 	var timer: Timer = Timer.new()
@@ -50,7 +55,7 @@ func _on_unit_died(unit: Unit) -> void:
 
 func _respawn_unit(team: Unit.Team, unit_class: Unit.Class, timer: Timer) -> void:
 	timer.queue_free()
-	if _is_shutting_down or not is_inside_tree():
+	if _is_shutting_down or not _respawns_enabled or not is_inside_tree():
 		return
 
 	var respawn_point: Node2D = _respawn_points.get(team) as Node2D
@@ -69,3 +74,7 @@ func _respawn_unit(team: Unit.Team, unit_class: Unit.Class, timer: Timer) -> voi
 	unit.position = _unit_container.to_local(respawn_point.global_position)
 	_unit_container.add_child(unit)
 	_register_unit(unit)
+
+
+func _on_match_finished(_winning_team: int) -> void:
+	_respawns_enabled = false

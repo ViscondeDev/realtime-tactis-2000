@@ -1,0 +1,181 @@
+[gd_scene format=3 uid="uid://b82qjaqik1nli"]
+
+[ext_resource type="Script" uid="uid://bsn5jpqx8v6xp" path="res://src/gameplay/match_controller.gd" id="1_du6bw"]
+[ext_resource type="Script" uid="uid://btusjhtd4pkht" path="res://src/gameplay/yellow_team_camera.gd" id="2_mhwal"]
+[ext_resource type="Script" uid="uid://c2bvcalceuvv8" path="res://tools/level_builder.gd" id="3_rgvsn"]
+[ext_resource type="Script" uid="uid://bxn47tpjyr6rv" path="res://tools/level_polygon.gd" id="4_ayr0s"]
+[ext_resource type="Script" uid="uid://cuw8comgqlltb" path="res://src/gameplay/respawn_point.gd" id="5_nrsx4"]
+[ext_resource type="Script" uid="uid://bm30wf3r7fjhn" path="res://src/gameplay/control_point.gd" id="6_e8qqr"]
+[ext_resource type="Script" uid="uid://blm2sqcpqdbpt" path="res://src/gameplay/unit_projectile_pool.gd" id="7_nu0k4"]
+[ext_resource type="Script" uid="uid://35datvu1g58l" path="res://src/gameplay/unit_command_controller.gd" id="8_yli4d"]
+[ext_resource type="Script" uid="uid://d16rfyvpgtlxb" path="res://src/gameplay/health_dispenser.gd" id="9_rwulr"]
+[ext_resource type="PackedScene" uid="uid://bt1qf6j1ifhf7" path="res://src/gameplay/unit.tscn" id="10_akum3"]
+[ext_resource type="Script" uid="uid://y35tpk8ols0k" path="res://src/gameplay/unit_respawn_controller.gd" id="11_u75ec"]
+[ext_resource type="Script" uid="uid://cwxqpmv3uu5rt" path="res://src/gameplay/red_team_ai.gd" id="12_55yga"]
+
+[node name="Level" type="Node2D" unique_id=334309463]
+
+[node name="MatchController" type="Node" parent="." unique_id=1741609733]
+unique_name_in_owner = true
+script = ExtResource("1_du6bw")
+
+[node name="YellowTeamCamera" type="Camera2D" parent="." unique_id=1922737940]
+process_callback = 0
+script = ExtResource("2_mhwal")
+
+[node name="LevelBuilder" type="Node2D" parent="." unique_id=2033735304]
+unique_name_in_owner = true
+script = ExtResource("3_rgvsn")
+navigation_agent_radius = 40.0
+floor_color = Color(0.16470589, 0.53333336, 0.9098039, 1)
+void_and_obstacle_color = Color(0.29411766, 0.43529412, 0.5764706, 1)
+wall_line_color = Color(0.29411766, 0.43529412, 0.5764706, 1)
+metadata/_custom_type_script = "uid://c2bvcalceuvv8"
+
+[node name="LevelPolygon" type="Line2D" parent="LevelBuilder" unique_id=1040923572]
+points = PackedVector2Array(-256, -768, 1408, -1344, 1408, -1088, 1536, -1088, 1664, -960, 1408, 64, 1408, 324, -256, 896, -256, 576, -384, 576, -512, 448, -256, -576)
+closed = true
+width = 4.0
+default_color = Color(0.25, 0.85, 0.5, 1)
+script = ExtResource("4_ayr0s")
+metadata/_custom_type_script = "uid://bxn47tpjyr6rv"
+
+[node name="LevelPolygon2" type="Line2D" parent="LevelBuilder" unique_id=146547039]
+points = PackedVector2Array(256, -64, 896, -64, 896, 0, 256, 0)
+closed = true
+width = 4.0
+default_color = Color(0.95, 0.35, 0.35, 1)
+script = ExtResource("4_ayr0s")
+polygon_kind = 1
+metadata/_custom_type_script = "uid://bxn47tpjyr6rv"
+
+[node name="LevelPolygon3" type="Line2D" parent="LevelBuilder" unique_id=1141597668]
+points = PackedVector2Array(256, -448, 896, -448, 896, -512, 256, -512)
+closed = true
+width = 4.0
+default_color = Color(0.95, 0.35, 0.35, 1)
+script = ExtResource("4_ayr0s")
+polygon_kind = 1
+metadata/_custom_type_script = "uid://bxn47tpjyr6rv"
+
+[node name="LevelPolygon4" type="Line2D" parent="LevelBuilder" unique_id=1409637834]
+points = PackedVector2Array(-256, 256, 192, 256, 192, 320, -256, 320)
+closed = true
+width = 4.0
+default_color = Color(0.95, 0.35, 0.35, 1)
+script = ExtResource("4_ayr0s")
+polygon_kind = 1
+metadata/_custom_type_script = "uid://bxn47tpjyr6rv"
+
+[node name="LevelPolygon5" type="Line2D" parent="LevelBuilder" unique_id=602855134]
+points = PackedVector2Array(896, -768, 896, -832, 1408, -832, 1408, -768)
+closed = true
+width = 4.0
+default_color = Color(0.95, 0.35, 0.35, 1)
+script = ExtResource("4_ayr0s")
+polygon_kind = 1
+metadata/_custom_type_script = "uid://bxn47tpjyr6rv"
+
+[node name="LevelPolygon6" type="Line2D" parent="LevelBuilder" unique_id=1406034632]
+position = Vector2(64, 4)
+points = PackedVector2Array(-320, 316, -128, 252, -128, -132, -128, -196, -192, -260, -320, 252, -320, 320)
+closed = true
+width = 4.0
+default_color = Color(0.95, 0.35, 0.35, 1)
+script = ExtResource("4_ayr0s")
+polygon_kind = 1
+metadata/_custom_type_script = "uid://bxn47tpjyr6rv"
+
+[node name="LevelPolygon7" type="Line2D" parent="LevelBuilder" unique_id=616140036]
+position = Vector2(0, -64)
+points = PackedVector2Array(1216, -704, 1408, -768, 1408, -640, 1280, -256, 1216, -320)
+closed = true
+width = 4.0
+default_color = Color(0.95, 0.35, 0.35, 1)
+script = ExtResource("4_ayr0s")
+polygon_kind = 1
+metadata/_custom_type_script = "uid://bxn47tpjyr6rv"
+
+[node name="RespawnPoints" type="Node2D" parent="." unique_id=299263654]
+
+[node name="Yellow" type="Node2D" parent="RespawnPoints" unique_id=1800027991 groups=["respawn_points"]]
+position = Vector2(-128, 704)
+script = ExtResource("5_nrsx4")
+
+[node name="Red" type="Node2D" parent="RespawnPoints" unique_id=1473376266 groups=["respawn_points"]]
+position = Vector2(1280, -1152)
+script = ExtResource("5_nrsx4")
+team = 1
+
+[node name="ControlPoint" type="Node2D" parent="." unique_id=1268325207 groups=["control_points"]]
+position = Vector2(576, -256)
+script = ExtResource("6_e8qqr")
+capture_radius = 250.0
+
+[node name="ProjectilePool" type="Node2D" parent="." unique_id=315060351]
+script = ExtResource("7_nu0k4")
+
+[node name="UnitCommandController" type="Node2D" parent="." unique_id=1211363128]
+script = ExtResource("8_yli4d")
+
+[node name="HealthDispenser3" type="StaticBody2D" parent="." unique_id=1981513805]
+position = Vector2(832, 192)
+collision_layer = 32
+collision_mask = 0
+script = ExtResource("9_rwulr")
+healing_radius = 290.0
+maximum_health = 150.0
+healing_per_second = 40.0
+metadata/_custom_type_script = "uid://d16rfyvpgtlxb"
+
+[node name="HealthDispenser4" type="StaticBody2D" parent="." unique_id=810225688]
+position = Vector2(320, -704)
+collision_layer = 32
+collision_mask = 0
+script = ExtResource("9_rwulr")
+healing_radius = 290.0
+maximum_health = 150.0
+healing_per_second = 40.0
+team = 1
+metadata/_custom_type_script = "uid://d16rfyvpgtlxb"
+
+[node name="Unit" parent="." unique_id=865573347 node_paths=PackedStringArray("projectile_pool") instance=ExtResource("10_akum3")]
+position = Vector2(0, 512)
+projectile_pool = NodePath("../ProjectilePool")
+
+[node name="Unit2" parent="." unique_id=1782970120 node_paths=PackedStringArray("projectile_pool") instance=ExtResource("10_akum3")]
+position = Vector2(192, 576)
+unit_class = 1
+projectile_pool = NodePath("../ProjectilePool")
+
+[node name="Unit3" parent="." unique_id=1519918105 node_paths=PackedStringArray("projectile_pool") instance=ExtResource("10_akum3")]
+position = Vector2(-60, 704)
+unit_class = 2
+projectile_pool = NodePath("../ProjectilePool")
+
+[node name="Unit4" parent="." unique_id=475138731 node_paths=PackedStringArray("projectile_pool") instance=ExtResource("10_akum3")]
+position = Vector2(1024, -960)
+team = 1
+projectile_pool = NodePath("../ProjectilePool")
+
+[node name="Unit5" parent="." unique_id=2060489319 node_paths=PackedStringArray("projectile_pool") instance=ExtResource("10_akum3")]
+position = Vector2(1280, -1152)
+team = 1
+unit_class = 1
+projectile_pool = NodePath("../ProjectilePool")
+
+[node name="Unit6" parent="." unique_id=1974041670 node_paths=PackedStringArray("projectile_pool") instance=ExtResource("10_akum3")]
+position = Vector2(892, -1024)
+team = 1
+unit_class = 2
+projectile_pool = NodePath("../ProjectilePool")
+
+[node name="UnitRespawnController" type="Node2D" parent="." unique_id=629618998 node_paths=PackedStringArray("_unit_container", "_projectile_pool")]
+unique_name_in_owner = true
+script = ExtResource("11_u75ec")
+_unit_container = NodePath("..")
+_projectile_pool = NodePath("../ProjectilePool")
+
+[node name="RedTeamAI" type="Node2D" parent="." unique_id=420095532]
+script = ExtResource("12_55yga")
+issue_delay_seconds = 2.5

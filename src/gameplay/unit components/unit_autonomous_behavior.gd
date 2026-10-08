@@ -28,9 +28,14 @@ var _burst_rounds_remaining: int = 0
 var _burst_timer: float = 0.0
 var _burst_round_damage: float = 0.0
 var _retreat_leg_started: bool = false
+var _match_controller: MatchController
 
 @onready var _perception: UnitPerception = %UnitPerception
 @onready var _movement: UnitMovement = %UnitMovement
+
+
+func _ready() -> void:
+	_match_controller = get_tree().get_first_node_in_group(&"match_controllers") as MatchController
 
 
 func _physics_process(delta: float) -> void:
@@ -163,6 +168,12 @@ func _update_engaging(delta: float) -> void:
 
 
 func _fire_round(target: Node2D, damage: float) -> void:
+	if (
+		is_instance_valid(_match_controller)
+		and _match_controller.phase == MatchController.Phase.FINISHED
+		and _unit.team != _match_controller.winner_team
+	):
+		return
 	if not is_instance_valid(projectile_pool):
 		push_error("UnitAutonomousBehavior requires a projectile pool.")
 		return
