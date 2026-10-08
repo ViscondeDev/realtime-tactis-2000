@@ -6,10 +6,12 @@ const WHEEL_ZOOM_FACTOR: float = 1.1
 const PAN_INERTIA_MULTIPLIER: float = 0.35
 const PAN_INERTIA_FRICTION: float = 9.0
 const PAN_INERTIA_STOP_SPEED: float = 8.0
+const FOCUS_DURATION: float = 0.55
 
 var _is_mouse_panning: bool = false
 var _pan_velocity: Vector2 = Vector2.ZERO
 var _touch_positions: Dictionary = {}
+var _focus_tween: Tween
 
 
 func _ready() -> void:
@@ -65,6 +67,18 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _pan_by_screen_delta(screen_delta: Vector2) -> void:
 	global_position -= screen_delta / zoom
+
+
+func focus_on_unit(unit: Unit) -> void:
+	if not is_instance_valid(unit):
+		return
+	_is_mouse_panning = false
+	_pan_velocity = Vector2.ZERO
+	if is_instance_valid(_focus_tween) and _focus_tween.is_running():
+		_focus_tween.kill()
+	_focus_tween = create_tween()
+	_focus_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	_focus_tween.tween_property(self, "global_position", unit.global_position, FOCUS_DURATION)
 
 
 func _zoom_at_screen_position(factor: float, screen_position: Vector2) -> void:

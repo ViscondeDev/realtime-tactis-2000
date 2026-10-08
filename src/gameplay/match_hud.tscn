@@ -1,0 +1,177 @@
+[gd_scene format=3 uid="uid://csj6kfn2dndps"]
+
+[ext_resource type="Script" uid="uid://cvahsvfevyws8" path="res://src/gameplay/match_hud.gd" id="1_hud"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_frame"]
+bg_color = Color(0.035, 0.055, 0.065, 0.94)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.76, 0.84, 0.87, 0.35)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[node name="MatchHUD" type="CanvasLayer" unique_id=1439476412]
+script = ExtResource("1_hud")
+
+[node name="Root" type="Control" parent="." unique_id=1731829907]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ScorePanel" type="PanelContainer" parent="Root" unique_id=824523329]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -340.0
+offset_top = 22.0
+offset_right = 340.0
+offset_bottom = 116.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_frame")
+
+[node name="Margin" type="MarginContainer" parent="Root/ScorePanel" unique_id=2127476915]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 14
+
+[node name="StatusRow" type="HBoxContainer" parent="Root/ScorePanel/Margin" unique_id=1743127960]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 18
+
+[node name="YellowTimer" type="Label" parent="Root/ScorePanel/Margin/StatusRow" unique_id=428159907]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(104, 40)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.835294, 0.913725, 0.223529, 1)
+theme_override_font_sizes/font_size = 28
+text = "20:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CaptureBar" type="Control" parent="Root/ScorePanel/Margin/StatusRow" unique_id=666007602]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(390, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="Background" type="ColorRect" parent="Root/ScorePanel/Margin/StatusRow/CaptureBar" unique_id=233372534]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.08, 0.1, 0.11, 1)
+
+[node name="YellowFill" type="ColorRect" parent="Root/ScorePanel/Margin/StatusRow/CaptureBar" unique_id=802803422]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.5
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0.835294, 0.913725, 0.223529, 1)
+
+[node name="RedFill" type="ColorRect" parent="Root/ScorePanel/Margin/StatusRow/CaptureBar" unique_id=131700167]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0.909804, 0.34902, 0.309804, 1)
+
+[node name="RedTimer" type="Label" parent="Root/ScorePanel/Margin/StatusRow" unique_id=699403952]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(104, 40)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.909804, 0.34902, 0.309804, 1)
+theme_override_font_sizes/font_size = 28
+text = "20:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MatchResult" type="Label" parent="Root" unique_id=1464470238]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 126.0
+offset_bottom = 166.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 26
+text = "YELLOW TEAM WINS"
+horizontal_alignment = 1
+
+[node name="UnitsPanel" type="PanelContainer" parent="Root" unique_id=13522549]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 176.0
+offset_right = 440.0
+offset_bottom = -24.0
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_frame")
+
+[node name="Margin" type="MarginContainer" parent="Root/UnitsPanel" unique_id=1248209591]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 18
+
+[node name="Column" type="VBoxContainer" parent="Root/UnitsPanel/Margin" unique_id=1938854222]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="Heading" type="Label" parent="Root/UnitsPanel/Margin/Column" unique_id=1134579575]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.835294, 0.913725, 0.223529, 1)
+theme_override_font_sizes/font_size = 22
+text = "YELLOW // UNITS"
+
+[node name="Divider" type="HSeparator" parent="Root/UnitsPanel/Margin/Column" unique_id=829080736]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="UnitScroll" type="ScrollContainer" parent="Root/UnitsPanel/Margin/Column" unique_id=1118890691]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="UnitList" type="VBoxContainer" parent="Root/UnitsPanel/Margin/Column/UnitScroll" unique_id=2012170033]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="EmptyState" type="Label" parent="Root/UnitsPanel/Margin/Column/UnitScroll/UnitList" unique_id=1204597251]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.64, 0.7, 0.71, 1)
+text = "No yellow units"
+horizontal_alignment = 1

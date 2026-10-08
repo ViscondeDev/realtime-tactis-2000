@@ -15,7 +15,8 @@ const YELLOW_LAYER:int = 2
 const RED_LAYER:int = 3
 const COLLECTABLES_LAYER:int = 4
 
-signal status_reported(report_type: StringName, active: bool)
+signal condition_changed(condition: StringName, active: bool)
+signal report_condition_changed(condition: StringName, active: bool)
 
 @export var team: Team = Team.YELLOW
 @export var unit_class: Class = Class.STRONG
@@ -28,7 +29,7 @@ signal status_reported(report_type: StringName, active: bool)
 @onready var unit_autonomous_behavior: UnitAutonomousBehavior = %UnitAutonomousBehavior
 @onready var unit_health: UnitHealth = $Behavior/UnitHealth
 
-var _report_conditions: Dictionary = {}
+var _conditions: Dictionary = {}
 
 
 func _ready() -> void:
@@ -56,11 +57,16 @@ func issue_move_order(target_position: Vector2) -> void:
 	unit_movement.move_to(target_position)
 
 
-func set_report_condition(report_type: StringName, active: bool) -> void:
-	if _report_conditions.get(report_type, false) == active:
+func set_condition(condition: StringName, active: bool) -> void:
+	if _conditions.get(condition, false) == active:
 		return
-	_report_conditions[report_type] = active
-	status_reported.emit(report_type, active)
+	_conditions[condition] = active
+	condition_changed.emit(condition, active)
+	report_condition_changed.emit(condition, active)
+
+
+func is_report_condition_active(condition: StringName) -> bool:
+	return _conditions.get(condition, false)
 
 
 func is_point_over_unit(world_position: Vector2) -> bool:

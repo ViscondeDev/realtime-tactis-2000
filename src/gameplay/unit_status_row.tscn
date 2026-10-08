@@ -1,0 +1,123 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://src/gameplay/unit_status_row.gd" id="1_row"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_row"]
+bg_color = Color(0.08, 0.1, 0.11, 0.92)
+border_color = Color(0.76, 0.84, 0.87, 0.2)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+content_margin_left = 8.0
+content_margin_top = 7.0
+content_margin_right = 8.0
+content_margin_bottom = 7.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_alert"]
+bg_color = Color(0.15, 0.14, 0.08, 0.98)
+border_color = Color(0.91, 0.82, 0.35, 0.85)
+border_width_left = 2
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+content_margin_left = 8.0
+content_margin_top = 7.0
+content_margin_right = 8.0
+content_margin_bottom = 7.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_health_bg"]
+bg_color = Color(0.16, 0.19, 0.19, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_health_fill"]
+bg_color = Color(0.835294, 0.913725, 0.223529, 1)
+
+[node name="UnitStatusRow" type="PanelContainer"]
+custom_minimum_size = Vector2(0, 104)
+theme_override_styles/panel = SubResource("StyleBoxFlat_row")
+mouse_filter = 0
+script = ExtResource("1_row")
+alert_style = SubResource("StyleBoxFlat_alert")
+
+[node name="Contents" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 16
+mouse_filter = 2
+
+[node name="AlertFlash" type="ColorRect" parent="." unique_id=1569930184]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.835294, 0.913725, 0.223529, 1)
+mouse_filter = 2
+
+[node name="Icon" type="TextureRect" parent="Contents" unique_id=1043408414]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(52, 52)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+modulate = Color(0.835294, 0.913725, 0.223529, 1)
+mouse_filter = 2
+
+[node name="Details" type="VBoxContainer" parent="Contents"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+theme_override_constants/separation = 6
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="Contents/Details" unique_id=1460288178]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.93, 0.95, 0.92, 1)
+theme_override_font_sizes/font_size = 18
+text = "CLASS / UNIT"
+text_overrun_behavior = 3
+mouse_filter = 2
+
+[node name="State" type="Label" parent="Contents/Details" unique_id=193221328]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.64, 0.7, 0.71, 1)
+theme_override_font_sizes/font_size = 16
+text = "IDLE"
+mouse_filter = 2
+
+[node name="Vitals" type="VBoxContainer" parent="Contents"]
+custom_minimum_size = Vector2(96, 0)
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 6
+mouse_filter = 2
+
+[node name="HealthValue" type="Label" parent="Contents/Vitals" unique_id=500402272]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.83, 0.87, 0.85, 1)
+theme_override_font_sizes/font_size = 15
+text = "100%"
+horizontal_alignment = 2
+mouse_filter = 2
+
+[node name="Health" type="ProgressBar" parent="Contents/Vitals" unique_id=964984821]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(96, 14)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_health_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_health_fill")
+show_percentage = false
+mouse_filter = 2

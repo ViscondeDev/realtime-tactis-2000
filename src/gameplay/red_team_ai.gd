@@ -85,17 +85,17 @@ func _register_unit(unit: Unit) -> void:
 		"target_position": Vector2.INF,
 		"build_target": null,
 	}
-	unit.status_reported.connect(_on_unit_status_reported.bind(unit))
+	unit.condition_changed.connect(_on_unit_condition_changed.bind(unit))
 	unit.tree_exiting.connect(_on_unit_exiting.bind(unit_id))
 
 
-func _on_unit_status_reported(report_type: StringName, active: bool, unit: Unit) -> void:
+func _on_unit_condition_changed(condition: StringName, active: bool, unit: Unit) -> void:
 	if not is_instance_valid(unit):
 		return
 	var state: Dictionary = _unit_states.get(unit.get_instance_id(), {})
 	if state.is_empty():
 		return
-	match report_type:
+	match condition:
 		&"outnumbered":
 			state["outnumbered"] = active
 		&"low_health":

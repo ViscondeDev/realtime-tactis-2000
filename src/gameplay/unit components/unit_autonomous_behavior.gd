@@ -14,6 +14,13 @@ var state: State = State.IDLE
 var _target_enemy: Unit
 var _target_dispenser: HealthDispenser
 var _building_dispenser: HealthDispenser
+var is_building_dispenser: bool:
+	get:
+		return (
+			is_instance_valid(_building_dispenser)
+			and _building_dispenser.is_building
+			and _building_dispenser.builder == _unit
+		)
 var _control_point_target: ControlPoint
 var _fire_timer: float = 0.0
 var _burst_rounds_remaining: int = 0
@@ -36,6 +43,7 @@ func _physics_process(delta: float) -> void:
 
 
 func on_player_move_order_issued() -> void:
+	_unit.set_condition(&"idle_without_order", false)
 	_target_enemy = null
 	_target_dispenser = null
 	_fire_timer = 0.0
@@ -52,20 +60,20 @@ func on_player_move_order_issued() -> void:
 
 func _update_idle() -> void:
 	if _acquire_visible_enemy():
-		_unit.set_report_condition(&"idle_without_order", false)
+		_unit.set_condition(&"idle_without_order", false)
 		_transition_to(State.ENGAGING)
 	elif _can_acquire_dispenser() and _acquire_visible_dispenser():
-		_unit.set_report_condition(&"idle_without_order", false)
+		_unit.set_condition(&"idle_without_order", false)
 		_transition_to(State.ENGAGING)
 	elif _movement.has_active_move_order():
-		_unit.set_report_condition(&"idle_without_order", false)
+		_unit.set_condition(&"idle_without_order", false)
 		_transition_to(State.MOVING)
 	elif _hold_visible_control_point():
-		_unit.set_report_condition(&"idle_without_order", false)
+		_unit.set_condition(&"idle_without_order", false)
 	else:
 		if _unit.unit_class == Unit.Class.SMART:
 			_try_build_visible_dispenser()
-		_unit.set_report_condition(&"idle_without_order", true)
+		_unit.set_condition(&"idle_without_order", not is_building_dispenser)
 
 
 func _update_moving() -> void:

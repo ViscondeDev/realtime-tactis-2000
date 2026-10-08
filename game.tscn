@@ -11,7 +11,7 @@
 [ext_resource type="Script" uid="uid://btusjhtd4pkht" path="res://src/gameplay/yellow_team_camera.gd" id="11_yellow_team_camera"]
 [ext_resource type="Script" uid="uid://cwxqpmv3uu5rt" path="res://src/gameplay/red_team_ai.gd" id="12_red_team_ai"]
 [ext_resource type="Script" uid="uid://bsn5jpqx8v6xp" path="res://src/gameplay/match_controller.gd" id="13_match_controller"]
-[ext_resource type="Script" uid="uid://cvahsvfevyws8" path="res://src/gameplay/match_hud.gd" id="14_match_hud"]
+[ext_resource type="PackedScene" uid="uid://csj6kfn2dndps" path="res://src/gameplay/match_hud.tscn" id="14_match_hud"]
 [ext_resource type="Script" uid="uid://d16rfyvpgtlxb" path="res://src/gameplay/health_dispenser.gd" id="15_health_dispenser"]
 
 [node name="Game" type="Node2D" unique_id=1544827901]
@@ -202,5 +202,6 @@ _projectile_pool = NodePath("../ProjectilePool")
 [node name="RedTeamAI" type="Node2D" parent="Level" unique_id=2106649642]
 script = ExtResource("12_red_team_ai")
 
-[node name="MatchHUD" type="CanvasLayer" parent="." unique_id=427083564]
-script = ExtResource("14_match_hud")
+[node name="MatchHUD" parent="." unique_id=427083564 node_paths=PackedStringArray("match_controller", "respawn_controller") instance=ExtResource("14_match_hud")]
+match_controller = NodePath("../Level/MatchController")
+respawn_controller = NodePath("../Level/UnitRespawnController")

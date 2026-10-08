@@ -51,4 +51,4 @@ func _set_current_health(value: float) -> void:
 
 func _update_low_health_report() -> void:
 	var is_low_health: bool = _max_health > 0.0 and _current_health / _max_health <= 0.3
-	_unit.set_report_condition(&"low_health", is_low_health)
+	_unit.set_condition(&"low_health", is_low_health)

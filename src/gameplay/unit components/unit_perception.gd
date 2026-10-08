@@ -63,9 +63,9 @@ func can_see_position(world_position: Vector2) -> bool:
 	var original_target_position: Vector2 = sight_line.target_position
 	sight_line.target_position = sight_line.to_local(world_position)
 	sight_line.force_raycast_update()
-	var is_visible: bool = not sight_line.is_colliding()
+	var has_line_of_sight: bool = not sight_line.is_colliding()
 	sight_line.target_position = original_target_position
-	return is_visible
+	return has_line_of_sight
 
 
 func _sight_line_check() -> void:
@@ -86,7 +86,7 @@ func _sight_line_check() -> void:
 	for enemy: Unit in onsight_enemy_units:
 		if is_instance_valid(enemy) and enemy.unit_health.current_health > 0.0:
 			visible_enemies += 1
-	_unit.set_report_condition(&"outnumbered", visible_enemies > visible_allies)
+	_unit.set_condition(&"outnumbered", visible_enemies > visible_allies)
 
 
 func _update_visible_unit(candidates: Array[Unit], visible_units: Array[Unit]) -> void:
