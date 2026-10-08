@@ -122,44 +122,25 @@ script = ExtResource("7_projectile_pool")
 [node name="UnitCommandController" type="Node2D" parent="Level" unique_id=52227663]
 script = ExtResource("6_mfdv2")
 
-[node name="HealthDispenser" type="StaticBody2D" parent="Level" unique_id=1887715674]
-position = Vector2(0, 512)
-collision_layer = 16
-collision_mask = 0
-script = ExtResource("15_health_dispenser")
-maximum_health = 150.0
-healing_per_second = 30.0
-is_built = true
-metadata/_custom_type_script = "uid://d16rfyvpgtlxb"
-
 [node name="HealthDispenser3" type="StaticBody2D" parent="Level" unique_id=903858893]
-position = Vector2(704, 192)
+position = Vector2(832, 192)
 collision_layer = 32
 collision_mask = 0
 script = ExtResource("15_health_dispenser")
+healing_radius = 290.0
 maximum_health = 150.0
-healing_per_second = 30.0
+healing_per_second = 40.0
 metadata/_custom_type_script = "uid://d16rfyvpgtlxb"
 
 [node name="HealthDispenser4" type="StaticBody2D" parent="Level" unique_id=866026612]
-position = Vector2(447, -704)
+position = Vector2(320, -704)
 collision_layer = 32
 collision_mask = 0
 script = ExtResource("15_health_dispenser")
+healing_radius = 290.0
 maximum_health = 150.0
-healing_per_second = 30.0
+healing_per_second = 40.0
 team = 1
-metadata/_custom_type_script = "uid://d16rfyvpgtlxb"
-
-[node name="HealthDispenser2" type="StaticBody2D" parent="Level" unique_id=202232472]
-position = Vector2(1152, -1024)
-collision_layer = 16
-collision_mask = 0
-script = ExtResource("15_health_dispenser")
-maximum_health = 150.0
-healing_per_second = 30.0
-team = 1
-is_built = true
 metadata/_custom_type_script = "uid://d16rfyvpgtlxb"
 
 [node name="Unit" parent="Level" unique_id=865573347 node_paths=PackedStringArray("projectile_pool") instance=ExtResource("1_e2o6t")]
@@ -201,6 +182,7 @@ _projectile_pool = NodePath("../ProjectilePool")
 
 [node name="RedTeamAI" type="Node2D" parent="Level" unique_id=2106649642]
 script = ExtResource("12_red_team_ai")
+issue_delay_seconds = 2.5
 
 [node name="MatchHUD" parent="." unique_id=427083564 node_paths=PackedStringArray("match_controller", "respawn_controller") instance=ExtResource("14_match_hud")]
 match_controller = NodePath("../Level/MatchController")

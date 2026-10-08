@@ -20,6 +20,7 @@ const HEALTH_DISPENSER_GROUP: StringName = &"health_dispensers"
 		queue_redraw()
 @export_range(1.0, 1000.0, 1.0) var maximum_health: float = 125.0
 @export_range(0.0, 100.0, 0.5) var healing_per_second: float = 20.0
+@export var overheal_enabled: bool = true
 
 @export var team: Unit.Team = Unit.Team.YELLOW
 var is_building: bool = false
@@ -29,6 +30,7 @@ var _construction_elapsed: float = 0.0
 var current_health: float = maximum_health
 var _collision_shape: CollisionShape2D
 var _healing_units: Array[Unit] = []
+var _serviced_units: Array[Unit] = []
 
 
 func _ready() -> void:
@@ -79,6 +81,7 @@ func take_damage(amount: float) -> void:
 		builder = null
 		_construction_elapsed = 0.0
 		current_health = maximum_health
+		_clear_serviced_units()
 		set_collision_layer_value(GOALS_LAYER, false)
 		set_collision_layer_value(BUILD_SITES_LAYER, true)
 		queue_redraw()
@@ -111,22 +114,35 @@ func _finish_construction() -> void:
 
 func _heal_nearby_units(delta: float) -> void:
 	_healing_units.clear()
-	if healing_per_second <= 0.0:
-		return
+	var nearby_units: Array[Unit] = []
 
 	var radius_squared: float = healing_radius * healing_radius
 	for node: Node in get_tree().get_nodes_in_group(Unit.COMMANDABLE_UNITS_GROUP):
 		var unit: Unit = node as Unit
 		if unit == null or unit.team != team:
 			continue
-		if unit.unit_health.current_health <= 0.0:
+		if not is_instance_valid(unit.unit_health) or unit.unit_health.current_health <= 0.0:
 			continue
 		if unit.global_position.distance_squared_to(global_position) > radius_squared:
 			continue
-		if unit.unit_health.current_health >= unit.unit_health.max_health:
-			continue
-		_healing_units.append(unit)
-		unit.unit_health.heal(healing_per_second * delta)
+		nearby_units.append(unit)
+		unit.unit_health.set_overheal_source(self, overheal_enabled)
+		if healing_per_second > 0.0 and unit.unit_health.current_health < unit.unit_health.healing_ceiling(overheal_enabled):
+			_healing_units.append(unit)
+			unit.unit_health.heal(healing_per_second * delta)
+
+	for unit: Unit in _serviced_units:
+		if is_instance_valid(unit) and not nearby_units.has(unit) and is_instance_valid(unit.unit_health):
+			unit.unit_health.set_overheal_source(self, false)
+	_serviced_units = nearby_units
+
+
+func _clear_serviced_units() -> void:
+	for unit: Unit in _serviced_units:
+		if is_instance_valid(unit) and is_instance_valid(unit.unit_health):
+			unit.unit_health.set_overheal_source(self, false)
+	_serviced_units.clear()
+	_healing_units.clear()
 
 
 func _draw() -> void:

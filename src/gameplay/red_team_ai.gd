@@ -3,6 +3,8 @@
 class_name RedTeamAI
 extends Node2D
 
+@export_range(0.0, 10.0, 0.1, "or_greater") var issue_delay_seconds: float = 0.0
+
 const CONTROL_POINTS_GROUP: StringName = &"control_points"
 const RESPAWN_POINTS_GROUP: StringName = &"respawn_points"
 const ORDER_REFRESH_INTERVAL: float = 0.25
@@ -32,23 +34,30 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	_order_refresh_timer += delta
-	if _order_refresh_timer < ORDER_REFRESH_INTERVAL:
-		return
-	_order_refresh_timer = 0.0
-	for unit_id: int in _unit_states.keys():
-		var unit_object: Object = instance_from_id(unit_id)
-		if not is_instance_valid(unit_object):
-			_unit_states.erase(unit_id)
-			continue
-		var unit: Unit = unit_object as Unit
-		if unit == null:
-			_unit_states.erase(unit_id)
-			continue
-		var state: Dictionary = _unit_states[unit_id]
-		if _is_retreating(state):
-			_issue_retreat_order(unit, state)
-		else:
-			_issue_role_order(unit, state)
+	if _order_refresh_timer >= ORDER_REFRESH_INTERVAL:
+		_order_refresh_timer = 0.0
+		for unit_id: int in _unit_states.keys():
+			var unit_object: Object = instance_from_id(unit_id)
+			if not is_instance_valid(unit_object):
+				_unit_states.erase(unit_id)
+				continue
+			var unit: Unit = unit_object as Unit
+			if unit == null:
+				_unit_states.erase(unit_id)
+				continue
+			var state: Dictionary = _unit_states[unit_id]
+			if state.get("prepare_for_push", false):
+				if unit.unit_health.current_health >= unit.unit_health.overheal_max_health:
+					state["prepare_for_push"] = false
+				elif _issue_preparation_order(unit, state):
+					continue
+				else:
+					state["prepare_for_push"] = false
+			if _is_retreating(state):
+				_issue_retreat_order(unit, state)
+			else:
+				_issue_role_order(unit, state)
+	_advance_pending_orders(delta)
 
 
 func _find_group_node(group_name: StringName) -> Node2D:
@@ -80,9 +89,12 @@ func _register_unit(unit: Unit) -> void:
 	_unit_states[unit_id] = {
 		"outnumbered": false,
 		"low_health": false,
+		"prepare_for_push": false,
 		"order_mode": "",
 		"follow_unit": null,
 		"target_position": Vector2.INF,
+		"pending_order": {},
+		"pending_order_elapsed": 0.0,
 		"build_target": null,
 	}
 	unit.condition_changed.connect(_on_unit_condition_changed.bind(unit))
@@ -98,12 +110,19 @@ func _on_unit_condition_changed(condition: StringName, active: bool, unit: Unit)
 	match condition:
 		&"outnumbered":
 			state["outnumbered"] = active
+			if active and unit.unit_health.current_health < unit.unit_health.overheal_max_health:
+				state["prepare_for_push"] = _find_nearest_health(unit, true) != null
 		&"low_health":
 			state["low_health"] = active
 		&"idle_without_order":
-			if active and not _is_retreating(state):
-				_issue_role_order(unit, state)
+			if active:
+				if state.get("prepare_for_push", false):
+					_issue_preparation_order(unit, state)
+				elif not _is_retreating(state):
+					_issue_role_order(unit, state)
 			return
+	if state.get("prepare_for_push", false) and _issue_preparation_order(unit, state):
+		return
 	if _is_retreating(state):
 		_issue_retreat_order(unit, state)
 	else:
@@ -112,6 +131,14 @@ func _on_unit_condition_changed(condition: StringName, active: bool, unit: Unit)
 
 func _is_retreating(state: Dictionary) -> bool:
 	return state.get("outnumbered", false) or state.get("low_health", false)
+
+
+func _issue_preparation_order(unit: Unit, state: Dictionary) -> bool:
+	var dispenser: HealthDispenser = _find_nearest_health(unit, true)
+	if dispenser == null:
+		return false
+	_issue_order_if_changed(unit, state, "overheal", dispenser.global_position, null)
+	return true
 
 
 func _issue_objective_order(unit: Unit, state: Dictionary) -> void:
@@ -137,15 +164,33 @@ func _issue_role_order(unit: Unit, state: Dictionary) -> void:
 func _issue_smart_build_order(unit: Unit, state: Dictionary) -> void:
 	var active_build: HealthDispenser = _find_dispenser_being_built_by(unit)
 	if active_build != null:
+		_clear_pending_order(state)
 		state["build_target"] = active_build
 		state["order_mode"] = "build_wait"
 		state["follow_unit"] = null
 		state["target_position"] = active_build.global_position
 		return
 
+	var should_build_dispenser: bool = _is_red_controlled() or not _has_team_dispenser(Unit.Team.RED)
+	if not should_build_dispenser:
+		state["build_target"] = null
+		_issue_objective_order(unit, state)
+		return
+
 	var target: HealthDispenser = state.get("build_target") as HealthDispenser
 	if is_instance_valid(target) and not target.is_built:
 		if target.is_building:
+			_clear_pending_order(state)
+			state["order_mode"] = "build_wait"
+			state["follow_unit"] = null
+			state["target_position"] = target.global_position
+			return
+		if (
+			not unit.unit_movement.has_active_move_order()
+			and unit.global_position.distance_to(target.global_position) <= UnitAutonomousBehavior.DISPENSER_BUILD_DISTANCE
+			and unit.unit_autonomous_behavior.begin_dispenser_construction(target)
+		):
+			_clear_pending_order(state)
 			state["order_mode"] = "build_wait"
 			state["follow_unit"] = null
 			state["target_position"] = target.global_position
@@ -160,6 +205,14 @@ func _issue_smart_build_order(unit: Unit, state: Dictionary) -> void:
 		_issue_order_if_changed(unit, state, "build_site", target.global_position, null)
 	else:
 		_issue_objective_order(unit, state)
+
+
+func _has_team_dispenser(team: Unit.Team) -> bool:
+	for node: Node in get_tree().get_nodes_in_group(HealthDispenser.HEALTH_DISPENSER_GROUP):
+		var dispenser: HealthDispenser = node as HealthDispenser
+		if is_instance_valid(dispenser) and dispenser.team == team and (dispenser.is_built or dispenser.is_building):
+			return true
+	return false
 
 
 func _find_dispenser_being_built_by(unit: Unit) -> HealthDispenser:
@@ -244,7 +297,7 @@ func _find_nearest_living_ally(unit: Unit) -> Unit:
 			nearest_ally = candidate
 	return nearest_ally
 
-func _find_nearest_health(unit: Unit) -> HealthDispenser:
+func _find_nearest_health(unit: Unit, overheal_only: bool = false) -> HealthDispenser:
 	var nearest_health: HealthDispenser = null
 	var nearest_distance_squared: float = INF
 	for node: Node in get_tree().get_nodes_in_group(HealthDispenser.HEALTH_DISPENSER_GROUP):
@@ -252,6 +305,8 @@ func _find_nearest_health(unit: Unit) -> HealthDispenser:
 			continue
 		var candidate: HealthDispenser = node as HealthDispenser
 		if candidate == null or candidate.team != Unit.Team.RED or not candidate.is_built:
+			continue
+		if overheal_only and (not candidate.overheal_enabled or candidate.healing_per_second <= 0.0):
 			continue
 		if candidate.current_health <= 0.0:
 			continue
@@ -272,11 +327,62 @@ func _issue_order_if_changed(unit: Unit, state: Dictionary, mode: String, target
 		and previous_follow == follow_unit
 		and previous_position.distance_to(target) <= TARGET_UPDATE_DISTANCE
 	):
+		_clear_pending_order(state)
 		return
+	var pending_order: Dictionary = state.get("pending_order", {})
+	if issue_delay_seconds > 0.0:
+		if not pending_order.is_empty() and pending_order["mode"] == mode and pending_order["follow_unit"] == follow_unit:
+			pending_order["target_position"] = target
+			return
+		state["pending_order"] = {
+			"mode": mode,
+			"follow_unit": follow_unit,
+			"target_position": target,
+		}
+		state["pending_order_elapsed"] = 0.0
+		return
+	_clear_pending_order(state)
+	_issue_move_order(unit, state, mode, target, follow_unit)
+
+
+func _advance_pending_orders(delta: float) -> void:
+	for unit_id: int in _unit_states.keys():
+		var state: Dictionary = _unit_states[unit_id]
+		var pending_order: Dictionary = state.get("pending_order", {})
+		if pending_order.is_empty():
+			continue
+		var unit_object: Object = instance_from_id(unit_id)
+		if not is_instance_valid(unit_object):
+			_unit_states.erase(unit_id)
+			continue
+		var unit: Unit = unit_object as Unit
+		if unit == null:
+			_unit_states.erase(unit_id)
+			continue
+		var elapsed: float = state.get("pending_order_elapsed", 0.0) + delta
+		state["pending_order_elapsed"] = elapsed
+		if elapsed < issue_delay_seconds:
+			continue
+		_issue_move_order(
+			unit,
+			state,
+			pending_order["mode"],
+			pending_order["target_position"],
+			pending_order["follow_unit"]
+		)
+		_clear_pending_order(state)
+
+
+func _issue_move_order(unit: Unit, state: Dictionary, mode: String, target: Vector2, follow_unit: Unit) -> void:
 	state["order_mode"] = mode
 	state["follow_unit"] = follow_unit
 	state["target_position"] = target
 	unit.issue_move_order(target)
+
+
+func _clear_pending_order(state: Dictionary) -> void:
+	state["pending_order"] = {}
+	state["pending_order_elapsed"] = 0.0
 
 
 func _on_unit_exiting(unit_id: int) -> void:

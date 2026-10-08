@@ -20,6 +20,7 @@ const ALERT_FLASH_FADE_SECONDS: float = 0.32
 @onready var _health_value: Label = %HealthValue
 @onready var _alert_flash: ColorRect = %AlertFlash
 
+var _overheal_fill_style: StyleBoxFlat
 var _unit: Unit
 var _last_state: String = ""
 var _is_alert: bool = false
@@ -75,10 +76,23 @@ func _on_health_changed(new_health: float) -> void:
 	if not is_instance_valid(_unit):
 		return
 	var maximum_health: float = _unit.unit_health.max_health
-	_health.max_value = maximum_health
+	_health.max_value = _unit.unit_health.overheal_max_health
 	_health.value = new_health
 	_health_value.text = "%d%%" % roundi(100.0 * new_health / maximum_health) if maximum_health > 0.0 else "0%"
+	if new_health > maximum_health:
+		_health.add_theme_stylebox_override("fill", _get_overheal_fill_style())
+	else:
+		_health.remove_theme_stylebox_override("fill")
 	_refresh_state()
+
+
+func _get_overheal_fill_style() -> StyleBoxFlat:
+	if _overheal_fill_style == null:
+		var fill_style: StyleBoxFlat = _health.get_theme_stylebox("fill") as StyleBoxFlat
+		if fill_style != null:
+			_overheal_fill_style = fill_style.duplicate()
+			_overheal_fill_style.bg_color = Color(0.22, 0.82, 0.72, 1.0)
+	return _overheal_fill_style
 
 
 func _on_report_condition_changed(_condition: StringName, _active: bool) -> void:

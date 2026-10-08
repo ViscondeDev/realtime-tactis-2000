@@ -86,7 +86,8 @@ func _sight_line_check() -> void:
 	for enemy: Unit in onsight_enemy_units:
 		if is_instance_valid(enemy) and enemy.unit_health.current_health > 0.0:
 			visible_enemies += 1
-	_unit.set_condition(&"outnumbered", visible_enemies > visible_allies)
+	var is_overhealed: bool = _unit.unit_health.current_health > _unit.unit_health.max_health
+	_unit.set_condition(&"outnumbered", visible_enemies > visible_allies and not is_overhealed)
 
 
 func _update_visible_unit(candidates: Array[Unit], visible_units: Array[Unit]) -> void:

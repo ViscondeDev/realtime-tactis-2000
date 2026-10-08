@@ -5,6 +5,7 @@ extends Node
 enum State {IDLE, MOVING, ENGAGING}
 
 const RETREAT_HEALTH_RATIO: float = 0.4
+const DISPENSER_BUILD_DISTANCE: float = 300.0
 
 @export var _unit: Unit
 @export var retreat_distance: float = 300.0
@@ -56,6 +57,21 @@ func on_player_move_order_issued() -> void:
 		_building_dispenser = null
 	_movement.clear_autonomous_move_target()
 	_transition_to(State.MOVING)
+
+
+func begin_dispenser_construction(dispenser: HealthDispenser) -> bool:
+	if _unit.unit_class != Unit.Class.SMART or not is_instance_valid(dispenser):
+		return false
+	if _movement.has_active_move_order() or is_building_dispenser:
+		return false
+	if _unit.global_position.distance_to(dispenser.global_position) > DISPENSER_BUILD_DISTANCE:
+		return false
+	if not dispenser.begin_construction(_unit):
+		return false
+	_building_dispenser = dispenser
+	_unit.set_condition(&"idle_without_order", false)
+	_transition_to(State.IDLE)
+	return true
 
 
 func _update_idle() -> void:
@@ -296,12 +312,11 @@ func _find_visible_enemy_dispenser() -> HealthDispenser:
 
 
 func _try_build_visible_dispenser() -> void:
-	if _unit.unit_class != Unit.Class.SMART or _movement.has_active_move_order():
+	if _unit.unit_class != Unit.Class.SMART or _movement.has_active_move_order() or is_building_dispenser:
 		return
 	for dispenser: HealthDispenser in _perception.onsight_areas:
 		if is_instance_valid(dispenser) and not dispenser.is_built and not dispenser.is_building:
-			if dispenser.begin_construction(_unit):
-				_building_dispenser = dispenser
+			if begin_dispenser_construction(dispenser):
 				return
 
 

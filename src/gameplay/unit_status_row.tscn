@@ -121,3 +121,14 @@ theme_override_styles/background = SubResource("StyleBoxFlat_health_bg")
 theme_override_styles/fill = SubResource("StyleBoxFlat_health_fill")
 show_percentage = false
 mouse_filter = 2
+
+[node name="BaselineMarker" type="ColorRect" parent="Contents/Vitals/Health"]
+layout_mode = 1
+anchors_preset = 0
+anchor_left = 0.666667
+anchor_right = 0.666667
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_right = 1.0
+color = Color(0.08, 0.1, 0.11, 0.9)
+mouse_filter = 2
