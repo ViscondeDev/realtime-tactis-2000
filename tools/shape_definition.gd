@@ -17,6 +17,10 @@ enum LineStyle {CONTINUOUS, DOTTED, SEGMENTED}
 	set(value):
 		offset = value
 		emit_changed()
+@export var rotation: float = 0.0:
+	set(value):
+		rotation = value
+		emit_changed()
 @export_range(1.0, 500.0, 1.0) var radius: float = 64.0:
 	set(value):
 		radius = clampf(value, 1.0, 500.0)

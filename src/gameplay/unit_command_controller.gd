@@ -6,6 +6,18 @@ const MINIMUM_DRAG_DISTANCE_PIXELS: float = 12.0
 const DRAG_GOAL_RING_RADIUS: float = 10.0
 
 var _dragged_unit: Unit = null
+var _drag_goal_ring: ShapeDefinition
+@onready var _shape_tool: ShapeTool = $ShapeTool
+
+
+func _ready() -> void:
+	_drag_goal_ring = ShapeDefinition.new()
+	_drag_goal_ring.shape = ShapeDefinition.Shape.CIRCLE
+	_drag_goal_ring.radius = DRAG_GOAL_RING_RADIUS
+	_drag_goal_ring.fill_enabled = false
+	_drag_goal_ring.line_width = 2.0
+	_shape_tool.definitions = [_drag_goal_ring]
+	_shape_tool.visible = false
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -32,10 +44,13 @@ func _process(_delta: float) -> void:
 
 func _draw() -> void:
 	if _dragged_unit == null:
+		_shape_tool.visible = false
 		return
 	var ring_color: Color = Color.html(Unit.TEAM_COLORS[_dragged_unit.team])
 	ring_color.a = 0.5
-	draw_arc(to_local(get_global_mouse_position()), DRAG_GOAL_RING_RADIUS, 0.0, TAU, 32, ring_color, 2.0)
+	_drag_goal_ring.offset = to_local(get_global_mouse_position())
+	_drag_goal_ring.outline_color = ring_color
+	_shape_tool.visible = true
 
 
 func _finish_drag() -> void:

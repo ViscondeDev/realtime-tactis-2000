@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://bt1qf6j1ifhf7" path="res://src/gameplay/unit.tscn" id="10_akum3"]
 [ext_resource type="Script" uid="uid://y35tpk8ols0k" path="res://src/gameplay/unit_respawn_controller.gd" id="11_u75ec"]
 [ext_resource type="Script" uid="uid://cwxqpmv3uu5rt" path="res://src/gameplay/red_team_ai.gd" id="12_55yga"]
+[ext_resource type="Script" uid="uid://ibcse2mnrnca" path="res://tools/shape_tool.gd" id="13_shape_tool"]
 
 [node name="Level" type="Node2D" unique_id=334309463]
 
@@ -101,21 +102,37 @@ metadata/_custom_type_script = "uid://bxn47tpjyr6rv"
 position = Vector2(-128, 704)
 script = ExtResource("5_nrsx4")
 
+[node name="ShapeTool" type="Node2D" parent="RespawnPoints/Yellow"]
+script = ExtResource("13_shape_tool")
+definitions = []
+
 [node name="Red" type="Node2D" parent="RespawnPoints" unique_id=1473376266 groups=["respawn_points"]]
 position = Vector2(1280, -1152)
 script = ExtResource("5_nrsx4")
 team = 1
+
+[node name="ShapeTool" type="Node2D" parent="RespawnPoints/Red"]
+script = ExtResource("13_shape_tool")
+definitions = []
 
 [node name="ControlPoint" type="Node2D" parent="." unique_id=1268325207 groups=["control_points"]]
 position = Vector2(576, -256)
 script = ExtResource("6_e8qqr")
 capture_radius = 250.0
 
+[node name="ShapeTool" type="Node2D" parent="ControlPoint"]
+script = ExtResource("13_shape_tool")
+definitions = []
+
 [node name="ProjectilePool" type="Node2D" parent="." unique_id=315060351]
 script = ExtResource("7_nu0k4")
 
 [node name="UnitCommandController" type="Node2D" parent="." unique_id=1211363128]
 script = ExtResource("8_yli4d")
+
+[node name="ShapeTool" type="Node2D" parent="UnitCommandController"]
+script = ExtResource("13_shape_tool")
+definitions = []
 
 [node name="HealthDispenser3" type="StaticBody2D" parent="." unique_id=1981513805]
 position = Vector2(832, 192)
@@ -127,6 +144,14 @@ maximum_health = 150.0
 healing_per_second = 40.0
 metadata/_custom_type_script = "uid://d16rfyvpgtlxb"
 
+[node name="ConstructionShapeTool" type="Node2D" parent="HealthDispenser3"]
+script = ExtResource("13_shape_tool")
+definitions = []
+
+[node name="BuiltShapeTool" type="Node2D" parent="HealthDispenser3"]
+script = ExtResource("13_shape_tool")
+definitions = []
+
 [node name="HealthDispenser4" type="StaticBody2D" parent="." unique_id=810225688]
 position = Vector2(320, -704)
 collision_layer = 32
@@ -137,6 +162,14 @@ maximum_health = 150.0
 healing_per_second = 40.0
 team = 1
 metadata/_custom_type_script = "uid://d16rfyvpgtlxb"
+
+[node name="ConstructionShapeTool" type="Node2D" parent="HealthDispenser4"]
+script = ExtResource("13_shape_tool")
+definitions = []
+
+[node name="BuiltShapeTool" type="Node2D" parent="HealthDispenser4"]
+script = ExtResource("13_shape_tool")
+definitions = []
 
 [node name="Unit" parent="." unique_id=865573347 node_paths=PackedStringArray("projectile_pool") instance=ExtResource("10_akum3")]
 position = Vector2(0, 512)

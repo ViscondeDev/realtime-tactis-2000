@@ -17,6 +17,18 @@ var capture_progress: float = 0.0:
 		capture_progress = clampf(value, -1.0, 1.0)
 		queue_redraw()
 
+@onready var _shape_tool: ShapeTool = $ShapeTool
+
+
+func _ready() -> void:
+	var hexagon: ShapeDefinition = ShapeDefinition.new()
+	hexagon.shape = ShapeDefinition.Shape.HEXAGON
+	hexagon.radius = HEXAGON_RADIUS
+	hexagon.fill_color = Color(1.0, 1.0, 1.0, 0.08)
+	hexagon.outline_color = Color.html("#263b46")
+	hexagon.line_width = HEXAGON_OUTLINE_WIDTH
+	_shape_tool.definitions = [hexagon]
+
 
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint():
@@ -42,15 +54,6 @@ func _process(delta: float) -> void:
 
 
 func _draw() -> void:
-	var hexagon: PackedVector2Array = PackedVector2Array()
-	for corner: int in range(6):
-		var angle: float = -PI / 2.0 + TAU * float(corner) / 6.0
-		hexagon.append(Vector2(cos(angle), sin(angle)) * HEXAGON_RADIUS)
-	var closed_outline: PackedVector2Array = hexagon.duplicate()
-	closed_outline.append(hexagon[0])
-
-	draw_colored_polygon(hexagon, Color(1.0, 1.0, 1.0, 0.08))
-	draw_polyline(closed_outline, Color.html("#263b46"), HEXAGON_OUTLINE_WIDTH, true)
 	_draw_progress_bar()
 
 

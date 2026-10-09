@@ -38,7 +38,7 @@ func _draw() -> void:
 
 
 func _draw_definition(definition: ShapeDefinition) -> void:
-	var points: PackedVector2Array = _shape_points(definition)
+	var points: PackedVector2Array = _definition_points(definition)
 	if points.is_empty():
 		return
 
@@ -87,6 +87,16 @@ func _shape_points(definition: ShapeDefinition) -> PackedVector2Array:
 		ShapeDefinition.Shape.LINE:
 			return PackedVector2Array([Vector2(-effective_radius, 0.0), Vector2(effective_radius, 0.0)])
 	return PackedVector2Array()
+
+
+func _definition_points(definition: ShapeDefinition) -> PackedVector2Array:
+	var points: PackedVector2Array = _shape_points(definition)
+	if is_zero_approx(definition.rotation):
+		return points
+	var rotation_transform: Transform2D = Transform2D(definition.rotation, Vector2.ZERO)
+	for point_index: int in range(points.size()):
+		points[point_index] = rotation_transform * points[point_index]
+	return points
 
 
 func _effective_radius(definition: ShapeDefinition) -> float:
@@ -240,7 +250,7 @@ func _export_png() -> void:
 
 
 func _definition_bounds(definition: ShapeDefinition) -> Rect2:
-	var points: PackedVector2Array = _shape_points(definition)
+	var points: PackedVector2Array = _definition_points(definition)
 	if points.is_empty():
 		return Rect2()
 
@@ -298,7 +308,7 @@ func _build_svg() -> String:
 	for definition: ShapeDefinition in definitions:
 		if definition == null:
 			continue
-		var points: PackedVector2Array = _shape_points(definition)
+		var points: PackedVector2Array = _definition_points(definition)
 		if points.size() < 2:
 			continue
 		var is_closed: bool = definition.shape != ShapeDefinition.Shape.LINE

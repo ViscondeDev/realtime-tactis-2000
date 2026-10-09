@@ -33,6 +33,26 @@ func _run() -> void:
 		push_error("Loaded level is missing the match controller or yellow units.")
 		quit(1)
 		return
+	if yellow_unit.get_node_or_null("Rendering/UnitShapeRenderer/ShapeTool") == null:
+		push_error("Unit body ShapeTool is missing from the unit scene tree.")
+		quit(1)
+		return
+	for shape_node_name: String in ["GoalMarkerShapes", "PathDotShapes1", "PathDotShapes2", "PathDotShapes3"]:
+		if yellow_unit.get_node_or_null("Rendering/UnitPathRenderer/" + shape_node_name) == null:
+			push_error("Unit path ShapeTool '%s' is missing from the unit scene tree." % shape_node_name)
+			quit(1)
+			return
+	for shape_node_path: String in [
+		"ControlPoint/ShapeTool",
+		"RespawnPoints/Yellow/ShapeTool",
+		"UnitCommandController/ShapeTool",
+		"HealthDispenser3/ConstructionShapeTool",
+		"HealthDispenser3/BuiltShapeTool",
+	]:
+		if level.get_node_or_null(shape_node_path) == null:
+			push_error("Level ShapeTool '%s' is missing from the level scene tree." % shape_node_path)
+			quit(1)
+			return
 
 	controller.queue_player_order(yellow_unit, yellow_unit.global_position + Vector2(100.0, 0.0))
 	if yellow_unit.unit_movement.has_active_move_order():

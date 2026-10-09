@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://e8fnamqpbfex" path="res://src/gameplay/unit components/unit_perception.gd" id="5_inr3l"]
 [ext_resource type="Script" uid="uid://cabrh6ctmaedx" path="res://src/gameplay/unit components/unit_movement.gd" id="5_r6ibq"]
 [ext_resource type="Script" uid="uid://dlipap3g1dug7" path="res://src/gameplay/unit components/unit_autonomous_behavior.gd" id="6_autonomous"]
+[ext_resource type="Script" uid="uid://ibcse2mnrnca" path="res://tools/shape_tool.gd" id="7_shape_tool"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ninnf"]
 radius = 510.00098
@@ -57,6 +58,26 @@ _unit = NodePath("../..")
 script = ExtResource("3_sdpio")
 _unit = NodePath("../..")
 
+[node name="GoalMarkerShapes" type="Node2D" parent="Rendering/UnitPathRenderer"]
+script = ExtResource("7_shape_tool")
+definitions = []
+
+[node name="PathDotShapes1" type="Node2D" parent="Rendering/UnitPathRenderer"]
+script = ExtResource("7_shape_tool")
+definitions = []
+
+[node name="PathDotShapes2" type="Node2D" parent="Rendering/UnitPathRenderer"]
+script = ExtResource("7_shape_tool")
+definitions = []
+
+[node name="PathDotShapes3" type="Node2D" parent="Rendering/UnitPathRenderer"]
+script = ExtResource("7_shape_tool")
+definitions = []
+
 [node name="UnitShapeRenderer" type="Node2D" parent="Rendering" unique_id=1474483965]
 unique_name_in_owner = true
 script = ExtResource("4_584o2")
+
+[node name="ShapeTool" type="Node2D" parent="Rendering/UnitShapeRenderer"]
+script = ExtResource("7_shape_tool")
+definitions = []

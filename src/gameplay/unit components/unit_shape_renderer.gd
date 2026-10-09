@@ -2,9 +2,6 @@
 class_name UnitShapeRenderer
 extends Node2D
 
-const SQUARE_SIZE_RATIO: float = 0.85
-const TRIANGLE_HALF_WIDTH_RATIO: float = 0.866 # cos(30 degrees)
-const TRIANGLE_BOTTOM_HEIGHT_RATIO: float = 0.5 # sin(30 degrees)
 const OVERHEAL_RING_PADDING: float = 6.0
 const OVERHEAL_RING_WIDTH: float = 3.0
 
@@ -15,36 +12,53 @@ var unit: Unit:
 		unit = new_unit
 		_definition = unit.class_definition
 		unit.unit_health.health_changed.connect(_on_health_changed)
+		_update_shape_definitions()
 
 var _definition: ClassDefinition:
 	set(new_definition):
 		_definition = new_definition
-		queue_redraw()
+		_update_shape_definitions()
+
+@onready var _shape_tool: ShapeTool = $ShapeTool
+var _body_shape: ShapeDefinition
+var _overheal_ring: ShapeDefinition
+
+
+func _ready() -> void:
+	_body_shape = ShapeDefinition.new()
+	_overheal_ring = ShapeDefinition.new()
+	_overheal_ring.shape = ShapeDefinition.Shape.CIRCLE
+	_overheal_ring.fill_enabled = false
+	_overheal_ring.line_width = OVERHEAL_RING_WIDTH
+	_shape_tool.definitions = [_body_shape, _overheal_ring]
 
 
 func _draw() -> void:
 	if unit == null:
 		return
 
-	var radius: float = _definition.body_radius
-	var color: Color = Color.html(Unit.TEAM_COLORS[unit.team])
-	if unit.unit_health.current_health > unit.unit_health.max_health:
-		draw_arc(Vector2.ZERO, radius + OVERHEAL_RING_PADDING, 0.0, TAU, 48, color, OVERHEAL_RING_WIDTH, true)
+	_update_shape_definitions()
 
+
+func _update_shape_definitions() -> void:
+	if not is_instance_valid(_shape_tool) or _definition == null or unit == null:
+		return
+
+	var color: Color = Color.html(Unit.TEAM_COLORS[unit.team])
 	match _definition.body_shape:
 		ClassDefinition.BodyShape.TRIANGLE:
-			var triangle_corners: PackedVector2Array = PackedVector2Array([
-				Vector2(0.0, -radius),
-				Vector2(radius * TRIANGLE_HALF_WIDTH_RATIO, radius * TRIANGLE_BOTTOM_HEIGHT_RATIO),
-				Vector2(-radius * TRIANGLE_HALF_WIDTH_RATIO, radius * TRIANGLE_BOTTOM_HEIGHT_RATIO),
-			])
-			draw_colored_polygon(triangle_corners, color)
+			_body_shape.shape = ShapeDefinition.Shape.TRIANGLE
 		ClassDefinition.BodyShape.SQUARE:
-			var half_side: float = radius * SQUARE_SIZE_RATIO
-			draw_rect(Rect2(-half_side, -half_side, half_side * 2.0, half_side * 2.0), color)
+			_body_shape.shape = ShapeDefinition.Shape.SQUARE
 		ClassDefinition.BodyShape.CIRCLE:
-			draw_circle(Vector2.ZERO, radius, color)
+			_body_shape.shape = ShapeDefinition.Shape.CIRCLE
+	_body_shape.radius = minf(_definition.body_radius, ShapeTool.MAX_RADIUS)
+	_body_shape.fill_color = color
+	_body_shape.outline_enabled = false
+	_overheal_ring.radius = minf(_definition.body_radius + OVERHEAL_RING_PADDING, ShapeTool.MAX_RADIUS)
+	_overheal_ring.outline_color = color
+	_overheal_ring.outline_enabled = unit.unit_health.current_health > unit.unit_health.max_health
 
 
 func _on_health_changed(_new_health: float) -> void:
-	queue_redraw()
+	_update_shape_definitions()

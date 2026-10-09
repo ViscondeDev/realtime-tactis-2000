@@ -17,12 +17,16 @@ const HEALTH_DISPENSER_GROUP: StringName = &"health_dispensers"
 @export_range(40.0, 1000.0, 1.0) var healing_radius: float = 240.0:
 	set(value):
 		healing_radius = value
+		_refresh_shape_tools()
 		queue_redraw()
 @export_range(1.0, 1000.0, 1.0) var maximum_health: float = 125.0
 @export_range(0.0, 100.0, 0.5) var healing_per_second: float = 20.0
 @export var overheal_enabled: bool = true
 
-@export var team: Unit.Team = Unit.Team.YELLOW
+@export var team: Unit.Team = Unit.Team.YELLOW:
+	set(value):
+		team = value
+		_refresh_shape_tools()
 var is_building: bool = false
 @export var is_built: bool = false
 var builder: Unit
@@ -31,6 +35,8 @@ var current_health: float = maximum_health
 var _collision_shape: CollisionShape2D
 var _healing_units: Array[Unit] = []
 var _serviced_units: Array[Unit] = []
+@onready var _construction_shape_tool: ShapeTool = $ConstructionShapeTool
+@onready var _built_shape_tool: ShapeTool = $BuiltShapeTool
 
 
 func _ready() -> void:
@@ -43,6 +49,7 @@ func _ready() -> void:
 	(_collision_shape.shape as CircleShape2D).radius = CROSS_HALF_LENGTH
 	_collision_shape.disabled = Engine.is_editor_hint()
 	add_child(_collision_shape)
+	_refresh_shape_tools()
 	set_process(not Engine.is_editor_hint())
 
 
@@ -80,6 +87,7 @@ func take_damage(amount: float) -> void:
 		is_building = false
 		builder = null
 		_construction_elapsed = 0.0
+		_refresh_shape_tools()
 		current_health = maximum_health
 		_clear_serviced_units()
 		set_collision_layer_value(GOALS_LAYER, false)
@@ -106,6 +114,7 @@ func _finish_construction() -> void:
 	is_building = false
 	is_built = true
 	current_health = maximum_health
+	_refresh_shape_tools()
 	set_collision_layer_value(BUILD_SITES_LAYER, false)
 	set_collision_layer_value(GOALS_LAYER, true)
 	_collision_shape.set_deferred("disabled", false)
@@ -145,6 +154,42 @@ func _clear_serviced_units() -> void:
 	_healing_units.clear()
 
 
+func _refresh_shape_tools() -> void:
+	if not is_instance_valid(_construction_shape_tool) or not is_instance_valid(_built_shape_tool):
+		return
+
+	var construction_marker: ShapeDefinition = ShapeDefinition.new()
+	construction_marker.shape = ShapeDefinition.Shape.DOT
+	construction_marker.radius = DOT_RADIUS
+	construction_marker.fill_color = Color.html("#263b46")
+	construction_marker.outline_enabled = false
+	_construction_shape_tool.definitions = [construction_marker]
+	_construction_shape_tool.visible = not is_built
+
+	var team_color: Color = Color.html(Unit.TEAM_COLORS[team])
+	var built_definitions: Array[ShapeDefinition] = []
+	for line_rotation: float in [0.0, PI * 0.5]:
+		var cross_line: ShapeDefinition = ShapeDefinition.new()
+		cross_line.shape = ShapeDefinition.Shape.LINE
+		cross_line.radius = CROSS_HALF_LENGTH
+		cross_line.line_width = CROSS_WIDTH
+		cross_line.fill_enabled = false
+		cross_line.outline_color = team_color
+		cross_line.rotation = line_rotation
+		built_definitions.append(cross_line)
+	for dot_index: int in range(DOTTED_RING_COUNT):
+		var angle: float = TAU * float(dot_index) / float(DOTTED_RING_COUNT)
+		var ring_dot: ShapeDefinition = ShapeDefinition.new()
+		ring_dot.shape = ShapeDefinition.Shape.DOT
+		ring_dot.radius = DOTTED_RING_RADIUS
+		ring_dot.offset = Vector2(cos(angle), sin(angle)) * healing_radius
+		ring_dot.fill_color = Color.html("#263b46")
+		ring_dot.outline_enabled = false
+		built_definitions.append(ring_dot)
+	_built_shape_tool.definitions = built_definitions
+	_built_shape_tool.visible = is_built
+
+
 func _draw() -> void:
 	if not is_built:
 		if is_building and is_instance_valid(builder):
@@ -155,7 +200,6 @@ func _draw() -> void:
 				CONNECTOR_WIDTH,
 				true
 			)
-		draw_circle(Vector2.ZERO, DOT_RADIUS, Color.html("#263b46"))
 		return
 
 	var team_color: Color = Color.html(Unit.TEAM_COLORS[team])
@@ -168,21 +212,3 @@ func _draw() -> void:
 				CONNECTOR_WIDTH,
 				true
 			)
-	draw_line(
-		Vector2(-CROSS_HALF_LENGTH, 0.0),
-		Vector2(CROSS_HALF_LENGTH, 0.0),
-		team_color,
-		CROSS_WIDTH,
-		true
-	)
-	draw_line(
-		Vector2(0.0, -CROSS_HALF_LENGTH),
-		Vector2(0.0, CROSS_HALF_LENGTH),
-		team_color,
-		CROSS_WIDTH,
-		true
-	)
-	for dot_index: int in range(DOTTED_RING_COUNT):
-		var angle: float = TAU * float(dot_index) / float(DOTTED_RING_COUNT)
-		var dot_position: Vector2 = Vector2(cos(angle), sin(angle)) * healing_radius
-		draw_circle(dot_position, DOTTED_RING_RADIUS, Color.html("#263b46"))
