@@ -8,9 +8,72 @@
 [ext_resource type="Script" uid="uid://cabrh6ctmaedx" path="res://src/gameplay/unit components/unit_movement.gd" id="5_r6ibq"]
 [ext_resource type="Script" uid="uid://dlipap3g1dug7" path="res://src/gameplay/unit components/unit_autonomous_behavior.gd" id="6_autonomous"]
 [ext_resource type="Script" uid="uid://ibcse2mnrnca" path="res://tools/shape_tool.gd" id="7_shape_tool"]
+[ext_resource type="Script" uid="uid://eoyfcxmdrogy" path="res://tools/shape_definition.gd" id="8_r6ibq"]
+[ext_resource type="Script" uid="uid://b62tcx7bnbg28" path="res://src/gameplay/unit components/unit_animation.gd" id="10_0iiy4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ninnf"]
 radius = 510.00098
+
+[sub_resource type="Animation" id="Animation_qari0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%UnitShapeRenderer/ShapeTool:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("UnitAnimation:skew_rate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="Animation" id="Animation_flagl"]
+resource_name = "take_damage"
+length = 0.19999999999999998
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%UnitShapeRenderer/ShapeTool:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.13333334),
+"transitions": PackedFloat32Array(3.0314324, 1),
+"update": 0,
+"values": [Vector2(0.7, 0.9), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("UnitAnimation:skew_rate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(2.8284273, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_14we2"]
+_data = {
+&"RESET": SubResource("Animation_qari0"),
+&"take_damage": SubResource("Animation_flagl")
+}
 
 [node name="Unit" type="CharacterBody2D" unique_id=865573347]
 collision_layer = 0
@@ -58,26 +121,34 @@ _unit = NodePath("../..")
 script = ExtResource("3_sdpio")
 _unit = NodePath("../..")
 
-[node name="GoalMarkerShapes" type="Node2D" parent="Rendering/UnitPathRenderer"]
+[node name="GoalMarkerShapes" type="Node2D" parent="Rendering/UnitPathRenderer" unique_id=1371483590]
 script = ExtResource("7_shape_tool")
-definitions = []
+definitions = Array[ExtResource("8_r6ibq")]([])
 
-[node name="PathDotShapes1" type="Node2D" parent="Rendering/UnitPathRenderer"]
+[node name="PathDotShapes1" type="Node2D" parent="Rendering/UnitPathRenderer" unique_id=1584122773]
 script = ExtResource("7_shape_tool")
-definitions = []
+definitions = Array[ExtResource("8_r6ibq")]([])
 
-[node name="PathDotShapes2" type="Node2D" parent="Rendering/UnitPathRenderer"]
+[node name="PathDotShapes2" type="Node2D" parent="Rendering/UnitPathRenderer" unique_id=889386701]
 script = ExtResource("7_shape_tool")
-definitions = []
+definitions = Array[ExtResource("8_r6ibq")]([])
 
-[node name="PathDotShapes3" type="Node2D" parent="Rendering/UnitPathRenderer"]
+[node name="PathDotShapes3" type="Node2D" parent="Rendering/UnitPathRenderer" unique_id=655617572]
 script = ExtResource("7_shape_tool")
-definitions = []
+definitions = Array[ExtResource("8_r6ibq")]([])
 
 [node name="UnitShapeRenderer" type="Node2D" parent="Rendering" unique_id=1474483965]
 unique_name_in_owner = true
 script = ExtResource("4_584o2")
 
-[node name="ShapeTool" type="Node2D" parent="Rendering/UnitShapeRenderer"]
+[node name="ShapeTool" type="Node2D" parent="Rendering/UnitShapeRenderer" unique_id=1207326241]
 script = ExtResource("7_shape_tool")
-definitions = []
+definitions = Array[ExtResource("8_r6ibq")]([])
+
+[node name="UnitAnimation" type="AnimationPlayer" parent="Rendering" unique_id=1752635167 node_paths=PackedStringArray("_unit")]
+libraries/ = SubResource("AnimationLibrary_14we2")
+script = ExtResource("10_0iiy4")
+_unit = NodePath("../..")
+skew_rate = 1.0
+
+[connection signal="took_damage" from="Behavior/UnitHealth" to="Rendering/UnitAnimation" method="_on_take_damage"]

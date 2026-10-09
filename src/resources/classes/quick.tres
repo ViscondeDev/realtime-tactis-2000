@@ -6,7 +6,7 @@
 script = ExtResource("1_v0qos")
 display_name = "Quick"
 body_shape = 0
-body_radius = 17.0
+body_radius = 20.0
 movement_speed = 333.0
 sight_update_interval = 0.15
 max_health = 160.0

@@ -3,6 +3,7 @@ class_name UnitHealth
 extends Node
 
 signal health_changed(new_health: float)
+signal took_damage()
 signal died
 
 const OVERHEAL_MULTIPLIER: float = 1.5
@@ -47,6 +48,7 @@ func _process(delta: float) -> void:
 func take_damage(amount: float) -> void:
 	if amount <= 0.0 or _current_health <= 0.0:
 		return
+	took_damage.emit()
 	_set_current_health(_current_health - amount)
 
 
