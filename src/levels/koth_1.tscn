@@ -7,12 +7,49 @@
 [ext_resource type="Script" uid="uid://cuw8comgqlltb" path="res://src/gameplay/respawn_point.gd" id="5_nrsx4"]
 [ext_resource type="Script" uid="uid://bm30wf3r7fjhn" path="res://src/gameplay/control_point.gd" id="6_e8qqr"]
 [ext_resource type="Script" uid="uid://blm2sqcpqdbpt" path="res://src/gameplay/unit_projectile_pool.gd" id="7_nu0k4"]
+[ext_resource type="Script" uid="uid://eoyfcxmdrogy" path="res://tools/shape_definition.gd" id="7_qno1b"]
 [ext_resource type="Script" uid="uid://35datvu1g58l" path="res://src/gameplay/unit_command_controller.gd" id="8_yli4d"]
-[ext_resource type="Script" uid="uid://d16rfyvpgtlxb" path="res://src/gameplay/health_dispenser.gd" id="9_rwulr"]
 [ext_resource type="PackedScene" uid="uid://bt1qf6j1ifhf7" path="res://src/gameplay/unit.tscn" id="10_akum3"]
+[ext_resource type="PackedScene" uid="uid://dhchv8nivi3iq" path="res://src/gameplay/health_dispenser.tscn" id="11_qno1b"]
 [ext_resource type="Script" uid="uid://y35tpk8ols0k" path="res://src/gameplay/unit_respawn_controller.gd" id="11_u75ec"]
 [ext_resource type="Script" uid="uid://cwxqpmv3uu5rt" path="res://src/gameplay/red_team_ai.gd" id="12_55yga"]
 [ext_resource type="Script" uid="uid://ibcse2mnrnca" path="res://tools/shape_tool.gd" id="13_shape_tool"]
+
+[sub_resource type="Resource" id="Resource_qno1b"]
+script = ExtResource("7_qno1b")
+radius = 120.0
+fill_enabled = false
+outline_color = Color(0.14901961, 0.23137255, 0.27450982, 1)
+line_width = 10.0
+
+[sub_resource type="Resource" id="Resource_c8gys"]
+script = ExtResource("7_qno1b")
+shape = 5
+radius = 5.0
+fill_color = Color(0.9490196, 0.7882353, 0.29803923, 1)
+outline_enabled = false
+
+[sub_resource type="Resource" id="Resource_ttprn"]
+script = ExtResource("7_qno1b")
+radius = 120.0
+fill_enabled = false
+outline_color = Color(0.14901961, 0.23137255, 0.27450982, 1)
+line_width = 10.0
+
+[sub_resource type="Resource" id="Resource_g154v"]
+script = ExtResource("7_qno1b")
+shape = 5
+radius = 5.0
+fill_color = Color(0.8509804, 0.2784314, 0.2784314, 1)
+outline_enabled = false
+
+[sub_resource type="Resource" id="Resource_vb1d0"]
+script = ExtResource("7_qno1b")
+shape = 3
+radius = 80.0
+fill_color = Color(1, 1, 1, 0.08)
+outline_color = Color(0.14901961, 0.23137255, 0.27450982, 1)
+line_width = 5.0
 
 [node name="Level" type="Node2D" unique_id=334309463]
 
@@ -102,27 +139,27 @@ metadata/_custom_type_script = "uid://bxn47tpjyr6rv"
 position = Vector2(-128, 704)
 script = ExtResource("5_nrsx4")
 
-[node name="ShapeTool" type="Node2D" parent="RespawnPoints/Yellow"]
+[node name="ShapeTool" type="Node2D" parent="RespawnPoints/Yellow" unique_id=191972987]
 script = ExtResource("13_shape_tool")
-definitions = []
+definitions = Array[ExtResource("7_qno1b")]([SubResource("Resource_qno1b"), SubResource("Resource_c8gys")])
 
 [node name="Red" type="Node2D" parent="RespawnPoints" unique_id=1473376266 groups=["respawn_points"]]
 position = Vector2(1280, -1152)
 script = ExtResource("5_nrsx4")
 team = 1
 
-[node name="ShapeTool" type="Node2D" parent="RespawnPoints/Red"]
+[node name="ShapeTool" type="Node2D" parent="RespawnPoints/Red" unique_id=855936324]
 script = ExtResource("13_shape_tool")
-definitions = []
+definitions = Array[ExtResource("7_qno1b")]([SubResource("Resource_ttprn"), SubResource("Resource_g154v")])
 
 [node name="ControlPoint" type="Node2D" parent="." unique_id=1268325207 groups=["control_points"]]
 position = Vector2(576, -256)
 script = ExtResource("6_e8qqr")
 capture_radius = 250.0
 
-[node name="ShapeTool" type="Node2D" parent="ControlPoint"]
+[node name="ShapeTool" type="Node2D" parent="ControlPoint" unique_id=1212606101]
 script = ExtResource("13_shape_tool")
-definitions = []
+definitions = Array[ExtResource("7_qno1b")]([SubResource("Resource_vb1d0")])
 
 [node name="ProjectilePool" type="Node2D" parent="." unique_id=315060351]
 script = ExtResource("7_nu0k4")
@@ -130,46 +167,15 @@ script = ExtResource("7_nu0k4")
 [node name="UnitCommandController" type="Node2D" parent="." unique_id=1211363128]
 script = ExtResource("8_yli4d")
 
-[node name="ShapeTool" type="Node2D" parent="UnitCommandController"]
+[node name="ShapeTool" type="Node2D" parent="UnitCommandController" unique_id=1531394124]
 script = ExtResource("13_shape_tool")
-definitions = []
+definitions = Array[ExtResource("7_qno1b")]([])
 
-[node name="HealthDispenser3" type="StaticBody2D" parent="." unique_id=1981513805]
-position = Vector2(832, 192)
-collision_layer = 32
-collision_mask = 0
-script = ExtResource("9_rwulr")
-healing_radius = 290.0
-maximum_health = 150.0
-healing_per_second = 40.0
-metadata/_custom_type_script = "uid://d16rfyvpgtlxb"
-
-[node name="ConstructionShapeTool" type="Node2D" parent="HealthDispenser3"]
-script = ExtResource("13_shape_tool")
-definitions = []
-
-[node name="BuiltShapeTool" type="Node2D" parent="HealthDispenser3"]
-script = ExtResource("13_shape_tool")
-definitions = []
-
-[node name="HealthDispenser4" type="StaticBody2D" parent="." unique_id=810225688]
+[node name="HealthDispenser" parent="." unique_id=1122991552 instance=ExtResource("11_qno1b")]
 position = Vector2(320, -704)
-collision_layer = 32
-collision_mask = 0
-script = ExtResource("9_rwulr")
-healing_radius = 290.0
-maximum_health = 150.0
-healing_per_second = 40.0
-team = 1
-metadata/_custom_type_script = "uid://d16rfyvpgtlxb"
 
-[node name="ConstructionShapeTool" type="Node2D" parent="HealthDispenser4"]
-script = ExtResource("13_shape_tool")
-definitions = []
-
-[node name="BuiltShapeTool" type="Node2D" parent="HealthDispenser4"]
-script = ExtResource("13_shape_tool")
-definitions = []
+[node name="HealthDispenser2" parent="." unique_id=1441221469 instance=ExtResource("11_qno1b")]
+position = Vector2(832, 192)
 
 [node name="Unit" parent="." unique_id=865573347 node_paths=PackedStringArray("projectile_pool") instance=ExtResource("10_akum3")]
 position = Vector2(0, 512)

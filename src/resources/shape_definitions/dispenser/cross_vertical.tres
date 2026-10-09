@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ShapeDefinition" format=3 uid="uid://c2pn5a1sea5kt"]
+
+[ext_resource type="Script" uid="uid://eoyfcxmdrogy" path="res://tools/shape_definition.gd" id="1_q0llu"]
+
+[resource]
+script = ExtResource("1_q0llu")
+shape = 4
+rotation = 1.571
+radius = 20.0
+fill_enabled = false
+outline_color = Color(0.14901961, 0.23137255, 0.27450982, 1)
+line_width = 8.0

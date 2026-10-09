@@ -14,11 +14,32 @@ const DOTTED_RING_COUNT: int = 48
 const DOTTED_RING_RADIUS: float = 2.5
 const HEALTH_DISPENSER_GROUP: StringName = &"health_dispensers"
 
+const SHAPE_DEFINITIONS = {
+	Unit.Team.RED :
+		{
+			"segmented_outline" : "uid://cibo7dyo4ha2n",
+			"cross_vertical" : "uid://c2pn5a1sea5kt",
+			"cross_horizontal" : "uid://bvi7037ef36hr",
+			"small_circle" : "uid://cm5cwck7u4wso",
+			"medium_circle" : "uid://dipeum70uqkct",
+			"big_circle" : "uid://ca23bgdp4hysk"
+		},
+		Unit.Team.YELLOW:
+			{
+				"segmented_outline" : "uid://cibo7dyo4ha2n",
+				"cross_vertical" : "uid://c2pn5a1sea5kt",
+				"cross_horizontal" : "uid://bvi7037ef36hr",
+				"small_circle" : "uid://drp784quvwku2",
+				"medium_circle" : "uid://6bg07u8lv5t",
+				"big_circle" : "uid://biumckan6chgr"
+			}
+}
+
 @export_range(40.0, 1000.0, 1.0) var healing_radius: float = 240.0:
 	set(value):
 		healing_radius = value
 		_refresh_shape_tools()
-		queue_redraw()
+		
 @export_range(1.0, 1000.0, 1.0) var maximum_health: float = 125.0
 @export_range(0.0, 100.0, 0.5) var healing_per_second: float = 20.0
 @export var overheal_enabled: bool = true
@@ -35,8 +56,8 @@ var current_health: float = maximum_health
 var _collision_shape: CollisionShape2D
 var _healing_units: Array[Unit] = []
 var _serviced_units: Array[Unit] = []
-@onready var _construction_shape_tool: ShapeTool = $ConstructionShapeTool
-@onready var _built_shape_tool: ShapeTool = $BuiltShapeTool
+@onready var _construction_shape: ShapeTool = $ConstructionShapeTool
+@onready var _built_shape: ShapeTool = $BuiltShapeTool
 
 
 func _ready() -> void:
@@ -155,39 +176,29 @@ func _clear_serviced_units() -> void:
 
 
 func _refresh_shape_tools() -> void:
-	if not is_instance_valid(_construction_shape_tool) or not is_instance_valid(_built_shape_tool):
+	if not is_instance_valid(_construction_shape) or not is_instance_valid(_built_shape):
 		return
 
-	var construction_marker: ShapeDefinition = ShapeDefinition.new()
-	construction_marker.shape = ShapeDefinition.Shape.DOT
-	construction_marker.radius = DOT_RADIUS
-	construction_marker.fill_color = Color.html("#263b46")
-	construction_marker.outline_enabled = false
-	_construction_shape_tool.definitions = [construction_marker]
-	_construction_shape_tool.visible = not is_built
+	var construction_cross_vertical:ShapeDefinition = load(SHAPE_DEFINITIONS[team]["cross_vertical"])
+	var construction_cross_horizontal:ShapeDefinition = load(SHAPE_DEFINITIONS[team]["cross_horizontal"])
+	var segmented_outline : ShapeDefinition = load(SHAPE_DEFINITIONS[team]["segmented_outline"])
 
-	var team_color: Color = Color.html(Unit.TEAM_COLORS[team])
-	var built_definitions: Array[ShapeDefinition] = []
-	for line_rotation: float in [0.0, PI * 0.5]:
-		var cross_line: ShapeDefinition = ShapeDefinition.new()
-		cross_line.shape = ShapeDefinition.Shape.LINE
-		cross_line.radius = CROSS_HALF_LENGTH
-		cross_line.line_width = CROSS_WIDTH
-		cross_line.fill_enabled = false
-		cross_line.outline_color = team_color
-		cross_line.rotation = line_rotation
-		built_definitions.append(cross_line)
-	for dot_index: int in range(DOTTED_RING_COUNT):
-		var angle: float = TAU * float(dot_index) / float(DOTTED_RING_COUNT)
-		var ring_dot: ShapeDefinition = ShapeDefinition.new()
-		ring_dot.shape = ShapeDefinition.Shape.DOT
-		ring_dot.radius = DOTTED_RING_RADIUS
-		ring_dot.offset = Vector2(cos(angle), sin(angle)) * healing_radius
-		ring_dot.fill_color = Color.html("#263b46")
-		ring_dot.outline_enabled = false
-		built_definitions.append(ring_dot)
-	_built_shape_tool.definitions = built_definitions
-	_built_shape_tool.visible = is_built
+	_construction_shape.definitions = [construction_cross_vertical, construction_cross_horizontal, segmented_outline]
+	_built_shape.definitions = _construction_shape.definitions
+	_construction_shape.visible = not is_built
+	_built_shape.visible = is_built
+
+
+	
+	if is_built:
+		var small_circle : ShapeDefinition = load(SHAPE_DEFINITIONS[team]["small_circle"])
+		var medium_circle : ShapeDefinition = load(SHAPE_DEFINITIONS[team]["medium_circle"])
+		var big_circle : ShapeDefinition = load(SHAPE_DEFINITIONS[team]["big_circle"])
+
+		for s: ShapeDefinition in [small_circle, medium_circle, big_circle]:
+			_built_shape.definitions.push_front(s)
+			await get_tree().create_timer(0.2).timeout
+			_built_shape.queue_redraw()
 
 
 func _draw() -> void:
