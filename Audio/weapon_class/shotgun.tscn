@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://dnwuhpbtdjljt"]
+
+[ext_resource type="AudioStream" uid="uid://bjd4oo1gifjw0" path="res://Audio/SFX/Characters/Weapons/Shotgun.wav" id="1_w5clv"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_y68es"]
+random_pitch = 1.122462
+random_volume_offset_db = 4.0
+streams_count = 1
+stream_0/stream = ExtResource("1_w5clv")
+
+[node name="Weapon" type="AudioStreamPlayer2D" unique_id=911506914]
+stream = SubResource("AudioStreamRandomizer_y68es")
+max_polyphony = 3

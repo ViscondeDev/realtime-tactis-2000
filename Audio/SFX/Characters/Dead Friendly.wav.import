@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://d3be41ks3vga0"
+path="res://.godot/imported/Dead Friendly.wav-db9df9bd9e711935e6ad31a9d29b4d84.sample"
+
+[deps]
+
+source_file="res://Audio/SFX/Characters/Dead Friendly.wav"
+dest_files=["res://.godot/imported/Dead Friendly.wav-db9df9bd9e711935e6ad31a9d29b4d84.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

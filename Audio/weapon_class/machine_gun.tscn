@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://bte3rqp0pjf3v"]
+
+[ext_resource type="AudioStream" uid="uid://clv61v4yaw84q" path="res://Audio/SFX/Characters/Weapons/MachineGun.wav" id="1_aparr"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8dbkn"]
+random_pitch = 1.122462
+random_volume_offset_db = 5.0
+streams_count = 1
+stream_0/stream = ExtResource("1_aparr")
+
+[node name="Weapon" type="AudioStreamPlayer2D" unique_id=911506914]
+stream = SubResource("AudioStreamRandomizer_8dbkn")
+volume_db = -4.0
+max_polyphony = 3

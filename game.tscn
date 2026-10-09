@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://dwi4fguxf5b6b"]
 
-[ext_resource type="Script" path="res://src/gameplay/main_menu.gd" id="1_main_menu"]
+[ext_resource type="Script" uid="uid://dx0c8d4dy7xb2" path="res://src/gameplay/main_menu.gd" id="1_main_menu"]
 [ext_resource type="PackedScene" path="res://src/gameplay/main_menu_ui.tscn" id="2_menu_ui"]
 
 [node name="Game" type="Node2D" unique_id=1544827901]
-metadata/_edit_horizontal_guides_ = [-832.0, 324.0]
 script = ExtResource("1_main_menu")
+metadata/_edit_horizontal_guides_ = [-832.0, 324.0]
 
-[node name="MatchContainer" type="Node2D" parent="."]
+[node name="MatchContainer" type="Node2D" parent="." unique_id=1768832156]
 
-[node name="MainMenuUI" parent="." instance=ExtResource("2_menu_ui")]
+[node name="MainMenuUI" parent="." unique_id=1025499105 instance=ExtResource("2_menu_ui")]

@@ -15,6 +15,10 @@ run/main_scene="uid://dwi4fguxf5b6b"
 config/features=PackedStringArray("4.7", "Mobile")
 config/icon="res://icon.svg"
 
+[autoload]
+
+AudioGlobal="*uid://clhyfp2bj44m1"
+
 [display]
 
 window/size/viewport_width=2560
@@ -33,6 +37,12 @@ project/assembly_name="Realtime Tactics 2000"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/at-icons/plugin.cfg")
+
+[file_customization]
+
+folder_colors={
+"res://Audio/": "teal"
+}
 
 [layer_names]
 
