@@ -15,5 +15,5 @@ const TEAM_DOT_RADIUS: float = 5.0
 
 
 func _draw() -> void:
-	draw_arc(Vector2.ZERO, RING_RADIUS, 0.0, TAU, 48, Color.WHITE, RING_WIDTH, true)
+	draw_arc(Vector2.ZERO, RING_RADIUS, 0.0, TAU, 48, Color.html("#263b46"), RING_WIDTH, true)
 	draw_circle(Vector2.ZERO, TEAM_DOT_RADIUS, Color.html(Unit.TEAM_COLORS[team]))

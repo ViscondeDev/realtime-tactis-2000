@@ -8,9 +8,9 @@ const BORDER_SIZE: int = 180
 const WALLS_COLLISION_LAYER_VALUE: int = 1  # Physics layer 1.
 
 @export var navigation_agent_radius: float = 80.0
-@export var floor_color: Color = Color("e6e6ee")
-@export var void_and_obstacle_color: Color = Color("1b1b24")
-@export var wall_line_color: Color = Color("5a5a6e")
+@export var floor_color: Color = Color.html("#E8E5DC")
+@export var void_and_obstacle_color: Color = Color.html("#263b46")
+@export var wall_line_color: Color = Color.html("#263b46")
 @export var wall_line_width: float = 6.0
 
 @export_tool_button("Rebuild Level", "Reload") var rebuild_level_action: Callable = rebuild_level

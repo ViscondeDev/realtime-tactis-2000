@@ -155,7 +155,7 @@ func _draw() -> void:
 				CONNECTOR_WIDTH,
 				true
 			)
-		draw_circle(Vector2.ZERO, DOT_RADIUS, Color.WHITE)
+		draw_circle(Vector2.ZERO, DOT_RADIUS, Color.html("#263b46"))
 		return
 
 	var team_color: Color = Color.html(Unit.TEAM_COLORS[team])
@@ -185,4 +185,4 @@ func _draw() -> void:
 	for dot_index: int in range(DOTTED_RING_COUNT):
 		var angle: float = TAU * float(dot_index) / float(DOTTED_RING_COUNT)
 		var dot_position: Vector2 = Vector2(cos(angle), sin(angle)) * healing_radius
-		draw_circle(dot_position, DOTTED_RING_RADIUS, Color.WHITE)
+		draw_circle(dot_position, DOTTED_RING_RADIUS, Color.html("#263b46"))

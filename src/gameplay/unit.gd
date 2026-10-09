@@ -5,7 +5,7 @@ extends CharacterBody2D
 enum Class {STRONG, QUICK, SMART}
 enum Team {YELLOW, RED}
 
-const TEAM_COLORS = {Team.YELLOW: "#D5E839", Team.RED: "#E8594F"}
+const TEAM_COLORS = {Team.YELLOW: "#F2C94C", Team.RED: "#D94747"}
 const CLASS_RESOURCES = {Class.STRONG: "uid://beiw7m8hmc0nj", Class.QUICK: "uid://ch8prcptxdl31", Class.SMART: "uid://c3yjuhcf2tds4"}
 
 const COMMANDABLE_UNITS_GROUP: StringName = &"commandable_units"

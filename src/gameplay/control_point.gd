@@ -50,7 +50,7 @@ func _draw() -> void:
 	closed_outline.append(hexagon[0])
 
 	draw_colored_polygon(hexagon, Color(1.0, 1.0, 1.0, 0.08))
-	draw_polyline(closed_outline, Color.WHITE, HEXAGON_OUTLINE_WIDTH, true)
+	draw_polyline(closed_outline, Color.html("#263b46"), HEXAGON_OUTLINE_WIDTH, true)
 	_draw_progress_bar()
 
 
@@ -68,4 +68,4 @@ func _draw_progress_bar() -> void:
 			Rect2(Vector2(bar_rect.position.x + yellow_width, bar_rect.position.y), Vector2(bar_rect.size.x - yellow_width, bar_rect.size.y)),
 			red_color
 		)
-	draw_rect(bar_rect, Color.WHITE, false, 2.0, true)
+	draw_rect(bar_rect, Color.html("#263b46"), false, 2.0, true)

@@ -5,9 +5,9 @@ var floor_polygons: Array[PackedVector2Array] = []
 var obstacle_polygons: Array[PackedVector2Array] = []
 var wall_polylines: Array[PackedVector2Array] = []
 
-var floor_color: Color = Color.WHITE
+var floor_color: Color = Color.html("#263b46")
 var obstacle_color: Color = Color.BLACK
-var wall_line_color: Color = Color.WHITE
+var wall_line_color: Color = Color.html("#263b46")
 var wall_line_width: float = 6.0
 
 

@@ -4,9 +4,9 @@ extends Node2D
 
 @export var _unit: Unit
 @export var dot_radius: float = 2.5
-@export var dot_spacing: float = 12.0
+@export var dot_spacing: float = 15.0
 @export var goal_marker_radius: float = 10.0
-@export var goal_marker_line_width: float = 2.5
+@export var goal_marker_line_width: float = 6
 @export var path_opacity: float = 0.75
 
 var _was_drawing_last_frame: bool = false
