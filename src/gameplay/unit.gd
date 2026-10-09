@@ -28,6 +28,7 @@ signal report_condition_changed(condition: StringName, active: bool)
 @onready var unit_shape_renderer: UnitShapeRenderer = %UnitShapeRenderer
 @onready var unit_autonomous_behavior: UnitAutonomousBehavior = %UnitAutonomousBehavior
 @onready var unit_health: UnitHealth = $Behavior/UnitHealth
+@onready var shot_particles: GPUParticles2D = $Rendering/ShotParticles
 
 var _conditions: Dictionary = {}
 

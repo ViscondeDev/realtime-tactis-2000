@@ -14,6 +14,22 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_ninnf"]
 radius = 510.00098
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ninnf"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(5, 5, 1)
+emission_shape = 1
+emission_sphere_radius = 1.0
+angle_min = -57.19999
+angle_max = -57.19999
+inherit_velocity_ratio = 1.0
+spread = 27.74
+flatness = 0.384
+initial_velocity_min = 381.3
+initial_velocity_max = 381.3
+scale_min = 5.0
+scale_max = 5.0
+color = Color(0.1458, 0.22653002, 0.27, 0.7411765)
+
 [sub_resource type="Animation" id="Animation_qari0"]
 length = 0.001
 tracks/0/type = "value"
@@ -54,7 +70,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.13333334),
 "transitions": PackedFloat32Array(3.0314324, 1),
 "update": 0,
-"values": [Vector2(0.7, 0.9), Vector2(1, 1)]
+"values": [Vector2(0.5, 0.7), Vector2(1, 1)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -116,6 +132,12 @@ script = ExtResource("6_autonomous")
 _unit = NodePath("../..")
 
 [node name="Rendering" type="Node2D" parent="." unique_id=405359763]
+
+[node name="ShotParticles" type="GPUParticles2D" parent="Rendering" unique_id=1767324407]
+emitting = false
+lifetime = 0.09999999999999999
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_ninnf")
 
 [node name="UnitPathRenderer" type="Node2D" parent="Rendering" unique_id=997801979 node_paths=PackedStringArray("_unit")]
 script = ExtResource("3_sdpio")

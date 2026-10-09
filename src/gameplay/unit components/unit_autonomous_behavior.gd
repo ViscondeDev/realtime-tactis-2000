@@ -194,7 +194,8 @@ func _fire_round(target: Node2D, damage: float) -> void:
 		class_definition.projectile_speed,
 		class_definition.attack_range
 	)
-
+	_unit.shot_particles.look_at(target.global_position)
+	_unit.shot_particles.emitting = true
 
 func _calculate_intercept_direction(target: Unit, projectile_speed: float) -> Vector2:
 	var relative_position: Vector2 = target.global_position - _unit.global_position
