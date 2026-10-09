@@ -29,6 +29,7 @@ signal report_condition_changed(condition: StringName, active: bool)
 @onready var unit_autonomous_behavior: UnitAutonomousBehavior = %UnitAutonomousBehavior
 @onready var unit_health: UnitHealth = $Behavior/UnitHealth
 @onready var shot_particles: GPUParticles2D = $Rendering/ShotParticles
+@onready var death_particles: GPUParticles2D = $Rendering/DeathParticles
 
 var _conditions: Dictionary = {}
 
@@ -50,7 +51,7 @@ func _ready() -> void:
 	unit_movement.movement_speed = class_definition.movement_speed
 	unit_autonomous_behavior.projectile_pool = projectile_pool
 	unit_shape_renderer.unit = self
-	unit_health.died.connect(queue_free)
+	unit_health.died.connect(_die)
 
 
 func issue_move_order(target_position: Vector2) -> void:
@@ -73,3 +74,11 @@ func is_report_condition_active(condition: StringName) -> bool:
 func is_point_over_unit(world_position: Vector2) -> bool:
 	var pick_radius: float = class_definition.body_radius + SELECTION_PADDING_PIXELS
 	return global_position.distance_to(world_position) <= pick_radius
+
+
+func _die():
+	unit_shape_renderer.visible = false
+	death_particles.emitting = true
+	process_mode = Node.PROCESS_MODE_DISABLED
+	await death_particles.finished
+	queue_free()

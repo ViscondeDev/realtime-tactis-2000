@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://ibcse2mnrnca" path="res://tools/shape_tool.gd" id="7_shape_tool"]
 [ext_resource type="Script" uid="uid://eoyfcxmdrogy" path="res://tools/shape_definition.gd" id="8_r6ibq"]
 [ext_resource type="Script" uid="uid://b62tcx7bnbg28" path="res://src/gameplay/unit components/unit_animation.gd" id="10_0iiy4"]
+[ext_resource type="Script" uid="uid://bgfnlbr500hbr" path="res://src/gameplay/unit components/death_particles.gd" id="12_14we2"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ninnf"]
 radius = 510.00098
@@ -59,7 +60,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_flagl"]
 resource_name = "take_damage"
-length = 0.19999999999999998
+length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -135,7 +136,7 @@ _unit = NodePath("../..")
 
 [node name="ShotParticles" type="GPUParticles2D" parent="Rendering" unique_id=1767324407]
 emitting = false
-lifetime = 0.09999999999999999
+lifetime = 0.1
 one_shot = true
 process_material = SubResource("ParticleProcessMaterial_ninnf")
 
@@ -172,5 +173,15 @@ libraries/ = SubResource("AnimationLibrary_14we2")
 script = ExtResource("10_0iiy4")
 _unit = NodePath("../..")
 skew_rate = 1.0
+
+[node name="DeathParticles" type="GPUParticles2D" parent="Rendering" unique_id=669425065 node_paths=PackedStringArray("_unit")]
+process_mode = 3
+emitting = false
+amount = 80
+lifetime = 0.4
+one_shot = true
+explosiveness = 0.93
+script = ExtResource("12_14we2")
+_unit = NodePath("../..")
 
 [connection signal="took_damage" from="Behavior/UnitHealth" to="Rendering/UnitAnimation" method="_on_take_damage"]

@@ -115,7 +115,7 @@ metadata/_custom_type_script = "uid://bxn47tpjyr6rv"
 
 [node name="LevelPolygon6" type="Line2D" parent="LevelBuilder" unique_id=1406034632]
 position = Vector2(64, 4)
-points = PackedVector2Array(-320, 316, -128, 252, -128, -132, -128, -196, -192, -260, -320, 252, -320, 320)
+points = PackedVector2Array(-320, 316, -128, 252, -128, -132, -128, -196, -192, -260, -320, 188, -320, 320)
 closed = true
 width = 4.0
 default_color = Color(0.95, 0.35, 0.35, 1)

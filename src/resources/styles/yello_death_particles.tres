@@ -1,0 +1,35 @@
+[gd_resource type="ParticleProcessMaterial" format=3 uid="uid://cn38iqhxrk58e"]
+
+[sub_resource type="Gradient" id="Gradient_0iiy4"]
+colors = PackedColorArray(0.9490196, 0.7882353, 0.29803923, 1, 0.9490196, 0.7882353, 0.29803923, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_flagl"]
+gradient = SubResource("Gradient_0iiy4")
+
+[sub_resource type="Curve" id="Curve_0iiy4"]
+_limits = [-200.0, 140.0, 0.0, 1.0]
+_data = [Vector2(0, 129.79999), 0.0, 0.0, 0, 0, Vector2(0.6740741, 129.79999), -268.68295, -268.68295, 0, 0, Vector2(0.9962964, -19.800003), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_tpocx"]
+curve = SubResource("Curve_0iiy4")
+
+[sub_resource type="Curve" id="Curve_qari0"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_0iiy4"]
+curve = SubResource("Curve_qari0")
+
+[resource]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 27.3
+gravity = Vector3(0, 0, 0)
+radial_accel_min = 14.789997
+radial_accel_max = 14.789997
+radial_accel_curve = SubResource("CurveTexture_tpocx")
+scale_min = 10.0
+scale_max = 20.0
+scale_curve = SubResource("CurveTexture_0iiy4")
+color_ramp = SubResource("GradientTexture1D_flagl")
