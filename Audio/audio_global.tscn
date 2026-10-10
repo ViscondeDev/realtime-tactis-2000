@@ -27,3 +27,4 @@ script = ExtResource("1_nnvre")
 [node name="Music" type="AudioStreamPlayer" parent="." unique_id=1021334340]
 stream = SubResource("AudioStreamInteractive_5xpoe")
 autoplay = true
+bus = &"Music"

@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://0eiwo7ctdgsy"]
+
+[ext_resource type="AudioStream" uid="uid://b7ohj3jvshdog" path="res://Audio/SFX/Characters/Dead Friendly.ogg" id="1_sbc0k"]
+
+[node name="Dead" type="AudioStreamPlayer2D" unique_id=1365131046]
+stream = ExtResource("1_sbc0k")
+panning_strength = 2.0

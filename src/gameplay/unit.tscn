@@ -64,4 +64,5 @@ script = ExtResource("4_584o2")
 
 [node name="UnitAudio" parent="." unique_id=710034046 instance=ExtResource("8_584o2")]
 
+[connection signal="died" from="Behavior/UnitHealth" to="UnitAudio" method="_on_unit_health_died"]
 [connection signal="health_changed" from="Behavior/UnitHealth" to="UnitAudio" method="_on_unit_health_health_changed"]

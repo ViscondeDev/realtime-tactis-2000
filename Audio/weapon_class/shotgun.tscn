@@ -18,3 +18,4 @@ stream_3/stream = ExtResource("4_s78dq")
 stream = SubResource("AudioStreamRandomizer_ttl7p")
 max_polyphony = 3
 panning_strength = 2.0
+bus = &"SFX"
