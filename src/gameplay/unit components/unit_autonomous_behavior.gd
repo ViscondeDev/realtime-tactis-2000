@@ -62,6 +62,11 @@ func on_player_move_order_issued() -> void:
 		_building_dispenser = null
 	_movement.clear_autonomous_move_target()
 	_transition_to(State.MOVING)
+	
+	### AUDIO ###
+	if _unit.team == _unit.Team.YELLOW:
+		AudioGlobal.get_node("Order").play()
+	### AUDIO END ###
 
 
 func begin_dispenser_construction(dispenser: HealthDispenser) -> bool:
