@@ -1,13 +1,20 @@
 [gd_scene format=3 uid="uid://dnwuhpbtdjljt"]
 
-[ext_resource type="AudioStream" uid="uid://bjd4oo1gifjw0" path="res://Audio/SFX/Characters/Weapons/Shotgun.wav" id="1_w5clv"]
+[ext_resource type="AudioStream" uid="uid://bk52pijqmf18v" path="res://Audio/SFX/Characters/Weapons/Shotgun 01.ogg" id="1_xo47c"]
+[ext_resource type="AudioStream" uid="uid://ho46ukdpd1td" path="res://Audio/SFX/Characters/Weapons/Shotgun 02.ogg" id="2_q4pou"]
+[ext_resource type="AudioStream" uid="uid://clgqshop3r3k" path="res://Audio/SFX/Characters/Weapons/Shotgun 03.ogg" id="3_fqod2"]
+[ext_resource type="AudioStream" uid="uid://cvr5pfcgcd3eb" path="res://Audio/SFX/Characters/Weapons/Shotgun 04.ogg" id="4_s78dq"]
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_y68es"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ttl7p"]
 random_pitch = 1.122462
 random_volume_offset_db = 4.0
-streams_count = 1
-stream_0/stream = ExtResource("1_w5clv")
+streams_count = 4
+stream_0/stream = ExtResource("1_xo47c")
+stream_1/stream = ExtResource("2_q4pou")
+stream_2/stream = ExtResource("3_fqod2")
+stream_3/stream = ExtResource("4_s78dq")
 
 [node name="Weapon" type="AudioStreamPlayer2D" unique_id=911506914]
-stream = SubResource("AudioStreamRandomizer_y68es")
+stream = SubResource("AudioStreamRandomizer_ttl7p")
 max_polyphony = 3
+panning_strength = 2.0

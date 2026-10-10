@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://e8fnamqpbfex" path="res://src/gameplay/unit components/unit_perception.gd" id="5_inr3l"]
 [ext_resource type="Script" uid="uid://cabrh6ctmaedx" path="res://src/gameplay/unit components/unit_movement.gd" id="5_r6ibq"]
 [ext_resource type="Script" uid="uid://dlipap3g1dug7" path="res://src/gameplay/unit components/unit_autonomous_behavior.gd" id="6_autonomous"]
-[ext_resource type="PackedScene" uid="uid://ia2huxu80tpd" path="res://Audio/Scripts/unit_audio.tscn" id="8_584o2"]
+[ext_resource type="PackedScene" uid="uid://ia2huxu80tpd" path="res://Audio/unit_audio.tscn" id="8_584o2"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ninnf"]
 radius = 510.00098

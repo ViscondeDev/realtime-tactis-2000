@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ia2huxu80tpd"]
 
-[ext_resource type="Script" uid="uid://c3xuip0l4x87" path="res://Audio/Scripts/unit_audio.gd" id="1_gdxcw"]
+[ext_resource type="Script" uid="uid://c3xuip0l4x87" path="res://Audio/unit_audio.gd" id="1_gdxcw"]
 [ext_resource type="PackedScene" uid="uid://bte3rqp0pjf3v" path="res://Audio/weapon_class/machine_gun.tscn" id="2_8dbkn"]
 [ext_resource type="AudioStream" uid="uid://bjd4oo1gifjw0" path="res://Audio/SFX/Characters/Weapons/Shotgun.wav" id="2_8rnfl"]
 
