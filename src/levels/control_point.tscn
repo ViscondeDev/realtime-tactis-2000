@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://sjy4wwbe52en"]
+
+[ext_resource type="Script" uid="uid://bm30wf3r7fjhn" path="res://src/gameplay/control_point.gd" id="1_c456r"]
+[ext_resource type="Script" uid="uid://ibcse2mnrnca" path="res://tools/shape_tool.gd" id="2_obebo"]
+[ext_resource type="Script" uid="uid://eoyfcxmdrogy" path="res://tools/shape_definition.gd" id="3_q1p75"]
+[ext_resource type="Resource" uid="uid://72xvfwvamx5d" path="res://src/resources/shape_definitions/control_points/outline.tres" id="4_obebo"]
+
+[node name="ControlPoint" type="Node2D" unique_id=228254791 groups=["control_points"]]
+script = ExtResource("1_c456r")
+capture_radius = 200.0
+
+[node name="ShapeTool" type="Node2D" parent="." unique_id=394721897]
+script = ExtResource("2_obebo")
+definitions = Array[ExtResource("3_q1p75")]([ExtResource("4_obebo")])

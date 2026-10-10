@@ -3,6 +3,7 @@ extends Node
 
 signal match_started
 signal match_finished(winning_team: int)
+signal control_point_captured(team: Unit.Team)
 
 const CONTROL_POINTS_GROUP: StringName = &"control_points"
 const MATCH_DURATION_SECONDS: float = 120.0
@@ -19,7 +20,12 @@ var countdown_seconds_remaining: float = COUNTDOWN_DURATION_SECONDS
 var result_seconds_remaining: float = 0.0
 
 var _control_point: ControlPoint
-var _controlling_team: int = -1
+var _controlling_team: Unit.Team = -1:
+	set(value):
+		if value != _controlling_team:
+			_controlling_team = value
+			control_point_captured.emit(value)
+
 var _pending_player_orders: Dictionary = {}
 
 
@@ -29,6 +35,7 @@ func _ready() -> void:
 	for node: Node in get_tree().get_nodes_in_group(CONTROL_POINTS_GROUP):
 		_control_point = node as ControlPoint
 		if _control_point != null:
+			control_point_captured.connect(_control_point.takeover)
 			break
 	if _control_point == null:
 		push_error("MatchController requires a control point in the '%s' group." % CONTROL_POINTS_GROUP)

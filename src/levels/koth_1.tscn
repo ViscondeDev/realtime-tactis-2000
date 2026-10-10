@@ -5,9 +5,9 @@
 [ext_resource type="Script" uid="uid://c2bvcalceuvv8" path="res://tools/level_builder.gd" id="3_rgvsn"]
 [ext_resource type="Script" uid="uid://bxn47tpjyr6rv" path="res://tools/level_polygon.gd" id="4_ayr0s"]
 [ext_resource type="Script" uid="uid://cuw8comgqlltb" path="res://src/gameplay/respawn_point.gd" id="5_nrsx4"]
-[ext_resource type="Script" uid="uid://bm30wf3r7fjhn" path="res://src/gameplay/control_point.gd" id="6_e8qqr"]
 [ext_resource type="Script" uid="uid://blm2sqcpqdbpt" path="res://src/gameplay/unit_projectile_pool.gd" id="7_nu0k4"]
 [ext_resource type="Script" uid="uid://eoyfcxmdrogy" path="res://tools/shape_definition.gd" id="7_qno1b"]
+[ext_resource type="PackedScene" uid="uid://sjy4wwbe52en" path="res://src/levels/control_point.tscn" id="8_qno1b"]
 [ext_resource type="Script" uid="uid://35datvu1g58l" path="res://src/gameplay/unit_command_controller.gd" id="8_yli4d"]
 [ext_resource type="PackedScene" uid="uid://bt1qf6j1ifhf7" path="res://src/gameplay/unit.tscn" id="10_akum3"]
 [ext_resource type="PackedScene" uid="uid://dhchv8nivi3iq" path="res://src/gameplay/health_dispenser.tscn" id="11_qno1b"]
@@ -42,14 +42,6 @@ shape = 5
 radius = 5.0
 fill_color = Color(0.8509804, 0.2784314, 0.2784314, 1)
 outline_enabled = false
-
-[sub_resource type="Resource" id="Resource_vb1d0"]
-script = ExtResource("7_qno1b")
-shape = 3
-radius = 80.0
-fill_color = Color(1, 1, 1, 0.08)
-outline_color = Color(0.14901961, 0.23137255, 0.27450982, 1)
-line_width = 5.0
 
 [node name="Level" type="Node2D" unique_id=334309463]
 
@@ -152,14 +144,8 @@ team = 1
 script = ExtResource("13_shape_tool")
 definitions = Array[ExtResource("7_qno1b")]([SubResource("Resource_ttprn"), SubResource("Resource_g154v")])
 
-[node name="ControlPoint" type="Node2D" parent="." unique_id=1268325207 groups=["control_points"]]
+[node name="ControlPoint" parent="." unique_id=228254791 instance=ExtResource("8_qno1b")]
 position = Vector2(576, -256)
-script = ExtResource("6_e8qqr")
-capture_radius = 250.0
-
-[node name="ShapeTool" type="Node2D" parent="ControlPoint" unique_id=1212606101]
-script = ExtResource("13_shape_tool")
-definitions = Array[ExtResource("7_qno1b")]([SubResource("Resource_vb1d0")])
 
 [node name="ProjectilePool" type="Node2D" parent="." unique_id=315060351]
 script = ExtResource("7_nu0k4")

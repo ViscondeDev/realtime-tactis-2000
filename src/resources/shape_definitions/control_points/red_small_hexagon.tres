@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ShapeDefinition" format=3 uid="uid://b6ever8neba32"]
+
+[ext_resource type="Script" uid="uid://eoyfcxmdrogy" path="res://tools/shape_definition.gd" id="1_kb08h"]
+
+[resource]
+script = ExtResource("1_kb08h")
+shape = 3
+radius = 60.0
+fill_color = Color(0.85, 0.2805, 0.2805, 0.1764706)
+outline_enabled = false
+metadata/_custom_type_script = "uid://eoyfcxmdrogy"

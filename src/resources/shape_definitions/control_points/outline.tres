@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ShapeDefinition" format=3 uid="uid://72xvfwvamx5d"]
+
+[ext_resource type="Script" uid="uid://eoyfcxmdrogy" path="res://tools/shape_definition.gd" id="1_pdrv4"]
+
+[resource]
+script = ExtResource("1_pdrv4")
+shape = 3
+radius = 180.0
+fill_color = Color(1, 1, 1, 0.08)
+outline_color = Color(0.14901961, 0.23137255, 0.27450982, 1)
+line_width = 6.0
+mark_count = 39
+segment_length = 23.0

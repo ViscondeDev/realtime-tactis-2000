@@ -10,25 +10,30 @@ const HEXAGON_OUTLINE_WIDTH: float = 5.0
 const PROGRESS_BAR_SIZE: Vector2 = Vector2(110.0, 18.0)
 const PROGRESS_BAR_POSITION: Vector2 = Vector2(-55.0, 14.0)
 
+const SHAPE_DEFINITIONS = {
+	Unit.Team.RED :
+		{
+			"segmented_outline" : "uid://72xvfwvamx5d",
+			"small_hexagon" : "uid://b6ever8neba32",
+			"medium_hexagon" : "uid://d4kv6oddpp7hs",
+			"big_hexagon" : "uid://k5ov6sdd3q5r"
+		},
+		Unit.Team.YELLOW:
+			{
+				"segmented_outline" : "uid://72xvfwvamx5d",
+				"small_hexagon" : "uid://bd2r4n7qvyvv0",
+				"medium_hexagon" : "uid://dfb7o2hokg5ke",
+				"big_hexagon" : "uid://dr8wcvx05qn2"
+			}
+}
+
 @export_range(1.0, 1000.0, 1.0) var capture_radius: float = 160.0
+@onready var shape: ShapeTool = $ShapeTool
 
 var capture_progress: float = 0.0:
 	set(value):
 		capture_progress = clampf(value, -1.0, 1.0)
 		queue_redraw()
-
-@onready var _shape_tool: ShapeTool = $ShapeTool
-
-
-func _ready() -> void:
-	var hexagon: ShapeDefinition = ShapeDefinition.new()
-	hexagon.shape = ShapeDefinition.Shape.HEXAGON
-	hexagon.radius = HEXAGON_RADIUS
-	hexagon.fill_color = Color(1.0, 1.0, 1.0, 0.08)
-	hexagon.outline_color = Color.html("#263b46")
-	hexagon.line_width = HEXAGON_OUTLINE_WIDTH
-	_shape_tool.definitions = [hexagon]
-
 
 func _process(delta: float) -> void:
 	if Engine.is_editor_hint():
@@ -52,23 +57,16 @@ func _process(delta: float) -> void:
 	var progress_delta: float = delta / CAPTURE_SECONDS
 	capture_progress += progress_delta if yellow_inside else -progress_delta
 
+func takeover(team: Unit.Team):
+	print("Takeover called for team: %s" % team)
+	shape.definitions.clear()
+	shape.definitions = [load(SHAPE_DEFINITIONS[team]["segmented_outline"])]
+	
+	var small_hexagon : ShapeDefinition = load(SHAPE_DEFINITIONS[team]["small_hexagon"])
+	var medium_hexagon : ShapeDefinition = load(SHAPE_DEFINITIONS[team]["medium_hexagon"])
+	var big_hexagon : ShapeDefinition = load(SHAPE_DEFINITIONS[team]["big_hexagon"])
 
-func _draw() -> void:
-	_draw_progress_bar()
-
-
-func _draw_progress_bar() -> void:
-	var bar_rect: Rect2 = Rect2(PROGRESS_BAR_POSITION, PROGRESS_BAR_SIZE)
-	var yellow_width: float = (capture_progress + 1.0) * 0.5 * PROGRESS_BAR_SIZE.x
-	var yellow_color: Color = Color.html(Unit.TEAM_COLORS[Unit.Team.YELLOW])
-	var red_color: Color = Color.html(Unit.TEAM_COLORS[Unit.Team.RED])
-
-	draw_rect(bar_rect, Color(0.08, 0.08, 0.08, 0.9))
-	if yellow_width > 0.0:
-		draw_rect(Rect2(bar_rect.position, Vector2(yellow_width, bar_rect.size.y)), yellow_color)
-	if yellow_width < bar_rect.size.x:
-		draw_rect(
-			Rect2(Vector2(bar_rect.position.x + yellow_width, bar_rect.position.y), Vector2(bar_rect.size.x - yellow_width, bar_rect.size.y)),
-			red_color
-		)
-	draw_rect(bar_rect, Color.html("#263b46"), false, 2.0, true)
+	for s: ShapeDefinition in [small_hexagon, medium_hexagon, big_hexagon]:
+		shape.definitions.push_front(s)
+		await get_tree().create_timer(0.2).timeout
+		shape.queue_redraw()
