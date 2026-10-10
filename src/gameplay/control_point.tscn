@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://sjy4wwbe52en"]
+[gd_scene format=3 uid="uid://bb6s6if75cgex"]
 
 [ext_resource type="Script" uid="uid://bm30wf3r7fjhn" path="res://src/gameplay/control_point.gd" id="1_c456r"]
 [ext_resource type="Script" uid="uid://ibcse2mnrnca" path="res://tools/shape_tool.gd" id="2_obebo"]
