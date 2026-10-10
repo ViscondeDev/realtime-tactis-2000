@@ -6,9 +6,9 @@ signal unit_selected(unit: Unit)
 @export var alert_style: StyleBox
 
 const CLASS_ICONS: Array[Texture2D] = [
-	preload("res://addons/at-icons/node/square.svg"),
-	preload("res://addons/at-icons/node/triangle.svg"),
-	preload("res://addons/at-icons/node/circle.svg"),
+	preload("uid://ddjh6al3q86fj"),
+	preload("uid://pp5qyrssf8dv"),
+	preload("uid://dr2o10401sbvj"),
 ]
 const ALERT_FLASH_HOLD_SECONDS: float = 0.12
 const ALERT_FLASH_FADE_SECONDS: float = 0.32
@@ -130,7 +130,7 @@ func _refresh_state() -> void:
 		_is_alert = is_alert
 		if is_alert:
 			_flash_on_alert()
-		if is_alert and alert_style != null:
+		if is_alert and alert_style != null and not awaiting_orders:
 			add_theme_stylebox_override("panel", alert_style)
 		else:
 			remove_theme_stylebox_override("panel")

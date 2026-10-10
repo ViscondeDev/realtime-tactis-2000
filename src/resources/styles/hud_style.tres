@@ -1,0 +1,15 @@
+[gd_resource type="Theme" format=3 uid="uid://cixmbr6wmrvsj"]
+
+[ext_resource type="FontFile" uid="uid://dq2x2lev1t0pp" path="res://src/resources/fonts/SpaceGrotesk-2.0.0/ttf/static/SpaceGrotesk-Bold.ttf" id="1_gfndy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_axidw"]
+bg_color = Color(0.14901961, 0.23137255, 0.27450982, 1)
+border_color = Color(0.72156864, 0.78039217, 0.7882353, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[resource]
+Label/fonts/font = ExtResource("1_gfndy")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_axidw")

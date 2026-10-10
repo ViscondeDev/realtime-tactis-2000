@@ -1,18 +1,19 @@
 [gd_scene format=3 uid="uid://csj6kfn2dndps"]
 
 [ext_resource type="Script" uid="uid://cvahsvfevyws8" path="res://src/gameplay/match_hud.gd" id="1_hud"]
+[ext_resource type="Theme" uid="uid://cixmbr6wmrvsj" path="res://src/resources/styles/hud_style.tres" id="2_h8224"]
+[ext_resource type="Script" uid="uid://ibcse2mnrnca" path="res://tools/shape_tool.gd" id="5_wn6t1"]
+[ext_resource type="Script" uid="uid://eoyfcxmdrogy" path="res://tools/shape_definition.gd" id="6_iwbci"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_frame"]
-bg_color = Color(0.035, 0.055, 0.065, 0.94)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.76, 0.84, 0.87, 0.35)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_wot6j"]
+color = Color(0.70980394, 0.77254903, 0.7921569, 1)
+thickness = 4
+
+[sub_resource type="Resource" id="Resource_6dqgh"]
+script = ExtResource("6_iwbci")
+radius = 52.0
+fill_color = Color(0.9490196, 0.7882353, 0.29803923, 1)
+outline_enabled = false
 
 [node name="MatchHUD" type="CanvasLayer" unique_id=1439476412]
 script = ExtResource("1_hud")
@@ -25,6 +26,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme = ExtResource("2_h8224")
 
 [node name="ScorePanel" type="PanelContainer" parent="Root" unique_id=824523329]
 layout_mode = 1
@@ -37,7 +39,6 @@ offset_right = 340.0
 offset_bottom = 116.0
 grow_horizontal = 2
 mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_frame")
 
 [node name="Margin" type="MarginContainer" parent="Root/ScorePanel" unique_id=2127476915]
 layout_mode = 2
@@ -56,7 +57,7 @@ theme_override_constants/separation = 18
 unique_name_in_owner = true
 custom_minimum_size = Vector2(104, 40)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.835294, 0.913725, 0.223529, 1)
+theme_override_colors/font_color = Color(0.9490196, 0.7882353, 0.29803923, 1)
 theme_override_font_sizes/font_size = 28
 text = "20:00"
 horizontal_alignment = 1
@@ -86,7 +87,7 @@ anchors_preset = -1
 anchor_right = 0.5
 anchor_bottom = 1.0
 mouse_filter = 2
-color = Color(0.835294, 0.913725, 0.223529, 1)
+color = Color(0.9490196, 0.7882353, 0.29803923, 1)
 
 [node name="RedFill" type="ColorRect" parent="Root/ScorePanel/Margin/StatusRow/CaptureBar" unique_id=131700167]
 unique_name_in_owner = true
@@ -96,13 +97,13 @@ anchor_left = 0.5
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-color = Color(0.909804, 0.34902, 0.309804, 1)
+color = Color(0.8509804, 0.2784314, 0.2784314, 1)
 
 [node name="RedTimer" type="Label" parent="Root/ScorePanel/Margin/StatusRow" unique_id=699403952]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(104, 40)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.909804, 0.34902, 0.309804, 1)
+theme_override_colors/font_color = Color(0.8509804, 0.2784314, 0.2784314, 1)
 theme_override_font_sizes/font_size = 28
 text = "20:00"
 horizontal_alignment = 1
@@ -121,24 +122,26 @@ theme_override_font_sizes/font_size = 26
 text = "YELLOW TEAM WINS"
 horizontal_alignment = 1
 
-[node name="ReturnToMenu" type="Button" parent="Root"]
+[node name="ReturnToMenu" type="Button" parent="Root" unique_id=373149119]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
+anchor_bottom = 0.5
 offset_left = -160.0
 offset_top = 172.0
 offset_right = 160.0
 offset_bottom = 224.0
 grow_horizontal = 2
+grow_vertical = 2
 theme_override_colors/font_color = Color(0.0352941, 0.055, 0.065, 1)
 theme_override_font_sizes/font_size = 17
 text = "RETURN TO MAIN MENU"
-horizontal_alignment = 1
 
-[node name="Countdown" type="Label" parent="Root"]
+[node name="Countdown" type="Label" parent="Root" unique_id=959892899]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
@@ -161,15 +164,17 @@ vertical_alignment = 1
 
 [node name="UnitsPanel" type="PanelContainer" parent="Root" unique_id=13522549]
 layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_left = 24.0
-offset_top = 176.0
-offset_right = 440.0
-offset_bottom = -24.0
+anchors_preset = -1
+anchor_left = 0.009000001
+anchor_top = 0.015000001
+anchor_right = 0.172
+anchor_bottom = 0.97800004
+offset_left = 0.9599991
+offset_top = 0.39999962
+offset_right = 71.67999
+offset_bottom = 7.6799316
 grow_vertical = 2
 mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_frame")
 
 [node name="Margin" type="MarginContainer" parent="Root/UnitsPanel" unique_id=1248209591]
 layout_mode = 2
@@ -186,13 +191,15 @@ theme_override_constants/separation = 12
 
 [node name="Heading" type="Label" parent="Root/UnitsPanel/Margin/Column" unique_id=1134579575]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.835294, 0.913725, 0.223529, 1)
-theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(0.9490196, 0.7882353, 0.29803923, 1)
+theme_override_font_sizes/font_size = 32
 text = "YELLOW // UNITS"
+horizontal_alignment = 1
 
 [node name="Divider" type="HSeparator" parent="Root/UnitsPanel/Margin/Column" unique_id=829080736]
 layout_mode = 2
 mouse_filter = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_wot6j")
 
 [node name="UnitScroll" type="ScrollContainer" parent="Root/UnitsPanel/Margin/Column" unique_id=1118890691]
 layout_mode = 2
@@ -204,12 +211,19 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 12
 
 [node name="EmptyState" type="Label" parent="Root/UnitsPanel/Margin/Column/UnitScroll/UnitList" unique_id=1204597251]
 unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(0, 52)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.64, 0.7, 0.71, 1)
 text = "No yellow units"
 horizontal_alignment = 1
+
+[node name="ShapeTool" type="Node2D" parent="." unique_id=962503085]
+script = ExtResource("5_wn6t1")
+definitions = Array[ExtResource("6_iwbci")]([SubResource("Resource_6dqgh")])
+png_path = "res://src/assets/unit_icons/yellow_circle.png"
+metadata/_custom_type_script = "uid://ibcse2mnrnca"
