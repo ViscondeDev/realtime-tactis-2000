@@ -1,16 +1,67 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://dn0bjc7wro4re"]
 
-[sub_resource type="Gradient" id="Gradient_menu"]
-colors = PackedColorArray(0.0627451, 0.0980392, 0.101961, 1, 0.105882, 0.160784, 0.160784, 1)
+[ext_resource type="Texture2D" uid="uid://bxnxtvgft235r" path="res://src/assets/Pasted image (2).png" id="1_mjred"]
+[ext_resource type="Theme" uid="uid://cixmbr6wmrvsj" path="res://src/resources/styles/hud_style.tres" id="1_tt30f"]
+[ext_resource type="FontFile" uid="uid://deyccmpesgcv6" path="res://src/resources/fonts/SpaceGrotesk-2.0.0/ttf/static/SpaceGrotesk-Medium.ttf" id="2_kdgm6"]
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_menu"]
-gradient = SubResource("Gradient_menu")
-fill_from = Vector2(0, 0)
-fill_to = Vector2(1, 1)
-width = 2
-height = 2
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_ctxya"]
+color = Color(0.9098039, 0.8980392, 0.8627451, 1)
+thickness = 3
+vertical = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ninnf"]
+bg_color = Color(0.14901961, 0.23137255, 0.27450982, 1)
+border_width_bottom = 6
+border_color = Color(0.9098039, 0.8980392, 0.8627451, 1)
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kdgm6"]
+bg_color = Color(0.14901961, 0.23137255, 0.27450982, 1)
+border_width_bottom = 6
+border_color = Color(0.9490196, 0.7882353, 0.29803923, 1)
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6bldj"]
+bg_color = Color(0.14901961, 0.23137255, 0.27450982, 1)
+border_width_bottom = 6
+border_color = Color(0.9490196, 0.7882353, 0.29803923, 1)
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j6yp6"]
+bg_color = Color(0.9098039, 0.8980392, 0.8627451, 1)
+border_width_bottom = 6
+border_color = Color(0.9098039, 0.8980392, 0.8627451, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xctd7"]
+bg_color = Color(0.9098039, 0.8980392, 0.8627451, 1)
+border_width_bottom = 6
+border_color = Color(0.9098039, 0.8980392, 0.8627451, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6f2wp"]
+bg_color = Color(0.9098039, 0.8980392, 0.8627451, 1)
+border_width_bottom = 6
+border_color = Color(0.9098039, 0.8980392, 0.8627451, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+content_margin_left = 42.0
+content_margin_top = 38.0
+content_margin_right = 42.0
+content_margin_bottom = 38.0
 bg_color = Color(0.082353, 0.121569, 0.12549, 0.98)
 border_width_left = 1
 border_width_top = 1
@@ -21,75 +72,129 @@ corner_radius_top_left = 2
 corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
-content_margin_left = 42.0
-content_margin_top = 38.0
-content_margin_right = 42.0
-content_margin_bottom = 38.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_input"]
-bg_color = Color(0.0941176, 0.141176, 0.145098, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.270588, 0.32549, 0.329412, 1)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
-content_margin_left = 12.0
-content_margin_top = 12.0
-content_margin_right = 12.0
-content_margin_bottom = 12.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button"]
-bg_color = Color(0.835294, 0.909804, 0.223529, 1)
-border_color = Color(0.835294, 0.909804, 0.223529, 1)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
-content_margin_left = 12.0
-content_margin_top = 12.0
-content_margin_right = 12.0
-content_margin_bottom = 12.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button_hover"]
-bg_color = Color(0.905882, 0.964706, 0.376471, 1)
-border_color = Color(0.929412, 0.94902, 0.921569, 1)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
-content_margin_left = 12.0
-content_margin_top = 12.0
-content_margin_right = 12.0
-content_margin_bottom = 12.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_disabled"]
-bg_color = Color(0.14902, 0.196078, 0.2, 1)
-border_color = Color(0.270588, 0.32549, 0.329412, 1)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
-content_margin_left = 12.0
-content_margin_top = 12.0
-content_margin_right = 12.0
-content_margin_bottom = 12.0
-
-[node name="MainMenuUI" type="CanvasLayer"]
+[node name="MainMenuUI" type="CanvasLayer" unique_id=1122763087]
 layer = 20
 
-[node name="Screen" type="Control" parent="."]
+[node name="NewMenu" type="Control" parent="." unique_id=89117428]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_tt30f")
 
-[node name="Background" type="TextureRect" parent="Screen"]
+[node name="Screenshot" type="Sprite2D" parent="NewMenu" unique_id=341668009]
+position = Vector2(1728, 704)
+texture = ExtResource("1_mjred")
+
+[node name="Polygon2D" type="Polygon2D" parent="NewMenu" unique_id=728858598]
+color = Color(0.14901961, 0.23137255, 0.27450982, 1)
+invert_enabled = true
+invert_border = 1458.7
+polygon = PackedVector2Array(1344, 256, 2368, 512, 2624, 256, 2624, 640, 1728, 1536, 1728, 1536, 1344, 1536, 1728, 1152, 1088, 1152, 1088, 512)
+
+[node name="Polygon2D2" type="Polygon2D" parent="NewMenu" unique_id=1784542098]
+position = Vector2(-1152, -832)
+color = Color(0.9490196, 0.7882353, 0.29803923, 1)
+polygon = PackedVector2Array(2240, 1280, 2432, 1088, 2240, 1088)
+
+[node name="Label" type="Label" parent="NewMenu" unique_id=477332188]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 256.0
+offset_right = 788.0
+offset_bottom = 639.0
+theme_override_colors/font_color = Color(0.9098039, 0.8980392, 0.8627451, 1)
+theme_override_fonts/font = ExtResource("2_kdgm6")
+theme_override_font_sizes/font_size = 148
+text = "Realtime 
+Tactics"
+
+[node name="Label2" type="Label" parent="NewMenu" unique_id=831342339]
+layout_mode = 0
+offset_left = 743.0
+offset_top = 549.0
+offset_right = 1403.0
+offset_bottom = 932.0
+theme_override_colors/font_color = Color(0.72156864, 0.78039217, 0.7882353, 1)
+theme_override_fonts/font = ExtResource("2_kdgm6")
+theme_override_font_sizes/font_size = 48
+text = "2000"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="NewMenu" unique_id=734309767]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 0
+offset_left = 192.0
+offset_top = 832.0
+offset_right = 704.0
+offset_bottom = 1280.0
+theme_override_constants/separation = 75
+
+[node name="VSeparator" type="VSeparator" parent="NewMenu/HBoxContainer" unique_id=748074242]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_ctxya")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="NewMenu/HBoxContainer" unique_id=1147403935]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label4" type="Label" parent="NewMenu/HBoxContainer/VBoxContainer" unique_id=2027101590]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 43
+text = "Tutorial"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="NewMenu/HBoxContainer/VBoxContainer" unique_id=236305396]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="LevelSelector" type="OptionButton" parent="NewMenu/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1075536192]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 54)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.9098039, 0.8980392, 0.8627451, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_ninnf")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_kdgm6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_6bldj")
+
+[node name="StartButton" type="Button" parent="NewMenu/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1855191415]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 76)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.14901961, 0.23137255, 0.27450982, 1)
+theme_override_fonts/font = ExtResource("2_kdgm6")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_j6yp6")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_xctd7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_6f2wp")
+text = "Play"
+
+[node name="Label2" type="Label" parent="NewMenu/HBoxContainer/VBoxContainer" unique_id=620013102]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 43
+text = "Credits"
+
+[node name="Label3" type="Label" parent="NewMenu/HBoxContainer/VBoxContainer" unique_id=1328662831]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 43
+text = "Rate"
+
+[node name="Screen" type="Control" parent="." unique_id=78806899]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_tt30f")
+
+[node name="Background" type="ColorRect" parent="Screen" unique_id=614844326]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -97,18 +202,19 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = SubResource("GradientTexture2D_menu")
-expand_mode = 1
-stretch_mode = 1
+color = Color(0.14901961, 0.23137255, 0.27450982, 1)
 
-[node name="TopRule" type="ColorRect" parent="Screen"]
+[node name="TopRule" type="ColorRect" parent="Screen" unique_id=148504458]
 layout_mode = 1
+anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 5.0
+grow_horizontal = 2
 mouse_filter = 2
-color = Color(0.835294, 0.909804, 0.223529, 1)
+color = Color(0.9490196, 0.7882353, 0.29803923, 1)
 
-[node name="Brand" type="Label" parent="Screen"]
+[node name="Brand" type="Label" parent="Screen" unique_id=203518173]
+layout_mode = 0
 offset_left = 48.0
 offset_top = 34.0
 offset_right = 298.0
@@ -117,8 +223,8 @@ theme_override_colors/font_color = Color(0.835294, 0.909804, 0.223529, 1)
 theme_override_font_sizes/font_size = 20
 text = "RT // 2000"
 
-[node name="HeaderStatus" type="Label" parent="Screen"]
-anchors_preset = 10
+[node name="HeaderStatus" type="Label" parent="Screen" unique_id=736891007]
+layout_mode = 0
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -390.0
@@ -131,7 +237,7 @@ theme_override_font_sizes/font_size = 14
 text = "TACTICAL OPERATIONS  /  BUILD 01"
 horizontal_alignment = 2
 
-[node name="MenuCenter" type="CenterContainer" parent="Screen"]
+[node name="MenuCenter" type="CenterContainer" parent="Screen" unique_id=1699769324]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -139,76 +245,47 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MenuPanel" type="PanelContainer" parent="Screen/MenuCenter"]
+[node name="MenuPanel" type="PanelContainer" parent="Screen/MenuCenter" unique_id=1196764483]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(720, 680)
 layout_mode = 2
+theme = ExtResource("1_tt30f")
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
-[node name="Content" type="VBoxContainer" parent="Screen/MenuCenter/MenuPanel"]
+[node name="Content" type="VBoxContainer" parent="Screen/MenuCenter/MenuPanel" unique_id=917535127]
 layout_mode = 2
 theme_override_constants/separation = 18
 
-[node name="Eyebrow" type="Label" parent="Screen/MenuCenter/MenuPanel/Content"]
+[node name="Eyebrow" type="Label" parent="Screen/MenuCenter/MenuPanel/Content" unique_id=1731534029]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.835294, 0.909804, 0.223529, 1)
 theme_override_font_sizes/font_size = 15
 text = "FIELD COMMAND  /  01"
 
-[node name="Title" type="Label" parent="Screen/MenuCenter/MenuPanel/Content"]
+[node name="Title" type="Label" parent="Screen/MenuCenter/MenuPanel/Content" unique_id=338636508]
 custom_minimum_size = Vector2(0, 130)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.929412, 0.94902, 0.921569, 1)
 theme_override_font_sizes/font_size = 54
-text = "REALTIME\nTACTICS"
+text = "REALTIME
+TACTICS"
 
-[node name="Description" type="Label" parent="Screen/MenuCenter/MenuPanel/Content"]
+[node name="Description" type="Label" parent="Screen/MenuCenter/MenuPanel/Content" unique_id=261155517]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.607843, 0.658824, 0.65098, 1)
 theme_override_font_sizes/font_size = 18
 text = "Select an operation and deploy your squad."
 
-[node name="Divider" type="HSeparator" parent="Screen/MenuCenter/MenuPanel/Content"]
+[node name="Divider" type="HSeparator" parent="Screen/MenuCenter/MenuPanel/Content" unique_id=1064102771]
 layout_mode = 2
 
-[node name="ModesLabel" type="Label" parent="Screen/MenuCenter/MenuPanel/Content"]
+[node name="ModesLabel" type="Label" parent="Screen/MenuCenter/MenuPanel/Content" unique_id=967036330]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.607843, 0.658824, 0.65098, 1)
 theme_override_font_sizes/font_size = 14
 text = "AVAILABLE OPERATIONS"
 
-[node name="LevelSelector" type="OptionButton" parent="Screen/MenuCenter/MenuPanel/Content"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 54)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.929412, 0.94902, 0.921569, 1)
-theme_override_font_sizes/font_size = 18
-theme_override_styles/normal = SubResource("StyleBoxFlat_input")
-theme_override_styles/hover = SubResource("StyleBoxFlat_input")
-
-[node name="StartButton" type="Button" parent="Screen/MenuCenter/MenuPanel/Content"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 76)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.0901961, 0.12549, 0.101961, 1)
-theme_override_colors/font_hover_color = Color(0.0901961, 0.12549, 0.101961, 1)
-theme_override_font_sizes/font_size = 18
-theme_override_styles/normal = SubResource("StyleBoxFlat_button")
-theme_override_styles/hover = SubResource("StyleBoxFlat_button_hover")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_button")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_disabled")
-text = "KING OF THE HILL     /     DEPLOY"
-
-[node name="DisabledModeButton" type="Button" parent="Screen/MenuCenter/MenuPanel/Content"]
-custom_minimum_size = Vector2(0, 58)
-layout_mode = 2
-disabled = true
-theme_override_colors/font_color = Color(0.470588, 0.513725, 0.513725, 1)
-theme_override_font_sizes/font_size = 18
-theme_override_styles/disabled = SubResource("StyleBoxFlat_disabled")
-text = "CONTROL POINTS     /     DISABLED"
-
-[node name="StatusLabel" type="Label" parent="Screen/MenuCenter/MenuPanel/Content"]
+[node name="StatusLabel" type="Label" parent="Screen/MenuCenter/MenuPanel/Content" unique_id=189180446]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
@@ -216,8 +293,8 @@ theme_override_colors/font_color = Color(0.607843, 0.658824, 0.65098, 1)
 theme_override_font_sizes/font_size = 14
 text = "ENEMY ORDER DELAY  /  2.5 SECONDS"
 
-[node name="Footer" type="Label" parent="Screen"]
-anchors_preset = 10
+[node name="Footer" type="Label" parent="Screen" unique_id=1944688414]
+layout_mode = 0
 anchor_right = 1.0
 offset_top = 892.0
 offset_bottom = 918.0
@@ -226,7 +303,7 @@ theme_override_font_sizes/font_size = 13
 text = "KOTH 01  /  CONTROL THE CENTRE  /  HOLD THE LINE"
 horizontal_alignment = 1
 
-[node name="LoadingScreen" type="Control" parent="."]
+[node name="LoadingScreen" type="Control" parent="." unique_id=1100636669]
 unique_name_in_owner = true
 visible = false
 layout_mode = 3
@@ -236,7 +313,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Backdrop" type="ColorRect" parent="LoadingScreen"]
+[node name="Backdrop" type="ColorRect" parent="LoadingScreen" unique_id=1237159952]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -245,7 +322,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.0627451, 0.0980392, 0.101961, 1)
 
-[node name="Center" type="CenterContainer" parent="LoadingScreen"]
+[node name="Center" type="CenterContainer" parent="LoadingScreen" unique_id=913139851]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -253,19 +330,19 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Content" type="VBoxContainer" parent="LoadingScreen/Center"]
+[node name="Content" type="VBoxContainer" parent="LoadingScreen/Center" unique_id=125019999]
 custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
 theme_override_constants/separation = 24
 
-[node name="Title" type="Label" parent="LoadingScreen/Center/Content"]
+[node name="Title" type="Label" parent="LoadingScreen/Center/Content" unique_id=633671966]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.929412, 0.94902, 0.921569, 1)
 theme_override_font_sizes/font_size = 34
 text = "DEPLOYMENT IN PROGRESS"
 horizontal_alignment = 1
 
-[node name="Status" type="Label" parent="LoadingScreen/Center/Content"]
+[node name="Status" type="Label" parent="LoadingScreen/Center/Content" unique_id=232497415]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.607843, 0.658824, 0.65098, 1)
@@ -273,7 +350,7 @@ theme_override_font_sizes/font_size = 17
 text = "Loading selected level..."
 horizontal_alignment = 1
 
-[node name="Progress" type="ProgressBar" parent="LoadingScreen/Center/Content"]
+[node name="Progress" type="ProgressBar" parent="LoadingScreen/Center/Content" unique_id=629601210]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 18)
 layout_mode = 2

@@ -10,8 +10,8 @@ const MINIMUM_LOADING_SCREEN_SECONDS: float = 0.35
 @onready var _menu_canvas: CanvasLayer = $MainMenuUI
 @onready var _menu_panel: Control = $MainMenuUI/Screen/MenuCenter/MenuPanel
 @onready var _loading_screen: Control = $MainMenuUI/LoadingScreen
-@onready var _level_selector: OptionButton = $MainMenuUI/Screen/MenuCenter/MenuPanel/Content/LevelSelector
-@onready var _start_button: Button = $MainMenuUI/Screen/MenuCenter/MenuPanel/Content/StartButton
+@onready var _level_selector: OptionButton = $MainMenuUI/NewMenu/HBoxContainer/VBoxContainer/HBoxContainer/LevelSelector
+@onready var _start_button: Button = $MainMenuUI/NewMenu/HBoxContainer/VBoxContainer/HBoxContainer/StartButton
 @onready var _status_label: Label = $MainMenuUI/Screen/MenuCenter/MenuPanel/Content/StatusLabel
 @onready var _loading_progress: ProgressBar = $MainMenuUI/LoadingScreen/Center/Content/Progress
 
@@ -145,8 +145,6 @@ func _launch_match(level_scene: PackedScene) -> void:
 func _on_match_started(level: Node2D) -> void:
 	if is_instance_valid(level):
 		level.process_mode = Node.PROCESS_MODE_INHERIT
-	
-	AudioGlobal.start_level()
 
 
 func _on_match_finished(winning_team: int) -> void:
