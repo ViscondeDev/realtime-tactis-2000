@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://e8fnamqpbfex" path="res://src/gameplay/unit components/unit_perception.gd" id="5_inr3l"]
 [ext_resource type="Script" uid="uid://cabrh6ctmaedx" path="res://src/gameplay/unit components/unit_movement.gd" id="5_r6ibq"]
 [ext_resource type="Script" uid="uid://dlipap3g1dug7" path="res://src/gameplay/unit components/unit_autonomous_behavior.gd" id="6_autonomous"]
+[ext_resource type="PackedScene" uid="uid://ia2huxu80tpd" path="res://Audio/unit_audio.tscn" id="8_584o2"]
 [ext_resource type="Script" uid="uid://ibcse2mnrnca" path="res://tools/shape_tool.gd" id="7_shape_tool"]
 [ext_resource type="Script" uid="uid://eoyfcxmdrogy" path="res://tools/shape_definition.gd" id="8_r6ibq"]
 [ext_resource type="Script" uid="uid://b62tcx7bnbg28" path="res://src/gameplay/unit components/unit_animation.gd" id="10_0iiy4"]
@@ -164,6 +165,9 @@ definitions = Array[ExtResource("8_r6ibq")]([])
 unique_name_in_owner = true
 script = ExtResource("4_584o2")
 
+[node name="UnitAudio" parent="." unique_id=710034046 instance=ExtResource("8_584o2")]
+
+
 [node name="ShapeTool" type="Node2D" parent="Rendering/UnitShapeRenderer" unique_id=1207326241]
 script = ExtResource("7_shape_tool")
 definitions = Array[ExtResource("8_r6ibq")]([])
@@ -184,4 +188,6 @@ explosiveness = 0.93
 script = ExtResource("12_14we2")
 _unit = NodePath("../..")
 
+[connection signal="died" from="Behavior/UnitHealth" to="UnitAudio" method="_on_unit_health_died"]
+[connection signal="health_changed" from="Behavior/UnitHealth" to="UnitAudio" method="_on_unit_health_health_changed"]
 [connection signal="took_damage" from="Behavior/UnitHealth" to="Rendering/UnitAnimation" method="_on_take_damage"]

@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://clgqshop3r3k"
+path="res://.godot/imported/Shotgun 03.ogg-ee2b7f1b521bc7a3dee82ccb2a5c2239.oggvorbisstr"
+
+[deps]
+
+source_file="res://Audio/SFX/Characters/Weapons/Shotgun 03.ogg"
+dest_files=["res://.godot/imported/Shotgun 03.ogg-ee2b7f1b521bc7a3dee82ccb2a5c2239.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

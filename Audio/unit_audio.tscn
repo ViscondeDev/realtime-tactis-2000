@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://ia2huxu80tpd"]
+
+[ext_resource type="Script" uid="uid://c3xuip0l4x87" path="res://Audio/unit_audio.gd" id="1_gdxcw"]
+[ext_resource type="PackedScene" uid="uid://bte3rqp0pjf3v" path="res://Audio/weapon_class/machine_gun.tscn" id="2_8dbkn"]
+[ext_resource type="PackedScene" uid="uid://0eiwo7ctdgsy" path="res://Audio/dead_team/dead_friendly.tscn" id="4_10ynu"]
+
+[node name="UnitAudio" type="Node2D" unique_id=710034046]
+script = ExtResource("1_gdxcw")
+
+[node name="Weapon" parent="." unique_id=911506914 instance=ExtResource("2_8dbkn")]
+stream = null
+
+[node name="Hit" type="AudioStreamPlayer2D" parent="." unique_id=107733716]
+panning_strength = 2.0
+bus = &"SFX"
+
+[node name="Dead" parent="." unique_id=1365131046 instance=ExtResource("4_10ynu")]
+stream = null
+bus = &"SFX"
+
+[node name="Heal" type="AudioStreamPlayer2D" parent="." unique_id=774157126]
+panning_strength = 2.0
+bus = &"SFX"

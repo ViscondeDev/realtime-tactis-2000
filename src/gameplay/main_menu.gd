@@ -145,6 +145,8 @@ func _launch_match(level_scene: PackedScene) -> void:
 func _on_match_started(level: Node2D) -> void:
 	if is_instance_valid(level):
 		level.process_mode = Node.PROCESS_MODE_INHERIT
+	
+	AudioGlobal.start_level()
 
 
 func _on_match_finished(winning_team: int) -> void:

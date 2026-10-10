@@ -62,6 +62,11 @@ func on_player_move_order_issued() -> void:
 		_building_dispenser = null
 	_movement.clear_autonomous_move_target()
 	_transition_to(State.MOVING)
+	
+	### AUDIO ###
+	if _unit.team == _unit.Team.YELLOW:
+		AudioGlobal.get_node("Order").play()
+	### AUDIO END ###
 
 
 func begin_dispenser_construction(dispenser: HealthDispenser) -> bool:
@@ -194,6 +199,10 @@ func _fire_round(target: Node2D, damage: float) -> void:
 		class_definition.projectile_speed,
 		class_definition.attack_range
 	)
+	### AUDIO START ###
+	$"../../UnitAudio/Weapon".play()
+	### AUDIO END ###
+
 	_unit.shot_particles.look_at(target.global_position)
 	_unit.shot_particles.emitting = true
 

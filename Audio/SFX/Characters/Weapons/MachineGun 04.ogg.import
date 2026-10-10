@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bb5ssegn4cg0u"
+path="res://.godot/imported/MachineGun 04.ogg-6a36227fd59f9c605304a9ab9996810f.oggvorbisstr"
+
+[deps]
+
+source_file="res://Audio/SFX/Characters/Weapons/MachineGun 04.ogg"
+dest_files=["res://.godot/imported/MachineGun 04.ogg-6a36227fd59f9c605304a9ab9996810f.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

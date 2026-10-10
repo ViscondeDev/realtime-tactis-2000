@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://clhyfp2bj44m1"]
+
+[ext_resource type="Script" uid="uid://bpbpywbhpx688" path="res://Audio/audio_global.gd" id="1_nnvre"]
+[ext_resource type="AudioStream" uid="uid://dlytur1oguhms" path="res://Audio/Music/02/menu_idle_wip_1.ogg" id="2_48blk"]
+[ext_resource type="AudioStream" uid="uid://dmeqhfcv0rupo" path="res://Audio/Music/02/overworld_major_battle_wip_2.ogg" id="3_rs3km"]
+[ext_resource type="AudioStream" uid="uid://bcdmvnbewhccg" path="res://Audio/SFX/Characters/Order 01.ogg" id="4_cqrli"]
+[ext_resource type="AudioStream" uid="uid://dw8efnynluriw" path="res://Audio/SFX/Characters/Order 02.ogg" id="5_empxh"]
+[ext_resource type="AudioStream" uid="uid://bvdtj4qmahskn" path="res://Audio/SFX/Characters/Order 03.ogg" id="6_fdcpd"]
+[ext_resource type="AudioStream" uid="uid://dobpvlf1tladq" path="res://Audio/SFX/Characters/Order 04.ogg" id="7_c3jvq"]
+
+[sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_5xpoe"]
+clip_count = 2
+clip_0/name = &"MainMenu"
+clip_0/stream = ExtResource("2_48blk")
+clip_0/auto_advance = 0
+clip_1/name = &"Level"
+clip_1/stream = ExtResource("3_rs3km")
+clip_1/auto_advance = 0
+_transitions = {
+Vector2i(-1, -1): {
+"fade_beats": 1.0,
+"fade_mode": 4,
+"from_time": 0,
+"to_time": 0
+}
+}
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_48blk"]
+streams_count = 4
+stream_0/stream = ExtResource("4_cqrli")
+stream_1/stream = ExtResource("5_empxh")
+stream_2/stream = ExtResource("6_fdcpd")
+stream_3/stream = ExtResource("7_c3jvq")
+
+[node name="AudioGlobal" type="Node2D" unique_id=835354796]
+script = ExtResource("1_nnvre")
+
+[node name="Music" type="AudioStreamPlayer" parent="." unique_id=1021334340]
+stream = SubResource("AudioStreamInteractive_5xpoe")
+autoplay = true
+bus = &"Music"
+
+[node name="Order" type="AudioStreamPlayer" parent="." unique_id=52107642]
+stream = SubResource("AudioStreamRandomizer_48blk")
+volume_db = -10.0
+bus = &"UI"

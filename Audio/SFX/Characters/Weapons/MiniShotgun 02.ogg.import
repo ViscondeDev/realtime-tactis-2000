@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://d0p55tooj0tut"
+path="res://.godot/imported/MiniShotgun 02.ogg-77fc336fa0ad3adea98aff0a1971a8be.oggvorbisstr"
+
+[deps]
+
+source_file="res://Audio/SFX/Characters/Weapons/MiniShotgun 02.ogg"
+dest_files=["res://.godot/imported/MiniShotgun 02.ogg-77fc336fa0ad3adea98aff0a1971a8be.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
