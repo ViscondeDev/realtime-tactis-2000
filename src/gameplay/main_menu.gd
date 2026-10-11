@@ -12,7 +12,7 @@ const MINIMUM_LOADING_SCREEN_SECONDS: float = 0.35
 @onready var _loading_screen: Control = $MainMenuUI/LoadingScreen
 @onready var _level_selector: OptionButton = $MainMenuUI/NewMenu/HBoxContainer/VBoxContainer/HBoxContainer/LevelSelector
 @onready var _start_button: Button = $MainMenuUI/NewMenu/HBoxContainer/VBoxContainer/HBoxContainer/StartButton
-@onready var _status_label: Label = $MainMenuUI/Screen/MenuCenter/MenuPanel/Content/StatusLabel
+@onready var _status_label: Label = $MainMenuUI/NewMenu/StatusLabel
 @onready var _loading_progress: ProgressBar = $MainMenuUI/LoadingScreen/Center/Content/Progress
 
 var enemy_issue_delay_seconds: float = INITIAL_ENEMY_ISSUE_DELAY

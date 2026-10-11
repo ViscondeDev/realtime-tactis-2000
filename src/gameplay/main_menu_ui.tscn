@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dn0bjc7wro4re"]
 
-[ext_resource type="Texture2D" uid="uid://bxnxtvgft235r" path="res://src/assets/Pasted image (2).png" id="1_mjred"]
 [ext_resource type="Theme" uid="uid://cixmbr6wmrvsj" path="res://src/resources/styles/hud_style.tres" id="1_tt30f"]
+[ext_resource type="Texture2D" uid="uid://c6lenfkcnisbi" path="res://src/assets/dreamlayer-5ef959b7.png" id="2_6bldj"]
 [ext_resource type="FontFile" uid="uid://deyccmpesgcv6" path="res://src/resources/fonts/SpaceGrotesk-2.0.0/ttf/static/SpaceGrotesk-Medium.ttf" id="2_kdgm6"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_ctxya"]
@@ -87,49 +87,63 @@ theme = ExtResource("1_tt30f")
 
 [node name="Screenshot" type="Sprite2D" parent="NewMenu" unique_id=341668009]
 position = Vector2(1728, 704)
-texture = ExtResource("1_mjred")
+scale = Vector2(0.79, 0.79)
+texture = ExtResource("2_6bldj")
 
-[node name="Polygon2D" type="Polygon2D" parent="NewMenu" unique_id=728858598]
+[node name="Polygon2D" type="Polygon2D" parent="NewMenu" unique_id=542535107]
+position = Vector2(-128, 0)
 color = Color(0.14901961, 0.23137255, 0.27450982, 1)
 invert_enabled = true
-invert_border = 1458.7
-polygon = PackedVector2Array(1344, 256, 2368, 512, 2624, 256, 2624, 640, 1728, 1536, 1728, 1536, 1344, 1536, 1728, 1152, 1088, 1152, 1088, 512)
+invert_border = 2018.1
+polygon = PackedVector2Array(1088, 704, 1344, 320, 2560, 320, 2560, 704, 2112, 1152, 1728, 1152, 1344, 896)
 
 [node name="Polygon2D2" type="Polygon2D" parent="NewMenu" unique_id=1784542098]
-position = Vector2(-1152, -832)
+position = Vector2(-128, 0)
 color = Color(0.9490196, 0.7882353, 0.29803923, 1)
-polygon = PackedVector2Array(2240, 1280, 2432, 1088, 2240, 1088)
+polygon = PackedVector2Array(2240, 1152, 2560, 1152, 2560, 832)
 
 [node name="Label" type="Label" parent="NewMenu" unique_id=477332188]
 layout_mode = 0
 offset_left = 128.0
-offset_top = 256.0
-offset_right = 788.0
-offset_bottom = 639.0
+offset_top = 128.0
+offset_right = 931.0
+offset_bottom = 593.0
 theme_override_colors/font_color = Color(0.9098039, 0.8980392, 0.8627451, 1)
 theme_override_fonts/font = ExtResource("2_kdgm6")
-theme_override_font_sizes/font_size = 148
+theme_override_font_sizes/font_size = 180
 text = "Realtime 
 Tactics"
 
 [node name="Label2" type="Label" parent="NewMenu" unique_id=831342339]
 layout_mode = 0
-offset_left = 743.0
-offset_top = 549.0
-offset_right = 1403.0
-offset_bottom = 932.0
+offset_left = 768.0
+offset_top = 512.0
+offset_right = 1428.0
+offset_bottom = 895.0
 theme_override_colors/font_color = Color(0.72156864, 0.78039217, 0.7882353, 1)
 theme_override_fonts/font = ExtResource("2_kdgm6")
 theme_override_font_sizes/font_size = 48
 text = "2000"
 
+[node name="StatusLabel" type="Label" parent="NewMenu" unique_id=189180446]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 0
+offset_left = 2176.0
+offset_top = 128.0
+offset_right = 2421.0
+offset_bottom = 152.0
+theme_override_colors/font_color = Color(0.607843, 0.658824, 0.65098, 1)
+theme_override_font_sizes/font_size = 14
+text = "ENEMY ORDER DELAY  /  2.5 SECONDS"
+
 [node name="HBoxContainer" type="HBoxContainer" parent="NewMenu" unique_id=734309767]
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 0
 offset_left = 192.0
-offset_top = 832.0
+offset_top = 704.0
 offset_right = 704.0
-offset_bottom = 1280.0
+offset_bottom = 1152.0
 theme_override_constants/separation = 75
 
 [node name="VSeparator" type="VSeparator" parent="NewMenu/HBoxContainer" unique_id=748074242]
@@ -156,9 +170,15 @@ custom_minimum_size = Vector2(0, 54)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0.9098039, 0.8980392, 0.8627451, 1)
+theme_override_font_sizes/font_size = 29
 theme_override_styles/normal = SubResource("StyleBoxFlat_ninnf")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_kdgm6")
 theme_override_styles/hover = SubResource("StyleBoxFlat_6bldj")
+alignment = 1
+selected = 0
+item_count = 1
+popup/item_0/text = "TEST"
+popup/item_0/id = 0
 
 [node name="StartButton" type="Button" parent="NewMenu/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1855191415]
 unique_name_in_owner = true
@@ -284,14 +304,6 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.607843, 0.658824, 0.65098, 1)
 theme_override_font_sizes/font_size = 14
 text = "AVAILABLE OPERATIONS"
-
-[node name="StatusLabel" type="Label" parent="Screen/MenuCenter/MenuPanel/Content" unique_id=189180446]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 24)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.607843, 0.658824, 0.65098, 1)
-theme_override_font_sizes/font_size = 14
-text = "ENEMY ORDER DELAY  /  2.5 SECONDS"
 
 [node name="Footer" type="Label" parent="Screen" unique_id=1944688414]
 layout_mode = 0
