@@ -5,6 +5,7 @@ const MATCH_HUD_SCENE: PackedScene = preload("res://src/gameplay/match_hud.tscn"
 const INITIAL_ENEMY_ISSUE_DELAY: float = 2.5
 const RESULT_DISPLAY_SECONDS: float = 10.0
 const MINIMUM_LOADING_SCREEN_SECONDS: float = 0.35
+const TUTORIAL_PATH: String = "uid://bacgcxyc2xdp"
 
 @onready var _match_container: Node2D = $MatchContainer
 @onready var _menu_canvas: CanvasLayer = $MainMenuUI
@@ -14,6 +15,7 @@ const MINIMUM_LOADING_SCREEN_SECONDS: float = 0.35
 @onready var _start_button: Button = $MainMenuUI/NewMenu/HBoxContainer/VBoxContainer/HBoxContainer/StartButton
 @onready var _status_label: Label = $MainMenuUI/NewMenu/StatusLabel
 @onready var _loading_progress: ProgressBar = $MainMenuUI/LoadingScreen/Center/Content/Progress
+@onready var _tutorial: Button = $MainMenuUI/NewMenu/HBoxContainer/VBoxContainer/Tutorial
 
 var enemy_issue_delay_seconds: float = INITIAL_ENEMY_ISSUE_DELAY
 
@@ -33,6 +35,7 @@ func _ready() -> void:
 	_result_return_timer.timeout.connect(_return_to_menu)
 	add_child(_result_return_timer)
 	_start_button.pressed.connect(_begin_load)
+	_tutorial.pressed.connect(func(): _begin_load(true))
 	_refresh_level_list()
 
 
@@ -85,7 +88,7 @@ func _refresh_level_list() -> void:
 		_status_label.text = "NO LEVELS AVAILABLE"
 
 
-func _begin_load() -> void:
+func _begin_load(is_tutorial: bool = false) -> void:
 	if not _loading_path.is_empty() or _level_paths.is_empty():
 		return
 	_status_label.add_theme_color_override("font_color", Color("#9ba8a6"))
@@ -93,7 +96,11 @@ func _begin_load() -> void:
 	if selected_index < 0 or selected_index >= _level_paths.size():
 		return
 
-	_loading_path = _level_paths[selected_index]
+	if is_tutorial:
+		_loading_path = TUTORIAL_PATH
+	else:
+		_loading_path = _level_paths[selected_index]
+
 	_loading_elapsed_seconds = 0.0
 	_loading_progress.value = 0.0
 	_loading_screen.show()

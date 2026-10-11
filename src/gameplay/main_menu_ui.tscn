@@ -154,10 +154,9 @@ theme_override_styles/separator = SubResource("StyleBoxLine_ctxya")
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label4" type="Label" parent="NewMenu/HBoxContainer/VBoxContainer" unique_id=2027101590]
+[node name="Tutorial" type="Button" parent="NewMenu/HBoxContainer/VBoxContainer" unique_id=573276930]
+unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 6
-theme_override_font_sizes/font_size = 43
 text = "Tutorial"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="NewMenu/HBoxContainer/VBoxContainer" unique_id=236305396]
