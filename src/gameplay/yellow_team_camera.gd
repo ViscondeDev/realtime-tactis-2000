@@ -1,4 +1,7 @@
+class_name YellowCamera
 extends Camera2D
+
+signal moved
 
 const MIN_ZOOM: float = 0.25
 const MAX_ZOOM: float = 2.5
@@ -67,6 +70,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _pan_by_screen_delta(screen_delta: Vector2) -> void:
 	global_position -= screen_delta / zoom
+	moved.emit()
 
 
 func focus_on_unit(unit: Unit) -> void:

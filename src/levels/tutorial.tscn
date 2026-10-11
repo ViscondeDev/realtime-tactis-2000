@@ -14,43 +14,426 @@
 [ext_resource type="PackedScene" uid="uid://bt1qf6j1ifhf7" path="res://src/gameplay/unit.tscn" id="12_78avc"]
 [ext_resource type="Script" uid="uid://y35tpk8ols0k" path="res://src/gameplay/unit_respawn_controller.gd" id="13_a26oa"]
 [ext_resource type="Script" uid="uid://cwxqpmv3uu5rt" path="res://src/gameplay/red_team_ai.gd" id="14_0l37i"]
+[ext_resource type="Script" uid="uid://dbalba806fa35" path="res://src/gameplay/tutorial_overlay.gd" id="15_73mwf"]
+[ext_resource type="Texture2D" uid="uid://bkfptudx15ggu" path="res://src/Minimalist Commander Tutorial Screen.png" id="15_g8iyn"]
+[ext_resource type="FontFile" uid="uid://deyccmpesgcv6" path="res://src/resources/fonts/SpaceGrotesk-2.0.0/ttf/static/SpaceGrotesk-Medium.ttf" id="16_mfhm4"]
+[ext_resource type="FontFile" uid="uid://cadbiq2jwul7" path="res://src/resources/fonts/SpaceGrotesk-2.0.0/ttf/static/SpaceGrotesk-Regular.ttf" id="17_mfhm4"]
 
-[sub_resource type="Resource" id="Resource_b20vf"]
+[sub_resource type="Resource" id="Resource_73mwf"]
 script = ExtResource("7_bpag7")
 radius = 120.0
 fill_enabled = false
 outline_color = Color(0.14901961, 0.23137255, 0.27450982, 1)
 line_width = 10.0
 
-[sub_resource type="Resource" id="Resource_inf0o"]
+[sub_resource type="Resource" id="Resource_g0laf"]
 script = ExtResource("7_bpag7")
 shape = 5
 radius = 5.0
 fill_color = Color(0.9490196, 0.7882353, 0.29803923, 1)
 outline_enabled = false
 
-[sub_resource type="Resource" id="Resource_g8iyn"]
+[sub_resource type="Resource" id="Resource_bpag7"]
 script = ExtResource("7_bpag7")
 radius = 120.0
 fill_enabled = false
 outline_color = Color(0.14901961, 0.23137255, 0.27450982, 1)
 line_width = 10.0
 
-[sub_resource type="Resource" id="Resource_mfhm4"]
+[sub_resource type="Resource" id="Resource_h2r1e"]
 script = ExtResource("7_bpag7")
 shape = 5
 radius = 5.0
 fill_color = Color(0.8509804, 0.2784314, 0.2784314, 1)
 outline_enabled = false
 
+[sub_resource type="Animation" id="Animation_g0laf"]
+resource_name = "CPHighlight"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../CPOverlay:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 0,
+"values": []
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../../YellowTeamCamera:zoom")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 0,
+"values": []
+}
+
+[sub_resource type="Animation" id="Animation_lsdrn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Speech/Label:visible_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Speech:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(0.24148409),
+"update": 0,
+"values": [Vector2(-384, 960)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Speech:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(0.21763775),
+"update": 0,
+"values": [-1.5707963267948966]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Speech/Continue:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../../CPOverlay:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../../YellowTeamCamera:zoom")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../../SpawnOverlay:modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_bpag7"]
+resource_name = "cp_Highlight"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Speech/Label:visible_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.16666663, 0.73333335),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Speech:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.16666663),
+"transitions": PackedFloat32Array(0.24148409, 1),
+"update": 0,
+"values": [Vector2(-384, 960), Vector2(576, 960)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Speech:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.16666663),
+"transitions": PackedFloat32Array(0.21763775, 1),
+"update": 0,
+"values": [-1.5707963267948966, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Speech/Continue:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.9359928, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../../CPOverlay:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../../YellowTeamCamera:zoom")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.5, 1.5)]
+}
+
+[sub_resource type="Animation" id="Animation_73mwf"]
+resource_name = "new_task"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Speech/Label:visible_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.16666663, 0.73333335),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Speech:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.16666663),
+"transitions": PackedFloat32Array(0.24148409, 1),
+"update": 0,
+"values": [Vector2(-384, 960), Vector2(576, 960)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Speech:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.16666663),
+"transitions": PackedFloat32Array(0.21763775, 1),
+"update": 0,
+"values": [-1.5707963267948966, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Speech/Continue:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.9359928, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, true]
+}
+
+[sub_resource type="Animation" id="Animation_7upbt"]
+resource_name = "new_text"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Speech/Label:visible_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.16666663, 0.73333335),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Speech:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.16666663),
+"transitions": PackedFloat32Array(0.24148409, 1),
+"update": 0,
+"values": [Vector2(-384, 960), Vector2(576, 960)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Speech:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.16666663),
+"transitions": PackedFloat32Array(0.21763775, 1),
+"update": 0,
+"values": [-1.5707963267948966, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Speech/Continue:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.9359928, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_h2r1e"]
+resource_name = "spawn_highlight"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Speech/Label:visible_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.16666663, 0.73333335),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Speech:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.16666663),
+"transitions": PackedFloat32Array(0.24148409, 1),
+"update": 0,
+"values": [Vector2(-384, 960), Vector2(576, 960)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Speech:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.16666663),
+"transitions": PackedFloat32Array(0.21763775, 1),
+"update": 0,
+"values": [-1.5707963267948966, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Speech/Continue:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.9359928, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../../CPOverlay:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../../SpawnOverlay:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_av687"]
+_data = {
+&"CPHighlight": SubResource("Animation_g0laf"),
+&"RESET": SubResource("Animation_lsdrn"),
+&"cp_Highlight": SubResource("Animation_bpag7"),
+&"new_task": SubResource("Animation_73mwf"),
+&"new_text": SubResource("Animation_7upbt"),
+&"spawn_highlight": SubResource("Animation_h2r1e")
+}
+
 [node name="Level" type="Node2D" unique_id=334309463]
+process_mode = 4
 
 [node name="MatchController" type="Node" parent="." unique_id=1741609733]
 unique_name_in_owner = true
 script = ExtResource("1_b20vf")
 
 [node name="YellowTeamCamera" type="Camera2D" parent="." unique_id=1922737940]
-position = Vector2(576, -256)
+process_mode = 3
+position = Vector2(256, -256)
 process_callback = 0
 script = ExtResource("2_inf0o")
 
@@ -134,7 +517,7 @@ script = ExtResource("5_73mwf")
 
 [node name="ShapeTool" type="Node2D" parent="RespawnPoints/Yellow" unique_id=191972987]
 script = ExtResource("6_g0laf")
-definitions = Array[ExtResource("7_bpag7")]([SubResource("Resource_b20vf"), SubResource("Resource_inf0o")])
+definitions = Array[ExtResource("7_bpag7")]([SubResource("Resource_73mwf"), SubResource("Resource_g0laf")])
 
 [node name="Red" type="Node2D" parent="RespawnPoints" unique_id=1473376266 groups=["respawn_points"]]
 position = Vector2(1280, -1152)
@@ -143,7 +526,7 @@ team = 1
 
 [node name="ShapeTool" type="Node2D" parent="RespawnPoints/Red" unique_id=855936324]
 script = ExtResource("6_g0laf")
-definitions = Array[ExtResource("7_bpag7")]([SubResource("Resource_g8iyn"), SubResource("Resource_mfhm4")])
+definitions = Array[ExtResource("7_bpag7")]([SubResource("Resource_bpag7"), SubResource("Resource_h2r1e")])
 
 [node name="ControlPoint" parent="." unique_id=228254791 instance=ExtResource("8_h2r1e")]
 position = Vector2(576, -256)
@@ -204,3 +587,91 @@ _projectile_pool = NodePath("../ProjectilePool")
 [node name="RedTeamAI" type="Node2D" parent="." unique_id=420095532]
 script = ExtResource("14_0l37i")
 issue_delay_seconds = 2.5
+
+[node name="CPOverlay" type="Polygon2D" parent="." unique_id=149739849]
+modulate = Color(1, 1, 1, 0)
+color = Color(0.1458, 0.22653002, 0.27, 0.29411766)
+invert_enabled = true
+invert_border = 1298.8
+polygon = PackedVector2Array(384, -448, 576, -512, 768, -448, 832, -256, 768, -64, 576, 0, 384, -64, 320, -256)
+
+[node name="SpawnOverlay" type="Polygon2D" parent="." unique_id=621855428]
+modulate = Color(1, 1, 1, 0)
+color = Color(0.1458, 0.22653002, 0.27, 0.29411766)
+invert_enabled = true
+invert_border = 5022.4
+polygon = PackedVector2Array(-320, 512, 64, 512, 64, 896, -320, 896)
+
+[node name="Spawn Visible" type="VisibleOnScreenNotifier2D" parent="." unique_id=547829164]
+position = Vector2(-192, 832)
+
+[node name="Overlay" type="CanvasLayer" parent="." unique_id=1937255360]
+process_mode = 3
+layer = 3
+
+[node name="TutorialOverlay" type="Control" parent="Overlay" unique_id=258603224 node_paths=PackedStringArray("_camera", "_spawn_visibility")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("15_73mwf")
+_camera = NodePath("../../YellowTeamCamera")
+_spawn_visibility = NodePath("../../Spawn Visible")
+
+[node name="Commander Backdrop" type="Polygon2D" parent="Overlay/TutorialOverlay" unique_id=50940067]
+color = Color(0.9098039, 0.8980392, 0.8627451, 1)
+polygon = PackedVector2Array(0, 1472, 1088, 1472, 896, 0, 0, 0)
+
+[node name="Line2D" type="Line2D" parent="Overlay/TutorialOverlay/Commander Backdrop" unique_id=379018329]
+points = PackedVector2Array(896, 0, 1088, 1472)
+default_color = Color(0.14901961, 0.23137255, 0.27450982, 1)
+
+[node name="Commander" type="Sprite2D" parent="Overlay/TutorialOverlay" unique_id=1460065174]
+position = Vector2(256, 1280)
+texture = ExtResource("15_g8iyn")
+
+[node name="Speech" type="Polygon2D" parent="Overlay/TutorialOverlay" unique_id=587566033]
+position = Vector2(-384, 960)
+rotation = -1.5707964
+color = Color(0.14901961, 0.23137255, 0.27450982, 1)
+polygon = PackedVector2Array(0, 256, 0, 0, 704, 0, 832, 128, 832, 384, 128, 384)
+
+[node name="Label" type="Label" parent="Overlay/TutorialOverlay/Speech" unique_id=772058690]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(704, 256)
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 768.0
+offset_bottom = 320.0
+theme_override_fonts/font = ExtResource("16_mfhm4")
+theme_override_font_sizes/font_size = 41
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Polygon2D2" type="Polygon2D" parent="Overlay/TutorialOverlay/Speech" unique_id=2118614870]
+color = Color(0.9490196, 0.7882353, 0.29803923, 1)
+polygon = PackedVector2Array(832, 64, 768, 0, 832, 0)
+
+[node name="Continue" type="Button" parent="Overlay/TutorialOverlay/Speech" unique_id=2109327915]
+custom_minimum_size = Vector2(192, 128)
+offset_left = 640.0
+offset_top = 256.0
+offset_right = 880.0
+offset_bottom = 384.0
+mouse_filter = 1
+theme_override_colors/font_color = Color(0.72156864, 0.78039217, 0.7882353, 1)
+theme_override_colors/font_disabled_color = Color(0.8784314, 0.8784314, 0.8784314, 0)
+theme_override_fonts/font = ExtResource("17_mfhm4")
+theme_override_font_sizes/font_size = 26
+disabled = true
+text = "Continue"
+flat = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Overlay/TutorialOverlay" unique_id=911323371]
+libraries/ = SubResource("AnimationLibrary_av687")
+autoplay = &"new_text"
+
+[connection signal="pressed" from="Overlay/TutorialOverlay/Speech/Continue" to="Overlay/TutorialOverlay" method="_update_step"]
