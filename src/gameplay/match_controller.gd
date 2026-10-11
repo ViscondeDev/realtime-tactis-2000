@@ -18,6 +18,7 @@ var winner_team: int = -1
 var phase: Phase = Phase.COUNTDOWN
 var countdown_seconds_remaining: float = COUNTDOWN_DURATION_SECONDS
 var result_seconds_remaining: float = 0.0
+@export var is_tutorial: bool = false
 
 var _control_point: ControlPoint
 var _controlling_team: Unit.Team = -1:

@@ -3,6 +3,8 @@
 class_name HealthDispenser
 extends StaticBody2D
 
+signal built
+
 const GOALS_LAYER: int = 5
 const BUILD_SITES_LAYER: int = 6
 const BUILD_SECONDS: float = 5.0
@@ -134,6 +136,7 @@ func _finish_construction() -> void:
 	_construction_elapsed = BUILD_SECONDS
 	is_building = false
 	is_built = true
+	built.emit()
 	current_health = maximum_health
 	_refresh_shape_tools()
 	set_collision_layer_value(BUILD_SITES_LAYER, false)

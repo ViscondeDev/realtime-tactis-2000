@@ -1,4 +1,5 @@
 extends Node2D
+class_name Game
 
 const LEVEL_DIRECTORY: String = "res://src/levels"
 const MATCH_HUD_SCENE: PackedScene = preload("res://src/gameplay/match_hud.tscn")
@@ -6,6 +7,8 @@ const INITIAL_ENEMY_ISSUE_DELAY: float = 2.5
 const RESULT_DISPLAY_SECONDS: float = 10.0
 const MINIMUM_LOADING_SCREEN_SECONDS: float = 0.35
 const TUTORIAL_PATH: String = "uid://bacgcxyc2xdp"
+
+static var current:Game
 
 @onready var _match_container: Node2D = $MatchContainer
 @onready var _menu_canvas: CanvasLayer = $MainMenuUI
@@ -29,10 +32,11 @@ var _result_return_timer: Timer
 
 
 func _ready() -> void:
+	current = self
 	_result_return_timer = Timer.new()
 	_result_return_timer.one_shot = true
 	_result_return_timer.wait_time = RESULT_DISPLAY_SECONDS
-	_result_return_timer.timeout.connect(_return_to_menu)
+	_result_return_timer.timeout.connect(return_to_menu)
 	add_child(_result_return_timer)
 	_start_button.pressed.connect(_begin_load)
 	_tutorial.pressed.connect(func(): _begin_load(true))
@@ -143,8 +147,9 @@ func _launch_match(level_scene: PackedScene) -> void:
 	_match_hud = MATCH_HUD_SCENE.instantiate() as MatchHUD
 	_match_hud.match_controller = match_controller
 	_match_hud.respawn_controller = level.find_child("UnitRespawnController", true, false) as UnitRespawnController
-	_match_hud.return_to_menu_requested.connect(_return_to_menu)
-	_match_container.add_child(_match_hud)
+	_match_hud.return_to_menu_requested.connect(return_to_menu)
+	if not _match_controller.is_tutorial:
+		_match_container.add_child(_match_hud)
 	_loading_screen.hide()
 	_menu_canvas.hide()
 
@@ -164,7 +169,7 @@ func _on_match_finished(winning_team: int) -> void:
 	_result_return_timer.start()
 
 
-func _return_to_menu() -> void:
+func return_to_menu() -> void:
 	_result_return_timer.stop()
 	for child: Node in _match_container.get_children():
 		child.queue_free()

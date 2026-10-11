@@ -2,6 +2,8 @@
 class_name UnitCommandController
 extends Node2D
 
+signal order_issued
+
 const MINIMUM_DRAG_DISTANCE_PIXELS: float = 12.0
 const DRAG_GOAL_RING_RADIUS: float = 10.0
 
@@ -63,9 +65,9 @@ func _finish_drag() -> void:
 		var match_controller: MatchController = get_tree().get_first_node_in_group(&"match_controllers") as MatchController
 		if is_instance_valid(match_controller):
 			match_controller.queue_player_order(_dragged_unit, drop_position)
+			order_issued.emit()
 		else:
 			_dragged_unit.issue_move_order(drop_position)
-
 	_dragged_unit = null
 	queue_redraw()
 

@@ -1,8 +1,9 @@
 @tool
 @icon("res://addons/at-icons/node2d/target.svg")
-
 class_name ControlPoint
 extends Node2D
+
+signal taken_over
 
 const CAPTURE_SECONDS: float = 5.0
 const HEXAGON_RADIUS: float = 80.0
@@ -59,6 +60,8 @@ func _process(delta: float) -> void:
 
 func takeover(team: Unit.Team):
 	print("Takeover called for team: %s" % team)
+	if team == Unit.Team.YELLOW:
+		taken_over.emit()
 	shape.definitions.clear()
 	shape.definitions = [load(SHAPE_DEFINITIONS[team]["segmented_outline"])]
 	
