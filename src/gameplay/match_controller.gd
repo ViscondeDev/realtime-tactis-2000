@@ -44,6 +44,9 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if phase == Phase.COUNTDOWN:
 		countdown_seconds_remaining = maxf(countdown_seconds_remaining - delta, 0.0)
+		### AUDIO ###
+		AudioGlobal.timer_sfx(countdown_seconds_remaining)
+		### AUDIO END ###
 		if countdown_seconds_remaining <= 0.0:
 			_start_match()
 		return

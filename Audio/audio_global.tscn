@@ -4,28 +4,44 @@
 [ext_resource type="AudioStream" uid="uid://dlytur1oguhms" path="res://Audio/Music/02/menu_idle_wip_1.ogg" id="2_48blk"]
 [ext_resource type="AudioStream" uid="uid://dmeqhfcv0rupo" path="res://Audio/Music/02/overworld_major_battle_wip_2.ogg" id="3_rs3km"]
 [ext_resource type="AudioStream" uid="uid://bcdmvnbewhccg" path="res://Audio/SFX/Characters/Order 01.ogg" id="4_cqrli"]
+[ext_resource type="AudioStream" uid="uid://pe8xh00tnj5x" path="res://Audio/Music/03/overworld_enemy_control_bells.ogg" id="4_empxh"]
 [ext_resource type="AudioStream" uid="uid://dw8efnynluriw" path="res://Audio/SFX/Characters/Order 02.ogg" id="5_empxh"]
 [ext_resource type="AudioStream" uid="uid://bvdtj4qmahskn" path="res://Audio/SFX/Characters/Order 03.ogg" id="6_fdcpd"]
 [ext_resource type="AudioStream" uid="uid://dobpvlf1tladq" path="res://Audio/SFX/Characters/Order 04.ogg" id="7_c3jvq"]
+[ext_resource type="AudioStream" uid="uid://bn3mw5l2vsm8b" path="res://Audio/SFX/UI/Countdown.ogg" id="9_c3jvq"]
+[ext_resource type="AudioStream" uid="uid://dau1geabrjh2h" path="res://Audio/SFX/UI/Countdown End.ogg" id="10_chvyd"]
+
+[sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_4bdev"]
+stream_count = 1
+stream_0/stream = ExtResource("2_48blk")
+stream_0/volume = -6.0
+
+[sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_grot6"]
+stream_count = 2
+stream_0/stream = ExtResource("3_rs3km")
+stream_0/volume = 0.0
+stream_1/stream = ExtResource("4_empxh")
+stream_1/volume = -60.0
 
 [sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_5xpoe"]
 clip_count = 2
 clip_0/name = &"MainMenu"
-clip_0/stream = ExtResource("2_48blk")
+clip_0/stream = SubResource("AudioStreamSynchronized_4bdev")
 clip_0/auto_advance = 0
 clip_1/name = &"Level"
-clip_1/stream = ExtResource("3_rs3km")
+clip_1/stream = SubResource("AudioStreamSynchronized_grot6")
 clip_1/auto_advance = 0
 _transitions = {
 Vector2i(-1, -1): {
 "fade_beats": 1.0,
 "fade_mode": 4,
 "from_time": 0,
-"to_time": 0
+"to_time": 1
 }
 }
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_48blk"]
+random_pitch = 1.0594631
 streams_count = 4
 stream_0/stream = ExtResource("4_cqrli")
 stream_1/stream = ExtResource("5_empxh")
@@ -43,4 +59,12 @@ bus = &"Music"
 [node name="Order" type="AudioStreamPlayer" parent="." unique_id=52107642]
 stream = SubResource("AudioStreamRandomizer_48blk")
 volume_db = -10.0
+bus = &"UI"
+
+[node name="Countdown" type="AudioStreamPlayer" parent="." unique_id=1188723117]
+stream = ExtResource("9_c3jvq")
+bus = &"UI"
+
+[node name="CountdownEnd" type="AudioStreamPlayer" parent="." unique_id=404983662]
+stream = ExtResource("10_chvyd")
 bus = &"UI"

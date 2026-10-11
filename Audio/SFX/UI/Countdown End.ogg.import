@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dau1geabrjh2h"
+path="res://.godot/imported/Countdown End.ogg-3fc5d9fd833546c1ee264233b84c74c9.oggvorbisstr"
+
+[deps]
+
+source_file="res://Audio/SFX/UI/Countdown End.ogg"
+dest_files=["res://.godot/imported/Countdown End.ogg-3fc5d9fd833546c1ee264233b84c74c9.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

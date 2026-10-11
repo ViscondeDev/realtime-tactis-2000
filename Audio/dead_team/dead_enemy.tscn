@@ -4,4 +4,5 @@
 
 [node name="Dead" type="AudioStreamPlayer2D" unique_id=1365131046]
 stream = ExtResource("1_ggcfp")
+volume_db = 3.0
 panning_strength = 2.0
