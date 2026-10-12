@@ -74,6 +74,11 @@ func _respawn_unit(team: Unit.Team, unit_class: Unit.Class, timer: Timer) -> voi
 	unit.position = _unit_container.to_local(respawn_point.global_position)
 	_unit_container.add_child(unit)
 	_register_unit(unit)
+	
+	### AUDIO ###
+	if team == Unit.Team.YELLOW:
+		AudioGlobal.respawn_sfx(respawn_point.position)
+	### AUDIO END ###
 
 
 func _on_match_finished(_winning_team: int) -> void:

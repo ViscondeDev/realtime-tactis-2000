@@ -5,4 +5,5 @@
 [node name="Dead" type="AudioStreamPlayer2D" unique_id=1365131046]
 stream = ExtResource("1_sbc0k")
 volume_db = 3.0
+attenuation = 0.0
 panning_strength = 2.0

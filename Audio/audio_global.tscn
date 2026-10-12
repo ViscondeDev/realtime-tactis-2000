@@ -10,6 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://dobpvlf1tladq" path="res://Audio/SFX/Characters/Order 04.ogg" id="7_c3jvq"]
 [ext_resource type="AudioStream" uid="uid://bn3mw5l2vsm8b" path="res://Audio/SFX/UI/Countdown.ogg" id="9_c3jvq"]
 [ext_resource type="AudioStream" uid="uid://dau1geabrjh2h" path="res://Audio/SFX/UI/Countdown End.ogg" id="10_chvyd"]
+[ext_resource type="AudioStream" uid="uid://dlt0io8r1hst8" path="res://Audio/SFX/UI/Respawn.ogg" id="11_chvyd"]
 
 [sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_4bdev"]
 stream_count = 1
@@ -70,6 +71,11 @@ bus = &"UI"
 stream = ExtResource("10_chvyd")
 bus = &"UI"
 
-[node name="CountdownEnd" type="AudioStreamPlayer" parent="CountdownEnd" unique_id=1951012597]
-stream = ExtResource("10_chvyd")
+[node name="Respawn" type="AudioStreamPlayer2D" parent="." unique_id=659564010]
+position = Vector2(292, 930)
+stream = ExtResource("11_chvyd")
+volume_db = 3.0
+max_distance = 4096.0
+attenuation = 0.0
+panning_strength = 4.0
 bus = &"UI"

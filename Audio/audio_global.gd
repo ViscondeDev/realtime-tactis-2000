@@ -68,3 +68,7 @@ func control_point_friendly() -> void:
 		-60,
 		5
 	)
+
+func respawn_sfx(_pos: Vector2) -> void:
+	$Respawn.position = _pos
+	$Respawn.play()
