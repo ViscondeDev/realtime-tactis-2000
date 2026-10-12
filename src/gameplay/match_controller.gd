@@ -6,7 +6,7 @@ signal match_finished(winning_team: int)
 signal control_point_captured(team: Unit.Team)
 
 const CONTROL_POINTS_GROUP: StringName = &"control_points"
-const MATCH_DURATION_SECONDS: float = 90.0
+const MATCH_DURATION_SECONDS: float = 20.0
 const COUNTDOWN_DURATION_SECONDS: float = 5.0
 const RESULT_DISPLAY_SECONDS: float = 10.0
 
@@ -62,6 +62,13 @@ func _process(delta: float) -> void:
 	if phase != Phase.ACTIVE or not is_instance_valid(_control_point):
 		return
 
+	if _controlling_team == Unit.Team.YELLOW:
+		if yellow_control_time_remaining <= 10:
+			AudioGlobal.timer_sfx(yellow_control_time_remaining)
+	elif _controlling_team == Unit.Team.RED:
+		if red_control_time_remaining <= 10:
+			AudioGlobal.timer_sfx(red_control_time_remaining)
+
 	if _control_point.capture_progress >= 1.0:
 		_controlling_team = Unit.Team.YELLOW
 	elif _control_point.capture_progress <= -1.0:
@@ -70,10 +77,14 @@ func _process(delta: float) -> void:
 	if _controlling_team == Unit.Team.YELLOW:
 		yellow_control_time_remaining = maxf(yellow_control_time_remaining - delta, 0.0)
 		if yellow_control_time_remaining <= 0.0:
-			winner_team = Unit.Team.YELLOW
+			AudioGlobal.control_point_friendly()
+			AudioGlobal.start_main_menu()
+			_finish_match(Unit.Team.YELLOW)
 	elif _controlling_team == Unit.Team.RED:
 		red_control_time_remaining = maxf(red_control_time_remaining - delta, 0.0)
 		if red_control_time_remaining <= 0.0:
+			AudioGlobal.control_point_enemy()
+			AudioGlobal.start_main_menu()
 			_finish_match(Unit.Team.RED)
 
 

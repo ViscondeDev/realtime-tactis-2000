@@ -75,7 +75,6 @@ func _process(_delta: float) -> void:
 
 func _on_return_to_menu_pressed() -> void:
 	return_to_menu_requested.emit()
-	AudioGlobal.start_main_menu()
 
 
 func _find_control_point() -> ControlPoint:
