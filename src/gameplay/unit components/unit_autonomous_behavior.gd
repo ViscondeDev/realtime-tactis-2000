@@ -379,10 +379,10 @@ func _find_visible_enemy() -> Unit:
 
 
 func _is_in_player_move_goal_direction(target_position: Vector2) -> bool:
-	if not _movement.has_player_move_goal():
-		return true
-	var direction_to_goal: Vector2 = _unit.global_position.direction_to(_movement.get_player_move_goal())
-	if direction_to_goal.is_zero_approx():
+	if not _movement.has_player_move_goal() or not _movement.has_active_move_order():
+		return true  
+	var to_goal: Vector2 = _movement.get_player_move_goal() - _unit.global_position
+	if to_goal.length_squared() < 1.0:
 		return true
 	var direction_to_target: Vector2 = _unit.global_position.direction_to(target_position)
-	return direction_to_goal.dot(direction_to_target) >= 0.0
+	return to_goal.normalized().dot(direction_to_target) >= 0.0
