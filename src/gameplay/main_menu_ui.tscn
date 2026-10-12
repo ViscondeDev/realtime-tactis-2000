@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dn0bjc7wro4re"]
 
 [ext_resource type="Theme" uid="uid://cixmbr6wmrvsj" path="res://src/resources/styles/hud_style.tres" id="1_tt30f"]
-[ext_resource type="Texture2D" uid="uid://c6lenfkcnisbi" path="res://src/assets/dreamlayer-5ef959b7.png" id="2_6bldj"]
+[ext_resource type="Texture2D" uid="uid://kuh8j7ppyqp4" path="res://src/assets/dreamlayer-8f69b429.png" id="2_6bldj"]
 [ext_resource type="FontFile" uid="uid://deyccmpesgcv6" path="res://src/resources/fonts/SpaceGrotesk-2.0.0/ttf/static/SpaceGrotesk-Medium.ttf" id="2_kdgm6"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_ctxya"]
@@ -132,10 +132,10 @@ Tactics"
 [node name="Label2" type="Label" parent="NewMenu" unique_id=831342339]
 layout_mode = 0
 offset_left = 768.0
-offset_top = 512.0
+offset_top = 494.0
 offset_right = 1428.0
-offset_bottom = 895.0
-theme_override_colors/font_color = Color(0.72156864, 0.78039217, 0.7882353, 1)
+offset_bottom = 877.0
+theme_override_colors/font_color = Color(0.9490196, 0.7882353, 0.29803923, 1)
 theme_override_fonts/font = ExtResource("2_kdgm6")
 theme_override_font_sizes/font_size = 48
 text = "2000"
@@ -241,6 +241,10 @@ position = Vector2(245, 17)
 points = PackedVector2Array(1280, 1344, 1344, 1280, 2176, 1280)
 width = 6.0
 default_color = Color(0.72156864, 0.78039217, 0.7882353, 1)
+
+[node name="Line2D2" type="Line2D" parent="NewMenu" unique_id=1158177182]
+points = PackedVector2Array(128, 64, 1024, 64)
+default_color = Color(0.9490196, 0.7882353, 0.29803923, 1)
 
 [node name="Label3" type="Label" parent="NewMenu" unique_id=174782003]
 layout_mode = 0
