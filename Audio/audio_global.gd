@@ -74,6 +74,12 @@ func control_point_friendly() -> void:
 		5
 	)
 
+func cp_takeover(team: Unit.Team) -> void:
+	if team == Unit.Team.YELLOW:
+		control_point_friendly()
+	elif team == Unit.Team.RED:
+		control_point_enemy()
+
 func respawn_sfx(_pos: Vector2) -> void:
 	$Respawn.position = _pos
 	$Respawn.play()

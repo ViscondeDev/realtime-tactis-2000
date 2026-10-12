@@ -31,6 +31,7 @@ var _pending_player_orders: Dictionary = {}
 
 
 func _ready() -> void:
+	control_point_captured.connect(AudioGlobal.cp_takeover)
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	add_to_group(&"match_controllers")
 	for node: Node in get_tree().get_nodes_in_group(CONTROL_POINTS_GROUP):
@@ -44,12 +45,15 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if phase == Phase.COUNTDOWN:
-		countdown_seconds_remaining = maxf(countdown_seconds_remaining - delta, 0.0)
-		### AUDIO ###
-		if process_mode != PROCESS_MODE_DISABLED:
-			AudioGlobal.timer_sfx(countdown_seconds_remaining)
-		### AUDIO END ###
-		if countdown_seconds_remaining <= 0.0:
+		if not is_tutorial:
+			countdown_seconds_remaining = maxf(countdown_seconds_remaining - delta, 0.0)
+			### AUDIO ###
+			if process_mode != PROCESS_MODE_DISABLED:
+				AudioGlobal.timer_sfx(countdown_seconds_remaining)
+			### AUDIO END ###
+			if countdown_seconds_remaining <= 0.0:
+				_start_match()
+		else:
 			_start_match()
 		return
 	if phase == Phase.FINISHED:

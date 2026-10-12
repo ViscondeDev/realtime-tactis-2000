@@ -89,6 +89,7 @@ corner_radius_bottom_left = 2
 
 [node name="MainMenuUI" type="CanvasLayer" unique_id=1122763087]
 layer = 20
+metadata/_edit_horizontal_guides_ = [1312.0]
 
 [node name="NewMenu" type="Control" parent="." unique_id=89117428]
 layout_mode = 3
