@@ -182,18 +182,6 @@ position = Vector2(1024, -960)
 team = 1
 projectile_pool = NodePath("../ProjectilePool")
 
-[node name="Unit5" parent="." unique_id=2060489319 node_paths=PackedStringArray("projectile_pool") instance=ExtResource("10_akum3")]
-position = Vector2(1280, -1152)
-team = 1
-unit_class = 1
-projectile_pool = NodePath("../ProjectilePool")
-
-[node name="Unit6" parent="." unique_id=1974041670 node_paths=PackedStringArray("projectile_pool") instance=ExtResource("10_akum3")]
-position = Vector2(892, -1024)
-team = 1
-unit_class = 2
-projectile_pool = NodePath("../ProjectilePool")
-
 [node name="UnitRespawnController" type="Node2D" parent="." unique_id=629618998 node_paths=PackedStringArray("_unit_container", "_projectile_pool")]
 unique_name_in_owner = true
 script = ExtResource("11_u75ec")

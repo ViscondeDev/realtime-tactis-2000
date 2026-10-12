@@ -13,8 +13,10 @@ enum Status {COUNTDOWN, CONTROL}
 @export var _red_countdown_style: StyleBox
 @export var _yellow_countdown_style: StyleBox
 
+@onready var _previous_medal: Sprite2D = %PreviousMedal
+@onready var _new_medal: Sprite2D = %NewMedal
 @onready var _results_animation: AnimationPlayer = %ResultsAnimation
-@onready var _support_phrase:Label = %SupportPhrase
+@onready var _support_phrase: Label = %SupportPhrase
 @onready var _score_panel: PanelContainer = %ScorePanel
 @onready var _yellow_timer_label: Label = %YellowTimer
 @onready var _red_timer_label: Label = %RedTimer
@@ -31,6 +33,8 @@ var _control_point: ControlPoint
 var _unit_rows: Dictionary = {}
 var _last_yellow_seconds: int = -1
 var _last_red_seconds: int = -1
+var previous_medal_rank: int
+var new_medal_rank: int
 
 
 func _ready() -> void:
@@ -57,7 +61,10 @@ func _process(_delta: float) -> void:
 		if winner_team >= 0 and not _result_panel.visible:
 			_show_results_panel(winner_team)
 			_match_result_label.text = "%s TEAM WINS" % ["YELLOW", "RED"][winner_team]
-			_support_phrase.text = ["The game just got harder.", "I still believe in you."][winner_team]
+			if new_medal_rank == 5:
+				_support_phrase.text = "You're the G.O.A.T!"
+			else:
+				_support_phrase.text = ["The game just got harder.", "I still believe in you."][winner_team]
 		var phase: int = int(match_controller.get("phase"))
 		_countdown_label.visible = phase == MatchController.Phase.COUNTDOWN
 		if _countdown_label.visible:
@@ -83,8 +90,14 @@ func _on_return_to_menu_pressed() -> void:
 func _show_results_panel(winner_team: Unit.Team):
 	if winner_team == Unit.Team.YELLOW:
 		_results_animation.play("promotion")
+		new_medal_rank = clamp(previous_medal_rank + 1, 1, 5)
+		_new_medal.frame = new_medal_rank
+		_previous_medal.frame = previous_medal_rank
 	elif winner_team == Unit.Team.RED:
 		_results_animation.play("demotion")
+		new_medal_rank = clamp(previous_medal_rank - 1, 1, 5)
+		_new_medal.frame = new_medal_rank
+		_previous_medal.frame = previous_medal_rank
 
 
 func _find_control_point() -> ControlPoint:
@@ -117,7 +130,7 @@ func _format_time(total_seconds: int) -> String:
 	var seconds: int = total_seconds % 60
 	return "%02d:%02d" % [minutes, seconds]
 
-func _update_stats_style(team:Unit.Team, status:Status):
+func _update_stats_style(team: Unit.Team, status: Status):
 	if status == Status.CONTROL:
 		if team == Unit.Team.RED:
 			_score_panel.add_theme_stylebox_override("panel", _red_controlling_style)

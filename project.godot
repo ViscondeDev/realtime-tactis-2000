@@ -13,7 +13,8 @@ config_version=5
 config/name="Realtime Tactics 2000"
 run/main_scene="uid://dwi4fguxf5b6b"
 config/features=PackedStringArray("4.7", "Mobile")
-config/icon="res://icon.svg"
+boot_splash/image="uid://kuh8j7ppyqp4"
+config/icon="uid://5ra68h5uux1y"
 
 [autoload]
 

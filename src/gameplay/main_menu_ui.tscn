@@ -3,6 +3,7 @@
 [ext_resource type="Theme" uid="uid://cixmbr6wmrvsj" path="res://src/resources/styles/hud_style.tres" id="1_tt30f"]
 [ext_resource type="Texture2D" uid="uid://kuh8j7ppyqp4" path="res://src/assets/dreamlayer-8f69b429.png" id="2_6bldj"]
 [ext_resource type="FontFile" uid="uid://deyccmpesgcv6" path="res://src/resources/fonts/SpaceGrotesk-2.0.0/ttf/static/SpaceGrotesk-Medium.ttf" id="2_kdgm6"]
+[ext_resource type="Texture2D" uid="uid://dfrppsa2p1irk" path="res://src/assets/medals.png" id="4_6bldj"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_ctxya"]
 color = Color(0.9098039, 0.8980392, 0.8627451, 1)
@@ -144,13 +145,13 @@ text = "2000"
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 0
-offset_left = 2176.0
-offset_top = 128.0
-offset_right = 2421.0
-offset_bottom = 152.0
+offset_left = 2202.0
+offset_top = 211.0
+offset_right = 2447.0
+offset_bottom = 235.0
 theme_override_colors/font_color = Color(0.607843, 0.658824, 0.65098, 1)
 theme_override_font_sizes/font_size = 14
-text = "ENEMY ORDER DELAY  /  2.5 SECONDS"
+text = "ENEMY ORDER DELAY  /  3 SECONDS"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="NewMenu" unique_id=734309767]
 custom_minimum_size = Vector2(80, 0)
@@ -255,6 +256,18 @@ offset_bottom = 1290.0
 theme_override_colors/font_color = Color(0.72156864, 0.78039217, 0.7882353, 1)
 theme_override_font_sizes/font_size = 26
 text = "DreamLayer Jam"
+
+[node name="Polygon2D3" type="Polygon2D" parent="NewMenu" unique_id=1775468759]
+position = Vector2(-64, 0)
+color = Color(0.9098039, 0.8980392, 0.8627451, 1)
+polygon = PackedVector2Array(2496, 192, 2496, 64, 2368, 64, 2304, 128, 2368, 192)
+
+[node name="Medal" type="Sprite2D" parent="NewMenu" unique_id=186645625]
+unique_name_in_owner = true
+position = Vector2(2368, 135)
+scale = Vector2(0.34, 0.34)
+texture = ExtResource("4_6bldj")
+hframes = 5
 
 [node name="Screen" type="Control" parent="." unique_id=78806899]
 visible = false

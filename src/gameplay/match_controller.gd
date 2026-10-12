@@ -7,7 +7,7 @@ signal countdown_started(team: Unit.Team)
 signal control_point_captured(team: Unit.Team)
 
 const CONTROL_POINTS_GROUP: StringName = &"control_points"
-const MATCH_DURATION_SECONDS: float = 20.0
+const MATCH_DURATION_SECONDS: float = 90.0
 const COUNTDOWN_DURATION_SECONDS: float = 5.0
 const RESULT_DISPLAY_SECONDS: float = 10.0
 

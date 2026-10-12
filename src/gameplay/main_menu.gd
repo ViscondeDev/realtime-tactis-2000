@@ -8,8 +8,9 @@ const RESULT_DISPLAY_SECONDS: float = 10.0
 const MINIMUM_LOADING_SCREEN_SECONDS: float = 0.35
 const TUTORIAL_PATH: String = "uid://bacgcxyc2xdp"
 
-static var current:Game
+static var current: Game
 
+@onready var _medal: Sprite2D = $MainMenuUI/NewMenu/Medal
 @onready var _match_container: Node2D = $MatchContainer
 @onready var _menu_canvas: CanvasLayer = $MainMenuUI
 @onready var _menu_panel: Control = $MainMenuUI/Screen/MenuCenter/MenuPanel
@@ -22,7 +23,7 @@ static var current:Game
 
 var enemy_issue_delay_seconds: float = INITIAL_ENEMY_ISSUE_DELAY
 
-var _level_paths: Dictionary = {"King of The Hill":"uid://b82qjaqik1nli"}
+var _level_paths: Dictionary = {"King of The Hill": "uid://b82qjaqik1nli"}
 var _loading_path: String = ""
 var _loading_elapsed_seconds: float = 0.0
 var _match_level: Node2D
@@ -41,6 +42,7 @@ func _ready() -> void:
 	_start_button.pressed.connect(_begin_load)
 	_tutorial.pressed.connect(func(): _begin_load(true))
 	_refresh_level_list()
+	_medal.frame = 5 - int(enemy_issue_delay_seconds) - 1
 
 
 func _process(delta: float) -> void:
@@ -146,15 +148,16 @@ func _launch_match(level_scene: PackedScene) -> void:
 
 	_match_hud = MATCH_HUD_SCENE.instantiate() as MatchHUD
 	_match_hud.match_controller = match_controller
+	_match_hud.previous_medal_rank = 5 - int(enemy_issue_delay_seconds) - 1
 	_match_hud.respawn_controller = level.find_child("UnitRespawnController", true, false) as UnitRespawnController
 	_match_hud.return_to_menu_requested.connect(return_to_menu)
 	if not _match_controller.is_tutorial:
 		_match_container.add_child(_match_hud)
+		_match_controller.control_point_captured.connect(_match_hud._update_stats_style.bind(MatchHUD.Status.CONTROL))
+		_match_controller.countdown_started.connect(_match_hud._update_stats_style.bind(MatchHUD.Status.COUNTDOWN))
 	_loading_screen.hide()
 	_menu_canvas.hide()
 	
-	_match_controller.control_point_captured.connect(_match_hud._update_stats_style.bind(MatchHUD.Status.CONTROL))
-	_match_controller.countdown_started.connect(_match_hud._update_stats_style.bind(MatchHUD.Status.COUNTDOWN))
 
 
 func _on_match_started(level: Node2D) -> void:
@@ -166,7 +169,8 @@ func _on_match_finished(winning_team: int) -> void:
 	if winning_team == Unit.Team.YELLOW:
 		enemy_issue_delay_seconds = maxf(enemy_issue_delay_seconds - 1.0, 0.0)
 	else:
-		enemy_issue_delay_seconds = minf(enemy_issue_delay_seconds + 1.0, 5.0)
+		enemy_issue_delay_seconds = minf(enemy_issue_delay_seconds + 1.0, 4.0)
+	_medal.frame = 5 - int(enemy_issue_delay_seconds) - 1
 	_status_label.text = "ENEMY ORDER DELAY  /  %.1f SECONDS" % enemy_issue_delay_seconds
 	_status_label.add_theme_color_override("font_color", Color("#9ba8a6"))
 	_result_return_timer.start()
