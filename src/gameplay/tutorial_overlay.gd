@@ -70,7 +70,7 @@ func _update_step() -> void:
 			_control_point.process_mode = PROCESS_MODE_INHERIT
 			_animation.play("build_dispenser")
 			await _control_point.taken_over
-			speech_text = "Keep the control point for two \nminutes to win. \n\nLet's get you in a real battle!"
+			speech_text = "Keep the control point for 90 \nseconds to win. \n\nLet's get you in a real battle!"
 			_animation.play("new_text")
 		TutorialSteps.DONE:
 			speech_text = "You're all set! Good luck!"
@@ -78,3 +78,4 @@ func _update_step() -> void:
 			await get_tree().create_timer(2.0).timeout
 			Game.current.return_to_menu()
 	_current_step += 1
+	AudioGlobal.get_node("Order").play()
