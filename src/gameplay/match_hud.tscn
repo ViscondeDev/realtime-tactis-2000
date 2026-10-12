@@ -2,18 +2,24 @@
 
 [ext_resource type="Script" uid="uid://cvahsvfevyws8" path="res://src/gameplay/match_hud.gd" id="1_hud"]
 [ext_resource type="Theme" uid="uid://cixmbr6wmrvsj" path="res://src/resources/styles/hud_style.tres" id="2_h8224"]
-[ext_resource type="Script" uid="uid://ibcse2mnrnca" path="res://tools/shape_tool.gd" id="5_wn6t1"]
-[ext_resource type="Script" uid="uid://eoyfcxmdrogy" path="res://tools/shape_definition.gd" id="6_iwbci"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_wot6j"]
 color = Color(0.70980394, 0.77254903, 0.7921569, 1)
 thickness = 4
 
-[sub_resource type="Resource" id="Resource_6dqgh"]
-script = ExtResource("6_iwbci")
-radius = 52.0
-fill_color = Color(0.9490196, 0.7882353, 0.29803923, 1)
-outline_enabled = false
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j5ei5"]
+bg_color = Color(0.14901961, 0.23137255, 0.27450982, 1)
+border_color = Color(0.9098039, 0.8980392, 0.8627451, 1)
+corner_radius_top_right = 60
+corner_radius_bottom_right = 60
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bw4pt"]
+bg_color = Color(0.9098039, 0.8980392, 0.8627451, 1)
+border_color = Color(0.9098039, 0.8980392, 0.8627451, 1)
+corner_radius_top_right = 60
+corner_radius_bottom_right = 60
+corner_detail = 1
 
 [node name="MatchHUD" type="CanvasLayer" unique_id=1439476412]
 script = ExtResource("1_hud")
@@ -109,57 +115,30 @@ text = "20:00"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MatchResult" type="Label" parent="Root" unique_id=1464470238]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_top = 126.0
-offset_bottom = 166.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 26
-text = "YELLOW TEAM WINS"
-horizontal_alignment = 1
-
-[node name="ReturnToMenu" type="Button" parent="Root" unique_id=373149119]
-unique_name_in_owner = true
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -160.0
-offset_top = 172.0
-offset_right = 160.0
-offset_bottom = 224.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0.0352941, 0.055, 0.065, 1)
-theme_override_font_sizes/font_size = 17
-text = "RETURN TO MAIN MENU"
-
 [node name="Countdown" type="Label" parent="Root" unique_id=959892899]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -360.0
-offset_top = -52.0
-offset_right = 360.0
-offset_bottom = 52.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(0.929412, 0.94902, 0.921569, 1)
-theme_override_font_sizes/font_size = 46
-text = "MATCH STARTS IN  5"
+theme_override_colors/font_color = Color(0.14901961, 0.23137255, 0.27450982, 1)
+theme_override_font_sizes/font_size = 137
+text = "MATCH
+STARTS IN
+5"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="Root/Countdown" unique_id=135532212]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.1458, 0.22653002, 0.27, 0.1764706)
 
 [node name="UnitsPanel" type="PanelContainer" parent="Root" unique_id=13522549]
 layout_mode = 1
@@ -221,8 +200,46 @@ theme_override_colors/font_color = Color(0.64, 0.7, 0.71, 1)
 text = "No yellow units"
 horizontal_alignment = 1
 
-[node name="ShapeTool" type="Node2D" parent="." unique_id=962503085]
-script = ExtResource("5_wn6t1")
-definitions = Array[ExtResource("6_iwbci")]([SubResource("Resource_6dqgh")])
-png_path = "res://src/assets/unit_icons/yellow_circle.png"
-metadata/_custom_type_script = "uid://ibcse2mnrnca"
+[node name="ResultPanel" type="PanelContainer" parent="Root" unique_id=1934073515]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(640, 320)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -122.0
+offset_top = -20.0
+offset_right = 122.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Root/ResultPanel" unique_id=654925489]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Root/ResultPanel/MarginContainer" unique_id=2102138019]
+layout_mode = 2
+
+[node name="MatchResult" type="Label" parent="Root/ResultPanel/MarginContainer/VBoxContainer" unique_id=1464470238]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 26
+text = "YELLOW TEAM WINS"
+horizontal_alignment = 1
+
+[node name="ReturnToMenu" type="Button" parent="Root/ResultPanel/MarginContainer/VBoxContainer" unique_id=373149119]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9098039, 0.8980392, 0.8627451, 1)
+theme_override_font_sizes/font_size = 17
+theme_override_styles/normal = SubResource("StyleBoxFlat_j5ei5")
+theme_override_styles/hover = SubResource("StyleBoxFlat_bw4pt")
+text = "RETURN TO MAIN MENU"

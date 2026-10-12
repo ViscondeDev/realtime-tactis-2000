@@ -17,6 +17,7 @@ const UNIT_ROW_SCENE: PackedScene = preload("res://src/gameplay/unit_status_row.
 @onready var _return_to_menu_button: Button = %ReturnToMenu
 @onready var _unit_list: VBoxContainer = %UnitList
 @onready var _empty_state: Label = %EmptyState
+@onready var _result_panel: PanelContainer = %ResultPanel
 
 var _control_point: ControlPoint
 var _unit_rows: Dictionary = {}
@@ -45,18 +46,18 @@ func _process(_delta: float) -> void:
 			_red_timer_label.text = _format_time(red_seconds)
 			_last_red_seconds = red_seconds
 		var winner_team: int = int(match_controller.get("winner_team"))
-		_match_result_label.visible = winner_team >= 0
+		_result_panel.visible = winner_team >= 0
 		_return_to_menu_button.visible = winner_team >= 0
 		if winner_team >= 0:
 			var seconds_remaining: int = ceili(float(match_controller.get("result_seconds_remaining")))
-			_match_result_label.text = "%s TEAM WINS  /  MENU IN %d" % [
+			_match_result_label.text = "%s TEAM WINS\n\nMENU IN %d" % [
 				"YELLOW" if winner_team == Unit.Team.YELLOW else "RED",
 				seconds_remaining,
 			]
 		var phase: int = int(match_controller.get("phase"))
 		_countdown_label.visible = phase == MatchController.Phase.COUNTDOWN
 		if _countdown_label.visible:
-			_countdown_label.text = "MATCH STARTS IN  %d" % ceili(float(match_controller.get("countdown_seconds_remaining")))
+			_countdown_label.text = "MATCH\nSTARTS IN\n%d" % ceili(float(match_controller.get("countdown_seconds_remaining")))
 
 	if is_instance_valid(_control_point):
 		var yellow_width: float = clampf((_control_point.capture_progress + 1.0) * 0.5, 0.0, 1.0)

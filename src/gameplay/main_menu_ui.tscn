@@ -9,6 +9,20 @@ color = Color(0.9098039, 0.8980392, 0.8627451, 1)
 thickness = 3
 vertical = true
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_68prt"]
+bg_color = Color(0.14901961, 0.23137255, 0.27450982, 1)
+border_color = Color(0.9098039, 0.8980392, 0.8627451, 1)
+corner_radius_top_right = 60
+corner_radius_bottom_right = 60
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qt2ns"]
+bg_color = Color(0.9098039, 0.8980392, 0.8627451, 1)
+border_color = Color(0.9098039, 0.8980392, 0.8627451, 1)
+corner_radius_top_right = 60
+corner_radius_bottom_right = 60
+corner_detail = 1
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ninnf"]
 bg_color = Color(0.14901961, 0.23137255, 0.27450982, 1)
 border_width_bottom = 6
@@ -157,10 +171,19 @@ size_flags_horizontal = 3
 [node name="Tutorial" type="Button" parent="NewMenu/HBoxContainer/VBoxContainer" unique_id=573276930]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_hover_color = Color(0.14901961, 0.23137255, 0.27450982, 1)
+theme_override_fonts/font = ExtResource("2_kdgm6")
+theme_override_font_sizes/font_size = 43
+theme_override_styles/normal = SubResource("StyleBoxFlat_68prt")
+theme_override_styles/hover = SubResource("StyleBoxFlat_qt2ns")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_qt2ns")
 text = "Tutorial"
+alignment = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="NewMenu/HBoxContainer/VBoxContainer" unique_id=236305396]
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_constants/separation = 8
 
 [node name="LevelSelector" type="OptionButton" parent="NewMenu/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1075536192]
@@ -174,10 +197,6 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_ninnf")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_kdgm6")
 theme_override_styles/hover = SubResource("StyleBoxFlat_6bldj")
 alignment = 1
-selected = 0
-item_count = 1
-popup/item_0/text = "TEST"
-popup/item_0/id = 0
 
 [node name="StartButton" type="Button" parent="NewMenu/HBoxContainer/VBoxContainer/HBoxContainer" unique_id=1855191415]
 unique_name_in_owner = true
@@ -191,17 +210,46 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_xctd7")
 theme_override_styles/hover = SubResource("StyleBoxFlat_6f2wp")
 text = "Play"
 
-[node name="Label2" type="Label" parent="NewMenu/HBoxContainer/VBoxContainer" unique_id=620013102]
+[node name="Credits" type="Button" parent="NewMenu/HBoxContainer/VBoxContainer" unique_id=233477271]
+unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 6
+size_flags_vertical = 3
+theme_override_colors/font_hover_color = Color(0.14901961, 0.23137255, 0.27450982, 1)
+theme_override_fonts/font = ExtResource("2_kdgm6")
 theme_override_font_sizes/font_size = 43
+theme_override_styles/normal = SubResource("StyleBoxFlat_68prt")
+theme_override_styles/hover = SubResource("StyleBoxFlat_qt2ns")
 text = "Credits"
+alignment = 0
 
-[node name="Label3" type="Label" parent="NewMenu/HBoxContainer/VBoxContainer" unique_id=1328662831]
+[node name="Rate" type="Button" parent="NewMenu/HBoxContainer/VBoxContainer" unique_id=528934370]
+unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 6
+size_flags_vertical = 3
+theme_override_colors/font_hover_color = Color(0.14901961, 0.23137255, 0.27450982, 1)
+theme_override_fonts/font = ExtResource("2_kdgm6")
 theme_override_font_sizes/font_size = 43
+theme_override_styles/normal = SubResource("StyleBoxFlat_68prt")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_qt2ns")
+theme_override_styles/hover = SubResource("StyleBoxFlat_qt2ns")
 text = "Rate"
+alignment = 0
+
+[node name="Line2D" type="Line2D" parent="NewMenu" unique_id=315699180]
+position = Vector2(245, 17)
+points = PackedVector2Array(1280, 1344, 1344, 1280, 2176, 1280)
+width = 6.0
+default_color = Color(0.72156864, 0.78039217, 0.7882353, 1)
+
+[node name="Label3" type="Label" parent="NewMenu" unique_id=174782003]
+layout_mode = 0
+offset_left = 2213.0
+offset_top = 1256.0
+offset_right = 2421.0
+offset_bottom = 1290.0
+theme_override_colors/font_color = Color(0.72156864, 0.78039217, 0.7882353, 1)
+theme_override_font_sizes/font_size = 26
+text = "DreamLayer Jam"
 
 [node name="Screen" type="Control" parent="." unique_id=78806899]
 visible = false

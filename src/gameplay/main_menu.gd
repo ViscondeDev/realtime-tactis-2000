@@ -22,7 +22,7 @@ static var current:Game
 
 var enemy_issue_delay_seconds: float = INITIAL_ENEMY_ISSUE_DELAY
 
-var _level_paths: Array[String] = []
+var _level_paths: Dictionary = {"King of The Hill":"uid://b82qjaqik1nli"}
 var _loading_path: String = ""
 var _loading_elapsed_seconds: float = 0.0
 var _match_level: Node2D
@@ -71,23 +71,23 @@ func _process(delta: float) -> void:
 
 func _refresh_level_list() -> void:
 	_level_selector.clear()
-	_level_paths.clear()
-	var directory: DirAccess = DirAccess.open(LEVEL_DIRECTORY)
-	if directory == null:
-		_set_loading_error("Level directory is unavailable.")
-		_start_button.disabled = true
-		return
+	# _level_paths.clear()
+	# var directory: DirAccess = DirAccess.open(LEVEL_DIRECTORY)
+	# if directory == null:
+	# 	_set_loading_error("Level directory is unavailable.")
+	# 	_start_button.disabled = true
+	# 	return
 
-	for file_name: String in directory.get_files():
-		if file_name.get_extension().to_lower() != "tscn":
-			continue
-		_level_paths.append(LEVEL_DIRECTORY.path_join(file_name))
-	_level_paths.sort()
+	# for file_name: String in directory.get_files():
+	# 	if file_name.get_extension().to_lower() != "tscn":
+	# 		continue
+	# 	_level_paths.append(LEVEL_DIRECTORY.path_join(file_name))
+	# _level_paths.sort()
 	for index: int in range(_level_paths.size()):
-		var level_title: String = _level_paths[index].get_file().get_basename().replace("_", " ").capitalize()
+		var level_title: String = _level_paths.keys()[index]
 		_level_selector.add_item(level_title, index)
 
-	_start_button.disabled = _level_paths.is_empty()
+	# _start_button.disabled = _level_paths.is_empty()
 	if _level_paths.is_empty():
 		_status_label.text = "NO LEVELS AVAILABLE"
 
@@ -103,7 +103,7 @@ func _begin_load(is_tutorial: bool = false) -> void:
 	if is_tutorial:
 		_loading_path = TUTORIAL_PATH
 	else:
-		_loading_path = _level_paths[selected_index]
+		_loading_path = _level_paths.values()[selected_index]
 
 	_loading_elapsed_seconds = 0.0
 	_loading_progress.value = 0.0
