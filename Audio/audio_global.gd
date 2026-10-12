@@ -72,3 +72,9 @@ func control_point_friendly() -> void:
 func respawn_sfx(_pos: Vector2) -> void:
 	$Respawn.position = _pos
 	$Respawn.play()
+
+func takeover_by_enemy_sfx() -> void:
+	$"Takeover Enemy".play()
+
+func takeover_by_friendly_sfx() -> void:
+	$"Takeover Friendly".play()

@@ -11,6 +11,8 @@
 [ext_resource type="AudioStream" uid="uid://bn3mw5l2vsm8b" path="res://Audio/SFX/UI/Countdown.ogg" id="9_c3jvq"]
 [ext_resource type="AudioStream" uid="uid://dau1geabrjh2h" path="res://Audio/SFX/UI/Countdown End.ogg" id="10_chvyd"]
 [ext_resource type="AudioStream" uid="uid://dlt0io8r1hst8" path="res://Audio/SFX/UI/Respawn.ogg" id="11_chvyd"]
+[ext_resource type="AudioStream" uid="uid://d0elj2g8y7wfe" path="res://Audio/SFX/UI/Takeover Enemy.ogg" id="12_i2lyb"]
+[ext_resource type="AudioStream" uid="uid://uschcunlru6u" path="res://Audio/SFX/UI/Takeaover Friendly.ogg" id="13_46g4j"]
 
 [sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_4bdev"]
 stream_count = 1
@@ -78,4 +80,12 @@ volume_db = 3.0
 max_distance = 4096.0
 attenuation = 0.0
 panning_strength = 4.0
+bus = &"UI"
+
+[node name="Takeover Enemy" type="AudioStreamPlayer" parent="." unique_id=1032943777]
+stream = ExtResource("12_i2lyb")
+bus = &"UI"
+
+[node name="Takeover Friendly" type="AudioStreamPlayer" parent="." unique_id=343963347]
+stream = ExtResource("13_46g4j")
 bus = &"UI"

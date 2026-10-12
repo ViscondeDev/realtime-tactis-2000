@@ -68,8 +68,17 @@ func takeover(team: Unit.Team):
 	var small_hexagon : ShapeDefinition = load(SHAPE_DEFINITIONS[team]["small_hexagon"])
 	var medium_hexagon : ShapeDefinition = load(SHAPE_DEFINITIONS[team]["medium_hexagon"])
 	var big_hexagon : ShapeDefinition = load(SHAPE_DEFINITIONS[team]["big_hexagon"])
-
+	
+	### AUDIO ###
+	if team == Unit.Team.YELLOW:
+		AudioGlobal.takeover_by_friendly_sfx()
+	else:
+		AudioGlobal.takeover_by_enemy_sfx()
+	### AUDIO END ###
+	
 	for s: ShapeDefinition in [small_hexagon, medium_hexagon, big_hexagon]:
 		shape.definitions.push_front(s)
 		await get_tree().create_timer(0.2).timeout
 		shape.queue_redraw()
+	
+	
