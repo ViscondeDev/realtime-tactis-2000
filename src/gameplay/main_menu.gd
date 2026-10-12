@@ -3,7 +3,7 @@ class_name Game
 
 const LEVEL_DIRECTORY: String = "res://src/levels"
 const MATCH_HUD_SCENE: PackedScene = preload("res://src/gameplay/match_hud.tscn")
-const INITIAL_ENEMY_ISSUE_DELAY: float = 2.5
+const INITIAL_ENEMY_ISSUE_DELAY: float = 3
 const RESULT_DISPLAY_SECONDS: float = 10.0
 const MINIMUM_LOADING_SCREEN_SECONDS: float = 0.35
 const TUTORIAL_PATH: String = "uid://bacgcxyc2xdp"

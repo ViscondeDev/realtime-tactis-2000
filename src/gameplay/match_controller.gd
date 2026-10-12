@@ -117,3 +117,4 @@ func _finish_match(winning_team: int) -> void:
 	phase = Phase.FINISHED
 	result_seconds_remaining = RESULT_DISPLAY_SECONDS
 	match_finished.emit(winner_team)
+	get_parent().process_mode = PROCESS_MODE_DISABLED

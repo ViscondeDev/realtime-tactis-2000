@@ -13,6 +13,8 @@ enum Status {COUNTDOWN, CONTROL}
 @export var _red_countdown_style: StyleBox
 @export var _yellow_countdown_style: StyleBox
 
+@onready var _results_animation: AnimationPlayer = %ResultsAnimation
+@onready var _support_phrase:Label = %SupportPhrase
 @onready var _score_panel: PanelContainer = %ScorePanel
 @onready var _yellow_timer_label: Label = %YellowTimer
 @onready var _red_timer_label: Label = %RedTimer
@@ -52,14 +54,10 @@ func _process(_delta: float) -> void:
 			_red_timer_label.text = _format_time(red_seconds)
 			_last_red_seconds = red_seconds
 		var winner_team: int = int(match_controller.get("winner_team"))
-		_result_panel.visible = winner_team >= 0
-		_return_to_menu_button.visible = winner_team >= 0
-		if winner_team >= 0:
-			var seconds_remaining: int = ceili(float(match_controller.get("result_seconds_remaining")))
-			_match_result_label.text = "%s TEAM WINS\n\nMENU IN %d" % [
-				"YELLOW" if winner_team == Unit.Team.YELLOW else "RED",
-				seconds_remaining,
-			]
+		if winner_team >= 0 and not _result_panel.visible:
+			_show_results_panel(winner_team)
+			_match_result_label.text = "%s TEAM WINS" % ["YELLOW", "RED"][winner_team]
+			_support_phrase.text = ["The game just got harder.", "I still believe in you."][winner_team]
 		var phase: int = int(match_controller.get("phase"))
 		_countdown_label.visible = phase == MatchController.Phase.COUNTDOWN
 		if _countdown_label.visible:
@@ -81,6 +79,12 @@ func _process(_delta: float) -> void:
 
 func _on_return_to_menu_pressed() -> void:
 	return_to_menu_requested.emit()
+
+func _show_results_panel(winner_team: Unit.Team):
+	if winner_team == Unit.Team.YELLOW:
+		_results_animation.play("promotion")
+	elif winner_team == Unit.Team.RED:
+		_results_animation.play("demotion")
 
 
 func _find_control_point() -> ControlPoint:

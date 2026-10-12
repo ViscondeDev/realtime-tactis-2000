@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cvahsvfevyws8" path="res://src/gameplay/match_hud.gd" id="1_hud"]
 [ext_resource type="Theme" uid="uid://cixmbr6wmrvsj" path="res://src/resources/styles/hud_style.tres" id="2_h8224"]
+[ext_resource type="Texture2D" uid="uid://dfrppsa2p1irk" path="res://src/assets/medals.png" id="3_bw4pt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_avjbb"]
 bg_color = Color(0.14901961, 0.23137255, 0.27450982, 1)
@@ -62,6 +63,312 @@ border_color = Color(0.9098039, 0.8980392, 0.8627451, 1)
 corner_radius_top_right = 60
 corner_radius_bottom_right = 60
 corner_detail = 1
+
+[sub_resource type="Animation" id="Animation_avjbb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Previous medal:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(312.00003, 158.00002)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Previous medal:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.5, 0.5)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("New medal:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(567, 158.00002)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("New medal:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("%MatchResult:visible_ratio")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("SupportPhrase:visible_ratio")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("%ReturnToMenu:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../..:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_pen68"]
+resource_name = "demotion"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Previous medal:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.5, 0.70000005, 1),
+"transitions": PackedFloat32Array(0.25881627, 3.9999957, 1),
+"update": 0,
+"values": [Vector2(312.00003, 158.00002), Vector2(258, 158), Vector2(567, 158)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Previous medal:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5, 0.70000005, 1),
+"transitions": PackedFloat32Array(1, 3.999999, 1),
+"update": 0,
+"values": [Vector2(0.5, 0.5), Vector2(0.5, 0.5), Vector2(1e-05, 1e-05)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("New medal:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.5, 0.76666665, 1),
+"transitions": PackedFloat32Array(1, 3.605001, 1),
+"update": 0,
+"values": [Vector2(79, 158), Vector2(79, 158), Vector2(313, 158.00002)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("New medal:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.5, 0.76666665, 1),
+"transitions": PackedFloat32Array(1, 3.363585, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(1e-05, 1e-05), Vector2(0.5, 0.5)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("%MatchResult:visible_ratio")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("SupportPhrase:visible_ratio")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(1.5, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("%ReturnToMenu:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.102418855, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../..:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_h8224"]
+resource_name = "promotion"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Previous medal:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.5, 0.70000005, 1),
+"transitions": PackedFloat32Array(0.25881627, 3.9999957, 1),
+"update": 0,
+"values": [Vector2(312.00003, 158.00002), Vector2(346.00003, 158.00002), Vector2(79.00003, 158.00002)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Previous medal:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5, 0.70000005, 1),
+"transitions": PackedFloat32Array(1, 3.999999, 1),
+"update": 0,
+"values": [Vector2(0.5, 0.5), Vector2(0.5, 0.5), Vector2(1e-05, 1e-05)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("New medal:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.5, 0.76666665, 1),
+"transitions": PackedFloat32Array(1, 3.605001, 1),
+"update": 0,
+"values": [Vector2(567, 158.00002), Vector2(567, 158.00002), Vector2(313, 158.00002)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("New medal:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.5, 0.76666665, 1),
+"transitions": PackedFloat32Array(1, 3.363585, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(1e-05, 1e-05), Vector2(0.5, 0.5)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("%MatchResult:visible_ratio")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("SupportPhrase:visible_ratio")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(1.5, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("%ReturnToMenu:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.102418855, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../..:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hhb4o"]
+_data = {
+&"RESET": SubResource("Animation_avjbb"),
+&"demotion": SubResource("Animation_pen68"),
+&"promotion": SubResource("Animation_h8224")
+}
 
 [node name="MatchHUD" type="CanvasLayer" unique_id=1439476412]
 script = ExtResource("1_hud")
@@ -240,7 +547,6 @@ theme_override_constants/separation = 12
 
 [node name="EmptyState" type="Label" parent="Root/UnitsPanel/Margin/Column/UnitScroll/UnitList" unique_id=1204597251]
 unique_name_in_owner = true
-visible = false
 custom_minimum_size = Vector2(0, 52)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.64, 0.7, 0.71, 1)
@@ -277,16 +583,47 @@ layout_mode = 2
 [node name="MatchResult" type="Label" parent="Root/ResultPanel/MarginContainer/VBoxContainer" unique_id=1464470238]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 6
+size_flags_vertical = 3
 theme_override_font_sizes/font_size = 26
 text = "YELLOW TEAM WINS"
 horizontal_alignment = 1
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="SupportPhrase" type="Label" parent="Root/ResultPanel/MarginContainer/VBoxContainer" unique_id=1916326080]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 26
+text = "The game just got harder"
+horizontal_alignment = 1
+vertical_alignment = 2
+visible_characters = 0
+visible_ratio = 0.0
 
 [node name="ReturnToMenu" type="Button" parent="Root/ResultPanel/MarginContainer/VBoxContainer" unique_id=373149119]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9098039, 0.8980392, 0.8627451, 1)
 theme_override_font_sizes/font_size = 17
 theme_override_styles/normal = SubResource("StyleBoxFlat_j5ei5")
 theme_override_styles/hover = SubResource("StyleBoxFlat_bw4pt")
 text = "RETURN TO MAIN MENU"
+
+[node name="Previous medal" type="Sprite2D" parent="Root/ResultPanel/MarginContainer/VBoxContainer" unique_id=1196223688]
+position = Vector2(312.00003, 158.00002)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_bw4pt")
+hframes = 5
+
+[node name="New medal" type="Sprite2D" parent="Root/ResultPanel/MarginContainer/VBoxContainer" unique_id=747453199]
+position = Vector2(567, 158.00002)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("3_bw4pt")
+hframes = 5
+frame = 1
+
+[node name="ResultsAnimation" type="AnimationPlayer" parent="Root/ResultPanel/MarginContainer/VBoxContainer" unique_id=39148127]
+unique_name_in_owner = true
+libraries/ = SubResource("AnimationLibrary_hhb4o")
