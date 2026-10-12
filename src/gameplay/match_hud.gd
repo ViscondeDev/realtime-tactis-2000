@@ -4,10 +4,16 @@ extends CanvasLayer
 signal return_to_menu_requested
 
 const UNIT_ROW_SCENE: PackedScene = preload("res://src/gameplay/unit_status_row.tscn")
+enum Status {COUNTDOWN, CONTROL}
 
 @export var match_controller: Node
 @export var respawn_controller: UnitRespawnController
+@export var _red_controlling_style: StyleBox
+@export var _yellow_controlling_style: StyleBox
+@export var _red_countdown_style: StyleBox
+@export var _yellow_countdown_style: StyleBox
 
+@onready var _score_panel: PanelContainer = %ScorePanel
 @onready var _yellow_timer_label: Label = %YellowTimer
 @onready var _red_timer_label: Label = %RedTimer
 @onready var _yellow_fill: ColorRect = %YellowFill
@@ -106,3 +112,15 @@ func _format_time(total_seconds: int) -> String:
 	var minutes: int = floori(float(total_seconds) / 60.0)
 	var seconds: int = total_seconds % 60
 	return "%02d:%02d" % [minutes, seconds]
+
+func _update_stats_style(team:Unit.Team, status:Status):
+	if status == Status.CONTROL:
+		if team == Unit.Team.RED:
+			_score_panel.add_theme_stylebox_override("panel", _red_controlling_style)
+		elif team == Unit.Team.YELLOW:
+			_score_panel.add_theme_stylebox_override("panel", _yellow_controlling_style)
+	elif status == Status.COUNTDOWN:
+		if team == Unit.Team.RED:
+			_score_panel.add_theme_stylebox_override("panel", _red_countdown_style)
+		elif team == Unit.Team.YELLOW:
+			_score_panel.add_theme_stylebox_override("panel", _yellow_countdown_style)

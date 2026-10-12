@@ -3,6 +3,7 @@ extends Node
 
 signal match_started
 signal match_finished(winning_team: int)
+signal countdown_started(team: Unit.Team)
 signal control_point_captured(team: Unit.Team)
 
 const CONTROL_POINTS_GROUP: StringName = &"control_points"
@@ -65,9 +66,11 @@ func _process(delta: float) -> void:
 	if _controlling_team == Unit.Team.YELLOW:
 		if yellow_control_time_remaining <= 10:
 			AudioGlobal.timer_sfx(yellow_control_time_remaining)
+			countdown_started.emit(Unit.Team.YELLOW)
 	elif _controlling_team == Unit.Team.RED:
 		if red_control_time_remaining <= 10:
 			AudioGlobal.timer_sfx(red_control_time_remaining)
+			countdown_started.emit(Unit.Team.RED)
 
 	if _control_point.capture_progress >= 1.0:
 		_controlling_team = Unit.Team.YELLOW

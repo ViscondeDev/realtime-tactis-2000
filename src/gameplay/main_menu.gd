@@ -152,6 +152,9 @@ func _launch_match(level_scene: PackedScene) -> void:
 		_match_container.add_child(_match_hud)
 	_loading_screen.hide()
 	_menu_canvas.hide()
+	
+	_match_controller.control_point_captured.connect(_match_hud._update_stats_style.bind(MatchHUD.Status.CONTROL))
+	_match_controller.countdown_started.connect(_match_hud._update_stats_style.bind(MatchHUD.Status.COUNTDOWN))
 
 
 func _on_match_started(level: Node2D) -> void:
