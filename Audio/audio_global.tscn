@@ -58,13 +58,18 @@ bus = &"Music"
 
 [node name="Order" type="AudioStreamPlayer" parent="." unique_id=52107642]
 stream = SubResource("AudioStreamRandomizer_48blk")
-volume_db = -10.0
+volume_db = -15.0
 bus = &"UI"
 
 [node name="Countdown" type="AudioStreamPlayer" parent="." unique_id=1188723117]
 stream = ExtResource("9_c3jvq")
+volume_db = -3.0
 bus = &"UI"
 
 [node name="CountdownEnd" type="AudioStreamPlayer" parent="." unique_id=404983662]
+stream = ExtResource("10_chvyd")
+bus = &"UI"
+
+[node name="CountdownEnd" type="AudioStreamPlayer" parent="CountdownEnd" unique_id=1951012597]
 stream = ExtResource("10_chvyd")
 bus = &"UI"

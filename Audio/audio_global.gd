@@ -21,13 +21,14 @@ func timer_sfx(countdown_seconds_remaining) -> void:
 	var countdown_seconds = ceil(countdown_seconds_remaining)
 	if countdown_seconds == 0:
 		$CountdownEnd.play()
+		start_level()
 	elif countdown_seconds < prev_countdown_seconds:
 		$Countdown.play()
 	prev_countdown_seconds = countdown_seconds
 
 func control_point_enemy() -> void:
 	# Stop the previous tween if it's still running
-	if is_instance_valid(_tween):
+	if _tween.is_valid():
 		_tween.kill()
 	
 	var music: AudioStreamPlayer = AudioGlobal.get_node("Music")
@@ -36,7 +37,7 @@ func control_point_enemy() -> void:
 	
 	# Stream index 1 = Bells
 	var stream_vol = synchronized_music_level.get_sync_stream_volume(1)
-	#synchronized_music_level.set_sync_stream_volume(1, 0)
+	#synchronized_music_level.set_sync_stream_volume(1, -6)
 	
 	_tween = create_tween()
 	_tween.tween_method(
@@ -49,7 +50,7 @@ func control_point_enemy() -> void:
 
 func control_point_friendly() -> void:
 	# Stop the previous tween if it's still running
-	if is_instance_valid(_tween):
+	if _tween.is_valid():
 		_tween.kill()
 	
 	var music: AudioStreamPlayer = AudioGlobal.get_node("Music")
